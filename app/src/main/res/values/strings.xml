@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MobileWPP</string>
+    <string name="operator_buttontext">OPERATOR</string>
+    <string name="supervisor_buttontext">SUPERVISOR</string>
+    <string name="dashboards_buttontext">DASHBOARDS</string>
+</resources>

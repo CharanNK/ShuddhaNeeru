@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mainActivityPadding">30dp</dimen>
+    <dimen name="dm_40sp">40sp</dimen>
+    <dimen name="dm_42sp">42sp</dimen>
+</resources>
