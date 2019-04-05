@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sanradiance.mobilewpp">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -21,7 +22,11 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".VerifyOTPActivity" />
-        <activity android:name=".OperatorInputActivity"></activity>
+        <activity android:name=".OperatorInputActivity" />
+        <activity
+            android:name=".OperatorDashboardActivity"
+            android:label="@string/title_activity_operator_dashboard"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

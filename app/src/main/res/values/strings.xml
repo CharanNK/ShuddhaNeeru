@@ -3,4 +3,53 @@
     <string name="operator_buttontext">OPERATOR</string>
     <string name="supervisor_buttontext">SUPERVISOR</string>
     <string name="dashboards_buttontext">DASHBOARDS</string>
+    <string name="title_activity_operator_dashboard">Operator Dashboard</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">WPP Status Monitoring System</string>
+    <string name="nav_header_subtitle">RWD and SD, Government of Karnataka</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
+    <string name="operator_name">Operator Name :</string>
+    <string name="operator_id">Operator ID : </string>
+    <string name="mobile_number">Mobile Number : </string>
+    <string name="location">Location : </string>
+    <string name="plant_capacity">Plant Capacity : </string>
+    <string name="voltage">Voltage : </string>
+    <string name="rwtl">RW Tank Level : </string>
+    <string name="rwfl">RW Flow Rate in LPH : </string>
+    <string name="twfl">TW Flow Rate in LPH: </string>
+    <string name="twtl">TW Tank Level : </string>
+    <string name="volume_disposed">Volume dispensed(lt) : </string>
+    <string name="twtds">TW TDS(PPM) : </string>
+    <string name="electricity_meter">Electricity Meter (KWH / Units) : </string>
+    
+    
+    <string-array name="voltage_array">
+        <item>Below 180V</item>
+        <item>180-230V</item>
+        <item>Above 230V</item>
+    </string-array>
+    
+    <string-array name="rw_tank_level">
+        <item>Low</item>
+        <item>Half</item>
+        <item>Full</item>
+    </string-array>
+
+    <string-array name="rw_flow_level">
+        <item>- - -</item>
+        <item>&lt;800</item>
+        <item>800 - 1000</item>
+        <item>&gt;1000</item>
+    </string-array>
+
+    <string-array name="tw_flow_level">
+        <item>- - -</item>
+        <item>&lt;400</item>
+        <item>400 - 500</item>
+        <item>&gt;500</item>
+    </string-array>
+
 </resources>

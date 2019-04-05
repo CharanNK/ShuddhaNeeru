@@ -19,4 +19,21 @@
         <item name="android:background">#6C6B99</item>
     </style>
 
+    <style name="operatorTextView" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="operatorEditText" parent="Base.V7.Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="spinnerBackground">
+        <item name="android:background">@drawable/gradient_spinner</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,11 +16,15 @@ public class VerifyOTPActivity extends AppCompatActivity {
     EditText otpDigit1, otpDigit2, otpDigit3, otpDigit4;
     Button verifyOtpButton;
     private static StringBuilder otpEntered = new StringBuilder();
+    private String userDetailsString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
+
+        userDetailsString = getIntent().getStringExtra("userdetails");
+        Log.d("User details:",userDetailsString);
 
         otpDigit1 = findViewById(R.id.otpDigit1);
         otpDigit2 = findViewById(R.id.otpDigit2);
@@ -133,7 +138,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String fullOTP = otpEntered.toString();
                 if(fullOTP.equals("1725")){
-                    Intent intent = new Intent(VerifyOTPActivity.this,OperatorInputActivity.class);
+                    Intent intent = new Intent(VerifyOTPActivity.this,OperatorDashboardActivity.class);
+                    intent.putExtra("userdetails",userDetailsString);
                     startActivity(intent);
                 }else {
                     Toast.makeText(getApplicationContext(),"Invalid OTP! Try again!",Toast.LENGTH_SHORT).show();

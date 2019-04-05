@@ -2,7 +2,9 @@ package com.sanradiance.mobilewpp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,6 +69,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.loginButton :
+                if(!isNetworkAvailable(getApplicationContext())){
+                    Snackbar.make(findViewById(R.id.loginLayout),"No Internet!",Snackbar.LENGTH_LONG).show();
+                }
                 String phoneNumber = phoneNumberField.getText().toString();
                 String password = passwordField.getText().toString();
 
@@ -84,6 +89,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private Boolean isNetworkAvailable(Context applicationContext) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
     private void performLogin(final String phoneNumber, String password) {
         try {
 
@@ -97,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     Log.d("Response", response.toString());
                     Intent intent = new Intent(LoginActivity.this,VerifyOTPActivity.class);
+                    intent.putExtra("userdetails",response.toString());
                     startActivity(intent);
                 }
 
@@ -105,7 +116,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onErrorResponse(VolleyError error) {
                     Log.d("Error", error.toString());
                     errorMessage.setVisibility(View.VISIBLE);
-                    errorMessage.setText("Invalid Phone Number. Please try again!");
+                    if(errorMessage.toString().contains("NoConnectionError")){
+                        Snackbar.make(findViewById(R.id.loginLayout),"No Internet!",Snackbar.LENGTH_LONG).show();
+                    }else
+                    errorMessage.setText("Invalid login details. Please try again!");
                 }
             }) {
 
