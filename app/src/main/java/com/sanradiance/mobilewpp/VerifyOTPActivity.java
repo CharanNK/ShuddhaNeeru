@@ -1,6 +1,7 @@
 package com.sanradiance.mobilewpp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,7 +10,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
 
 public class VerifyOTPActivity extends AppCompatActivity {
 
@@ -30,8 +39,16 @@ public class VerifyOTPActivity extends AppCompatActivity {
         otpDigit2 = findViewById(R.id.otpDigit2);
         otpDigit3 = findViewById(R.id.otpDigit3);
         otpDigit4 = findViewById(R.id.otpDigit4);
+//        TextView operatorMobileNumberTv = findViewById(R.id.operatormobile_value);
+//        String operatorMobile = this.getIntent().getStringExtra("operatorMobile");
+//        operatorMobileNumberTv.setText(operatorMobile);
 
         verifyOtpButton = findViewById(R.id.verifyOtpButton);
+
+
+
+
+
 
         otpDigit1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -137,12 +154,14 @@ public class VerifyOTPActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String fullOTP = otpEntered.toString();
-                if(fullOTP.equals("1725")){
-                    Intent intent = new Intent(VerifyOTPActivity.this,OperatorDashboardActivity.class);
-                    intent.putExtra("userdetails",userDetailsString);
+                if (fullOTP.equals("1725")) {
+                    Intent intent = new Intent(VerifyOTPActivity.this, OperatorDashboardActivity.class);
+                    intent.putExtra("userdetails", userDetailsString);
                     startActivity(intent);
-                }else {
-                    Toast.makeText(getApplicationContext(),"Invalid OTP! Try again!",Toast.LENGTH_SHORT).show();
+                } else if (fullOTP.length() < 1) {
+                    Toast.makeText(getApplicationContext(), "Please enter verification code", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Invalid OTP! Try again!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

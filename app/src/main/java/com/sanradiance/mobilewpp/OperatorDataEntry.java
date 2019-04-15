@@ -173,7 +173,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         operatorIdTv.setText(operatorId);
         operatorNameTv.setText(operatorName);
         operatorMobileNumberTv.setText(operatorMobile.toString());
-        plantLatLongTv.setText(latitude+", "+longitude);
+        plantLatLongTv.setText(latitude+","+longitude);
 
         Log.d("loginResponse", loginResponse);
 

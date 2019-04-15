@@ -87,12 +87,10 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
 
                             activity.getSupportFragmentManager().beginTransaction().replace(R.id.container,operatorDataEntry).addToBackStack(null).commit();
                         }
-                        Toast.makeText(mContext, "Okay button clicked!!", Toast.LENGTH_SHORT).show();
                     }
                 }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int id) {
-                        Toast.makeText(mContext, "Cancel button clicked!!", Toast.LENGTH_SHORT).show();
                         alertDialog.cancel();
                     }
                 });

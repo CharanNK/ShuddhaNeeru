@@ -78,10 +78,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 if (phoneNumber.length() != 10) {
                     errorMessage.setVisibility(View.VISIBLE);
-                    errorMessage.setText("Invalid Phone Number. Please try again!");
+                    errorMessage.setText("Please enter a phone number & try again!");
                 } else if (password.length() < 1) {
                     errorMessage.setVisibility(View.VISIBLE);
-                    errorMessage.setText("Please enter the password & try again!");
+                    errorMessage.setText("Please enter a password & try again!");
                 } else {
                     performLogin(phoneNumber, password);
                 }
@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             JSONObject paramJson = new JSONObject();
             paramJson.put("mobile", phoneNumber);
-            paramJson.put("password", phoneNumber);
+            paramJson.put("password", password);
             paramJson.put("remember_me", true);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, paramJson, new Response.Listener<JSONObject>() {
                 @Override
