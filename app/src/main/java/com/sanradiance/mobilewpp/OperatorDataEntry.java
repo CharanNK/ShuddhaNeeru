@@ -197,6 +197,8 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
         operatorSubmitButton.setOnClickListener(this);
         return view;
+
+
     }
 
     @Override
