@@ -1,6 +1,7 @@
 package com.sanradiance.mobilewpp;
 
 public class PlantDataModel {
+    public int id;
     public String plantId;
     public String vendorInstalled;
     public String district;
@@ -17,6 +18,14 @@ public class PlantDataModel {
     public String serviceProvider;
     public String createdAt;
     public String updatedAt;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getPlantId() {
         return plantId;
@@ -146,7 +155,8 @@ public class PlantDataModel {
         this.updatedAt = updatedAt;
     }
 
-    public PlantDataModel(String plantId, String vendorInstalled, String district, String taluk, String panchayat, String village, String habitation, String plantCapacityLPH, String eControllerMake, String panelId, String latitude, String longitude, String mobileNumber, String serviceProvider, String createdAt, String updatedAt) {
+    public PlantDataModel(int id,String plantId, String vendorInstalled, String district, String taluk, String panchayat, String village, String habitation, String plantCapacityLPH, String eControllerMake, String panelId, String latitude, String longitude, String mobileNumber, String serviceProvider, String createdAt, String updatedAt) {
+        this.id = id;
         this.plantId = plantId;
         this.vendorInstalled = vendorInstalled;
         this.district = district;

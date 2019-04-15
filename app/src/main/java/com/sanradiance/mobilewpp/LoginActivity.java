@@ -44,11 +44,12 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    EditText phoneNumberField,passwordField;
+    EditText phoneNumberField, passwordField;
     TextView errorMessage;
     Button loginButton;
 
     private static String LOGIN_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/login";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,23 +68,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.loginButton :
-                if(!isNetworkAvailable(getApplicationContext())){
-                    Snackbar.make(findViewById(R.id.loginLayout),"No Internet!",Snackbar.LENGTH_LONG).show();
+        switch (view.getId()) {
+            case R.id.loginButton:
+                if (!isNetworkAvailable(getApplicationContext())) {
+                    Snackbar.make(findViewById(R.id.loginLayout), "No Internet!", Snackbar.LENGTH_LONG).show();
                 }
                 String phoneNumber = phoneNumberField.getText().toString();
                 String password = passwordField.getText().toString();
 
-                if(phoneNumber.length()!=10){
+                if (phoneNumber.length() != 10) {
                     errorMessage.setVisibility(View.VISIBLE);
                     errorMessage.setText("Invalid Phone Number. Please try again!");
-                }else if(password.length()<1){
+                } else if (password.length() < 1) {
                     errorMessage.setVisibility(View.VISIBLE);
                     errorMessage.setText("Please enter the password & try again!");
-                }
-                else{
-                    performLogin(phoneNumber,password);
+                } else {
+                    performLogin(phoneNumber, password);
                 }
                 break;
         }
@@ -100,15 +100,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             JSONObject paramJson = new JSONObject();
             paramJson.put("mobile", phoneNumber);
             paramJson.put("password", phoneNumber);
-            paramJson.put("remember_me",true);
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, LOGIN_URL,paramJson, new Response.Listener<JSONObject>() {
+            paramJson.put("remember_me", true);
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, paramJson, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
 
                     Log.d("Response", response.toString());
-                    Intent intent = new Intent(LoginActivity.this,VerifyOTPActivity.class);
-                    intent.putExtra("userdetails",response.toString());
-                    startActivity(intent);
+                    try {
+                        JSONObject loginResponse = new JSONObject(response.toString());
+                        JSONObject userDetails = loginResponse.getJSONObject("user");
+                        String accountType = userDetails.getString("account_type");
+                        if (accountType.contains("operator")) {
+                            Intent intent = new Intent(LoginActivity.this, VerifyOTPActivity.class);
+                            intent.putExtra("userdetails", response.toString());
+                            startActivity(intent);
+                        }else{
+                            errorMessage.setVisibility(View.VISIBLE);
+                            errorMessage.setText("Not an operator!");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }, new Response.ErrorListener() {
@@ -116,17 +128,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onErrorResponse(VolleyError error) {
                     Log.d("Error", error.toString());
                     errorMessage.setVisibility(View.VISIBLE);
-                    if(errorMessage.toString().contains("NoConnectionError")){
-                        Snackbar.make(findViewById(R.id.loginLayout),"No Internet!",Snackbar.LENGTH_LONG).show();
-                    }else
-                    errorMessage.setText("Invalid login details. Please try again!");
+                    if (errorMessage.toString().contains("NoConnectionError")) {
+                        Snackbar.make(findViewById(R.id.loginLayout), "No Internet!", Snackbar.LENGTH_LONG).show();
+                    } else
+                        errorMessage.setText("Invalid login details. Please try again!");
                 }
             }) {
 
                 @Override
                 protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                     int mStatusCode = response.statusCode;
-                    Log.d("Status code",String.valueOf(mStatusCode));
+                    Log.d("Status code", String.valueOf(mStatusCode));
                     return super.parseNetworkResponse(response);
                 }
 
@@ -141,7 +153,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(jsonObjectRequest);
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

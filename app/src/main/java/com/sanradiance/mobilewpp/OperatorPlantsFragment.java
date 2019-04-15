@@ -26,6 +26,8 @@ public class OperatorPlantsFragment extends Fragment {
     public List<PlantDataModel> plantsList;
 
     PlantsAdapter plantsAdapter;
+    String bearerToken;
+    UserDataModel userDetail;
 
     @Nullable
     @Override
@@ -42,10 +44,19 @@ public class OperatorPlantsFragment extends Fragment {
 
         try {
             JSONObject loginResponse = new JSONObject(plantData);
+            bearerToken = loginResponse.getString("access_token");
+
+            JSONObject userDetails = loginResponse.getJSONObject("user");
+            int userId = userDetails.getInt("id");
+            String userName = userDetails.getString("name");
+            long userMobile = userDetails.getLong("mobile");
+            userDetail = new UserDataModel(bearerToken,userName,userId,userMobile);
+
             JSONArray assignedPlantList = loginResponse.getJSONArray("assigned_plant_list");
             for (int i = 0; i < assignedPlantList.length(); i++) {
                 JSONArray plantDetailsArray = assignedPlantList.getJSONObject(i).getJSONArray("plant_details");
                 JSONObject plantDetails = plantDetailsArray.getJSONObject(0);
+                int id = plantDetails.getInt("id");
                 String plantId = plantDetails.getString("plant_id");
                 String installedVendor = plantDetails.getString("installed_by_vendor");
                 String district = plantDetails.getString("district");
@@ -64,7 +75,7 @@ public class OperatorPlantsFragment extends Fragment {
                 String updatedAt = plantDetails.getString("updated_at");
 
                 Log.d("JsonParsing plantId", plantId);
-                PlantDataModel plantDataModel = new PlantDataModel(plantId, installedVendor, district, taluk, panchayath,
+                PlantDataModel plantDataModel = new PlantDataModel(id,plantId, installedVendor, district, taluk, panchayath,
                         village, habitation, plantCapacity, eControllerMake, panelId, latitude, longitude,
                         mobileNumber, serviceProvider, createdAt, updatedAt);
 
@@ -79,7 +90,7 @@ public class OperatorPlantsFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         plantRecycler.setLayoutManager(linearLayoutManager);
 
-        plantsAdapter = new PlantsAdapter(this.getContext(),plantsList);
+        plantsAdapter = new PlantsAdapter(this.getContext(),plantsList,userDetail);
 
         plantRecycler.setAdapter(plantsAdapter);
 

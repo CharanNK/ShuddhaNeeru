@@ -3,6 +3,7 @@ package com.sanradiance.mobilewpp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,10 +25,12 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
     private String[] plantStatus = {"Working", "Not working"};
     private AlertDialog alertDialog;
     private Boolean workingStatus;
+    private UserDataModel userDetail;
 
-    public PlantsAdapter(Context mContext, List<PlantDataModel> plantsList) {
+    public PlantsAdapter(Context mContext, List<PlantDataModel> plantsList,UserDataModel userDetail) {
         this.mContext = mContext;
         this.plantsList = plantsList;
+        this.userDetail = userDetail;
     }
 
     @NonNull
@@ -50,7 +53,7 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
         viewHolder.plantCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("Select Plant Status");
                 builder.setSingleChoiceItems(plantStatus, -1, new DialogInterface.OnClickListener() {
                     @Override
@@ -70,6 +73,18 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
                         if (workingStatus){
                             AppCompatActivity activity = (AppCompatActivity) view.getContext();
                             OperatorDataEntry operatorDataEntry = new OperatorDataEntry();
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString("accessToken",userDetail.getAccessToken());
+                            bundle.putString("operatorName",userDetail.getUserName());
+                            bundle.putInt("operatorId",userDetail.getUserId());
+                            bundle.putLong("operatorMobile",userDetail.getUserMobile());
+                            bundle.putInt("plantId",currentPlant.getId());
+                            bundle.putString("plantCapacity",currentPlant.getPlantCapacityLPH());
+                            bundle.putString("plantLatitude",currentPlant.getLatitude());
+                            bundle.putString("plantLongitude",currentPlant.getLongitude());
+                            operatorDataEntry.setArguments(bundle);
+
                             activity.getSupportFragmentManager().beginTransaction().replace(R.id.container,operatorDataEntry).addToBackStack(null).commit();
                         }
                         Toast.makeText(mContext, "Okay button clicked!!", Toast.LENGTH_SHORT).show();

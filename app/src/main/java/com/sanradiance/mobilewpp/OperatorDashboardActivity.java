@@ -42,9 +42,13 @@ public class OperatorDashboardActivity extends AppCompatActivity
 
         try {
             JSONObject jsonObject = new JSONObject(userDetails);
+            String accessToken = jsonObject.getString("access_token");
             JSONObject userData = jsonObject.getJSONObject("user");
             String userName = userData.getString("name");
             int userNumber = userData.getInt("id");
+            int mobileNumber = userData.getInt("mobile");
+
+            UserDataModel user = new UserDataModel(accessToken,userName,userNumber,mobileNumber);
 
             View headerView = navigationView.getHeaderView(0);
             TextView navHeaderUserName = headerView.findViewById(R.id.nav_header_userName);
