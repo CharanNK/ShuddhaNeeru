@@ -38,18 +38,46 @@
         <item>Full</item>
     </string-array>
 
-    <string-array name="rw_flow_level">
+    <string-array name="rw_flow_level_500">
         <item>- - -</item>
         <item>&lt;800</item>
         <item>800 - 1000</item>
         <item>&gt;1000</item>
     </string-array>
 
-    <string-array name="tw_flow_level">
+    <string-array name="tw_flow_level_500">
         <item>- - -</item>
         <item>&lt;400</item>
         <item>400 - 500</item>
         <item>&gt;500</item>
+    </string-array>
+
+    <string-array name="rw_flow_level_1000">
+        <item>- - -</item>
+        <item>&lt;1600</item>
+        <item>1600-2000</item>
+        <item>&gt;2000</item>
+    </string-array>
+
+    <string-array name="rw_flow_level_2000">
+        <item>- - -</item>
+        <item>&lt;3200</item>
+        <item>3200-4000</item>
+        <item>&gt;4000</item>
+    </string-array>
+
+    <string-array name="tw_flow_level_1000">
+        <item>- - -</item>
+        <item>&lt;800</item>
+        <item>800-1000</item>
+        <item>&gt;1000</item>
+    </string-array>
+
+    <string-array name="tw_flow_level_2000">
+        <item>- - -</item>
+        <item>&lt;1600</item>
+        <item>1600-2000</item>
+        <item>&gt;2000</item>
     </string-array>
 
 </resources>

@@ -109,10 +109,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     try {
                         JSONObject loginResponse = new JSONObject(response.toString());
                         JSONObject userDetails = loginResponse.getJSONObject("user");
+                        Long mobileNumber = userDetails.getLong("mobile");
                         String accountType = userDetails.getString("account_type");
                         if (accountType.contains("operator")) {
                             Intent intent = new Intent(LoginActivity.this, VerifyOTPActivity.class);
                             intent.putExtra("userdetails", response.toString());
+                            intent.putExtra("mobilenumber",mobileNumber);
                             startActivity(intent);
                         }else{
                             errorMessage.setVisibility(View.VISIBLE);

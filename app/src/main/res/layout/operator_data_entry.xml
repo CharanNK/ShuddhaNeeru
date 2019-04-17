@@ -281,7 +281,7 @@
                                     style="@style/spinnerBackground"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:entries="@array/rw_flow_level"
+                                    android:entries="@array/rw_flow_level_500"
                                     android:padding="5dp"></Spinner>
 
                             </LinearLayout>
@@ -328,7 +328,7 @@
                                     style="@style/spinnerBackground"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:entries="@array/tw_flow_level"
+                                    android:entries="@array/tw_flow_level_500"
                                     android:padding="5dp"></Spinner>
 
                             </LinearLayout>

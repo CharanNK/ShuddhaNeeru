@@ -26,6 +26,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
     Button verifyOtpButton;
     private static StringBuilder otpEntered = new StringBuilder();
     private String userDetailsString;
+    private Long userMobileNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +34,18 @@ public class VerifyOTPActivity extends AppCompatActivity {
         setContentView(R.layout.activity_verify_otp);
 
         userDetailsString = getIntent().getStringExtra("userdetails");
+        userMobileNumber = getIntent().getLongExtra("mobilenumber",0);
         Log.d("User details:",userDetailsString);
 
         otpDigit1 = findViewById(R.id.otpDigit1);
         otpDigit2 = findViewById(R.id.otpDigit2);
         otpDigit3 = findViewById(R.id.otpDigit3);
         otpDigit4 = findViewById(R.id.otpDigit4);
-//        TextView operatorMobileNumberTv = findViewById(R.id.operatormobile_value);
-//        String operatorMobile = this.getIntent().getStringExtra("operatorMobile");
-//        operatorMobileNumberTv.setText(operatorMobile);
+
+        TextView operatorMobileNumberTv = findViewById(R.id.operatormobile_value);
+        String existingText = operatorMobileNumberTv.getText().toString();
+        existingText+= String.valueOf(userMobileNumber);
+        operatorMobileNumberTv.setText(existingText);
 
         verifyOtpButton = findViewById(R.id.verifyOtpButton);
 

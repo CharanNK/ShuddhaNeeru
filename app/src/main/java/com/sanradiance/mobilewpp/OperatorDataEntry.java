@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,6 +55,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -170,6 +172,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         accessToken = loginResponse;
 
         plantCapacityEditText.setText(plantCapacity);
+        initializeFlowLevels(plantCapacity);
         operatorIdTv.setText(operatorId);
         operatorNameTv.setText(operatorName);
         operatorMobileNumberTv.setText(operatorMobile.toString());
@@ -199,6 +202,27 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         return view;
 
 
+    }
+
+    private void initializeFlowLevels(String plantCapacity) {
+        List<String> rwFlowLevel = Arrays.asList(getResources().getStringArray(R.array.rw_flow_level_500));
+        List<String> twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_500));
+
+        if(plantCapacity.equals("1000")){
+            rwFlowLevel = Arrays.asList(getResources().getStringArray(R.array.rw_flow_level_1000));
+            twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_500));
+        }else if(plantCapacity.equals("2000")){
+            rwFlowLevel = Arrays.asList(getResources().getStringArray(R.array.rw_flow_level_2000));
+            twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_2000));
+        }
+
+        ArrayAdapter<String> rwAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,rwFlowLevel);
+        ArrayAdapter<String> twAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,twFlowLevel);
+
+        rwFlowRateSpinner.setAdapter(rwAdapter);
+        twFlowRateSpinner.setAdapter(twAdapter);
+        rwAdapter.notifyDataSetChanged();
+        twAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -281,13 +305,13 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         }
 
         rwFlowRate = rwFlowRateSpinner.getSelectedItem().toString();
-        if (rwFlowRate.length() <= 0) {
+        if (rwFlowRate.length() <= 0||rwFlowRate.contains("- -")) {
             labelRWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
         }
 
         twFlowRate = twFlowRateSpinner.getSelectedItem().toString();
-        if (twFlowRate.length() <= 0) {
+        if (twFlowRate.length() <= 0||twFlowRate.contains("- -")) {
             labelTWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
         }
@@ -316,6 +340,8 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
         if (valuesSetFlag) {
             uploadData();
+        }else{
+            Toast.makeText(getContext(),"Please fill all fields before Submit!",Toast.LENGTH_LONG).show();
         }
     }
 
