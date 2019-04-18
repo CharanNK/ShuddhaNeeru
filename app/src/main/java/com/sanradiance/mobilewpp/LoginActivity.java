@@ -57,6 +57,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         phoneNumberField = findViewById(R.id.phoneNumberField);
         passwordField = findViewById(R.id.passwordField);
+        phoneNumberField.setOnClickListener(this);
+
 
         errorMessage = findViewById(R.id.errorMessage);
 
@@ -68,6 +70,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+
+
+
         switch (view.getId()) {
             case R.id.loginButton:
                 if (!isNetworkAvailable(getApplicationContext())) {
@@ -75,10 +80,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 String phoneNumber = phoneNumberField.getText().toString();
                 String password = passwordField.getText().toString();
-
-                if (phoneNumber.length() != 10) {
+                if (phoneNumber.length() < 1) {
                     errorMessage.setVisibility(View.VISIBLE);
                     errorMessage.setText("Please enter a phone number & try again!");
+                }else if (phoneNumber.length() != 10) {
+                    errorMessage.setVisibility(View.VISIBLE);
+                    errorMessage.setText("Please enter valid phone number & try again!");
                 } else if (password.length() < 1) {
                     errorMessage.setVisibility(View.VISIBLE);
                     errorMessage.setText("Please enter a password & try again!");

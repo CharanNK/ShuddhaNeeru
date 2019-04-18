@@ -210,7 +210,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
         if(plantCapacity.equals("1000")){
             rwFlowLevel = Arrays.asList(getResources().getStringArray(R.array.rw_flow_level_1000));
-            twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_500));
+            twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_1000));
         }else if(plantCapacity.equals("2000")){
             rwFlowLevel = Arrays.asList(getResources().getStringArray(R.array.rw_flow_level_2000));
             twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_2000));
@@ -297,21 +297,23 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         if (plantVoltage.length() <= 0) {
             labelVoltage.setTextColor(Color.RED);
             valuesSetFlag = false;
+
         }
 
         if (rwTankLevel.length() <= 0) {
             labelRWTankLevel.setTextColor(Color.RED);
             valuesSetFlag = false;
+
         }
 
         rwFlowRate = rwFlowRateSpinner.getSelectedItem().toString();
-        if (rwFlowRate.length() <= 0||rwFlowRate.contains("- -")) {
+        if (rwFlowRate.length() <= 0 || rwFlowRate.contains("- -")) {
             labelRWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
         }
 
         twFlowRate = twFlowRateSpinner.getSelectedItem().toString();
-        if (twFlowRate.length() <= 0||twFlowRate.contains("- -")) {
+        if (twFlowRate.length() <= 0 || twFlowRate.contains("- -")) {
             labelTWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
         }
@@ -340,6 +342,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
         if (valuesSetFlag) {
             uploadData();
+
         }else{
             Toast.makeText(getContext(),"Please fill all fields before Submit!",Toast.LENGTH_LONG).show();
         }
