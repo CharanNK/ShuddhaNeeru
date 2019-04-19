@@ -55,6 +55,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -216,6 +217,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_2000));
         }
 
+
         ArrayAdapter<String> rwAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,rwFlowLevel);
         ArrayAdapter<String> twAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,twFlowLevel);
 
@@ -224,6 +226,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         rwAdapter.notifyDataSetChanged();
         twAdapter.notifyDataSetChanged();
     }
+
 
     @Override
     public void onClick(View view) {
@@ -307,13 +310,13 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         }
 
         rwFlowRate = rwFlowRateSpinner.getSelectedItem().toString();
-        if (rwFlowRate.length() <= 0 || rwFlowRate.contains("- -")) {
+        if (rwFlowRate.length() <= 0 || rwFlowRate.contains("-Please select-")) {
             labelRWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
         }
 
         twFlowRate = twFlowRateSpinner.getSelectedItem().toString();
-        if (twFlowRate.length() <= 0 || twFlowRate.contains("- -")) {
+        if (twFlowRate.length() <= 0 || twFlowRate.contains("-Please select-")) {
             labelTWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
         }
@@ -347,7 +350,6 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             Toast.makeText(getContext(),"Please fill all fields before Submit!",Toast.LENGTH_LONG).show();
         }
     }
-
     private void uploadData() {
         try {
             JSONObject paramJson = new JSONObject();
