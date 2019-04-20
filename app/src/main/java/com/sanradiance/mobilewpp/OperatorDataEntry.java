@@ -15,6 +15,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -225,6 +227,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         twFlowRateSpinner.setAdapter(twAdapter);
         rwAdapter.notifyDataSetChanged();
         twAdapter.notifyDataSetChanged();
+
     }
 
 
@@ -301,11 +304,17 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             labelVoltage.setTextColor(Color.RED);
             valuesSetFlag = false;
 
+        } else {
+            labelVoltage.setTextColor(Color.BLACK);
+
         }
 
         if (rwTankLevel.length() <= 0) {
             labelRWTankLevel.setTextColor(Color.RED);
             valuesSetFlag = false;
+
+        } else {
+            labelRWTankLevel.setTextColor(Color.BLACK);
 
         }
 
@@ -313,34 +322,54 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         if (rwFlowRate.length() <= 0 || rwFlowRate.contains("-Please select-")) {
             labelRWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelRWFlowRate.setTextColor(Color.BLACK);
+
         }
 
         twFlowRate = twFlowRateSpinner.getSelectedItem().toString();
         if (twFlowRate.length() <= 0 || twFlowRate.contains("-Please select-")) {
             labelTWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelTWFlowRate.setTextColor(Color.BLACK);
+
         }
 
         if (twTankLevel.length() <= 0) {
             labelTWTankLevel.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelTWTankLevel.setTextColor(Color.BLACK);
+
         }
 
-        volumeDispensed = volumeDispensedEditText.getText().toString();
-        if (volumeDispensed.length() <= 0) {
+       volumeDispensed = volumeDispensedEditText.getText().toString();
+        if (Integer.valueOf(volumeDispensed) > Integer.valueOf(plantCapacity)) {
             labelVolumeDispensed.setTextColor(Color.RED);
             valuesSetFlag = false;
+            Toast.makeText(getContext(), "Volume dispense value should be less than plant capacity value", Toast.LENGTH_LONG).show();
+
+        } else {
+            labelVolumeDispensed.setTextColor(Color.BLACK);
+
         }
 
         if (twTDS.length() <= 0) {
             labelTWTDS.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelTWTDS.setTextColor(Color.BLACK);
+
         }
 
         electricityMeter = electricityEditText.getText().toString();
         if (electricityMeter.length() <= 0) {
             labelElectricityMeter.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelElectricityMeter.setTextColor(Color.BLACK);
+
         }
 
         if (valuesSetFlag) {
