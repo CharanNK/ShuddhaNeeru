@@ -126,7 +126,7 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
                                             reasonOfFailure = "no_water";
                                             break;
                                         case 2:
-                                            reasonOfFailure = "breakdown";
+                                            reasonOfFailure = "break_down";
                                             break;
                                         default:
                                             reasonOfFailure = "no_power";
@@ -167,9 +167,9 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
     private void updateFailureReason(int id, String reasonOfFailure) {
         try {
             JSONObject paramJson = new JSONObject();
-            paramJson.put("plant_id", "1");
+            paramJson.put("plant_id",id);
             paramJson.put("plant_working_status", "0");
-            paramJson.put("plant_failure_reason", "no_power");
+            paramJson.put("plant_failure_reason", reasonOfFailure);
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, failureStatusURL, paramJson, new Response.Listener<JSONObject>() {
                 @Override

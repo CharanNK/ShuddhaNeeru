@@ -141,7 +141,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         labelElectricityMeter = view.findViewById(R.id.label_electricitymeter);
 
 
-        rwTankLevelCamera = view.findViewById(R.id.rwtanklevelCamera);
+//        rwTankLevelCamera = view.findViewById(R.id.rwtanklevelCamera);
         rwFlowRateCamera = view.findViewById(R.id.rwflowrateCamera);
         twFlowRateCamera = view.findViewById(R.id.twflowrateCamera);
         volumeDispensedCamera = view.findViewById(R.id.volumedispensedCamera);
@@ -189,7 +189,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         twTdsButton2.setOnClickListener(this);
         twTdsButton3.setOnClickListener(this);
 
-        rwTankLevelCamera.setOnClickListener(this);
+//        rwTankLevelCamera.setOnClickListener(this);
         electricityMeterCamera.setOnClickListener(this);
         twTDSCamera.setOnClickListener(this);
         volumeDispensedCamera.setOnClickListener(this);
@@ -276,10 +276,10 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                 twTDS = twTdsButton3.getText().toString();
                 break;
 
-            case R.id.rwtanklevelCamera:
-                openCamera();
-                currentImageIdentifier = "rwtanklevel";
-                break;
+//            case R.id.rwtanklevelCamera:
+//                openCamera();
+//                currentImageIdentifier = "rwtanklevel";
+//                break;
             case R.id.twflowrateCamera:
                 openCamera();
                 currentImageIdentifier = "twflowrate";
@@ -309,52 +309,76 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
     private void validateData() {
 
-        Log.d("tankelevelImageID",String.valueOf(rwTankLevelImageId));
+//        Log.d("tankelevelImageID",String.valueOf(rwTankLevelImageId));
 
         if (plantVoltage.length() <= 0) {
             labelVoltage.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelVoltage.setTextColor(Color.BLACK);
 
         }
 
         if (rwTankLevel.length() <= 0) {
             labelRWTankLevel.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelRWTankLevel.setTextColor(Color.BLACK);
 
         }
 
         rwFlowRate = rwFlowRateSpinner.getSelectedItem().toString();
-        if (rwFlowRate.length() <= 0 || rwFlowRate.contains("- -")) {
+        if (rwFlowRate.length() <= 0 || rwFlowRate.contains("-Please select-")) {
             labelRWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelRWFlowRate.setTextColor(Color.BLACK);
+
         }
 
         twFlowRate = twFlowRateSpinner.getSelectedItem().toString();
-        if (twFlowRate.length() <= 0 || twFlowRate.contains("- -")) {
+        if (twFlowRate.length() <= 0 || twFlowRate.contains("-Please select-")) {
             labelTWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelTWFlowRate.setTextColor(Color.BLACK);
+
         }
 
         if (twTankLevel.length() <= 0) {
             labelTWTankLevel.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelTWTankLevel.setTextColor(Color.BLACK);
+
         }
 
         volumeDispensed = volumeDispensedEditText.getText().toString();
-        if (volumeDispensed.length() <= 0) {
+        if (Integer.valueOf(volumeDispensed) > Integer.valueOf(plantCapacity)) {
             labelVolumeDispensed.setTextColor(Color.RED);
             valuesSetFlag = false;
+            Toast.makeText(getContext(), "Volume dispense value should be less than the plant capacity value", Toast.LENGTH_LONG).show();
+
+        } else {
+            labelVolumeDispensed.setTextColor(Color.BLACK);
+
         }
 
         if (twTDS.length() <= 0) {
             labelTWTDS.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelTWTDS.setTextColor(Color.BLACK);
+
         }
 
         electricityMeter = electricityEditText.getText().toString();
         if (electricityMeter.length() <= 0) {
             labelElectricityMeter.setTextColor(Color.RED);
             valuesSetFlag = false;
+        } else {
+            labelElectricityMeter.setTextColor(Color.BLACK);
+
         }
 
         if (valuesSetFlag) {
