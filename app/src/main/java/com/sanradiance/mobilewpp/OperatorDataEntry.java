@@ -1,10 +1,9 @@
 package com.sanradiance.mobilewpp;
 
 import android.Manifest;
-import android.content.ContentValues;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,11 +12,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.text.InputFilter;
-import android.text.Spanned;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,17 +26,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -51,32 +42,22 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.ContentValues.TAG;
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 public class OperatorDataEntry extends Fragment implements View.OnClickListener {
     Button voltageButton1, voltageButton2, voltageButton3;
@@ -87,8 +68,10 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
     EditText plantCapacityEditText, volumeDispensedEditText, electricityEditText;
     Spinner rwFlowRateSpinner, twFlowRateSpinner;
     TextView labelPlantCapacity, labelVoltage, labelRWTankLevel, labelRWFlowRate, labelTWFlowRate, labelTWTankLevel, labelVolumeDispensed, labelTWTDS, labelElectricityMeter;
-    TextView operatorNameTv, operatorIdTv, operatorMobileNumberTv,plantLatLongTv;
+    TextView operatorNameTv, operatorIdTv, operatorMobileNumberTv, plantLatLongTv;
     ImageView rwTankLevelCamera, rwFlowRateCamera, twFlowRateCamera, volumeDispensedCamera, twTDSCamera, electricityMeterCamera;
+
+    int rwTankLevelImageId, rwFlowRateImageId, twFlowRateImageId, volumeDispensedImageId, twTDSImageId, electricityMeterImageId;
 
     String plantCapacity, plantVoltage, rwTankLevel, rwFlowRate, twFlowRate, twTankLevel, volumeDispensed, twTDS, electricityMeter;
 
@@ -100,9 +83,14 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
     private static final String dataUploadURL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/user/survey-details/upload";
     private static final String fileUploadURL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/upload/file";
-    private Uri picUri;
 
     int CAPTURE_IMAGE = 1000;
+    private Uri fileUri;
+    FileService fileService;
+
+    private static String currentImageIdentifier;
+
+    private String currentImagePath;
 
     @Nullable
     @Override
@@ -179,9 +167,11 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         operatorIdTv.setText(operatorId);
         operatorNameTv.setText(operatorName);
         operatorMobileNumberTv.setText(operatorMobile.toString());
-        plantLatLongTv.setText(latitude+","+longitude);
+        plantLatLongTv.setText(latitude + "," + longitude);
 
         Log.d("loginResponse", loginResponse);
+
+        fileService = APIUtils.getFileService();
 
         voltageButton1.setOnClickListener(this);
         voltageButton2.setOnClickListener(this);
@@ -200,6 +190,11 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         twTdsButton3.setOnClickListener(this);
 
         rwTankLevelCamera.setOnClickListener(this);
+        electricityMeterCamera.setOnClickListener(this);
+        twTDSCamera.setOnClickListener(this);
+        volumeDispensedCamera.setOnClickListener(this);
+        twFlowRateCamera.setOnClickListener(this);
+        rwFlowRateCamera.setOnClickListener(this);
 
         operatorSubmitButton.setOnClickListener(this);
         return view;
@@ -211,25 +206,22 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         List<String> rwFlowLevel = Arrays.asList(getResources().getStringArray(R.array.rw_flow_level_500));
         List<String> twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_500));
 
-        if(plantCapacity.equals("1000")){
+        if (plantCapacity.equals("1000")) {
             rwFlowLevel = Arrays.asList(getResources().getStringArray(R.array.rw_flow_level_1000));
             twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_1000));
-        }else if(plantCapacity.equals("2000")){
+        } else if (plantCapacity.equals("2000")) {
             rwFlowLevel = Arrays.asList(getResources().getStringArray(R.array.rw_flow_level_2000));
             twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_2000));
         }
 
-
-        ArrayAdapter<String> rwAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,rwFlowLevel);
-        ArrayAdapter<String> twAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,twFlowLevel);
+        ArrayAdapter<String> rwAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, rwFlowLevel);
+        ArrayAdapter<String> twAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, twFlowLevel);
 
         rwFlowRateSpinner.setAdapter(rwAdapter);
         twFlowRateSpinner.setAdapter(twAdapter);
         rwAdapter.notifyDataSetChanged();
         twAdapter.notifyDataSetChanged();
-
     }
-
 
     @Override
     public void onClick(View view) {
@@ -286,7 +278,29 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
             case R.id.rwtanklevelCamera:
                 openCamera();
+                currentImageIdentifier = "rwtanklevel";
                 break;
+            case R.id.twflowrateCamera:
+                openCamera();
+                currentImageIdentifier = "twflowrate";
+                break;
+            case R.id.electricitymeterCamera:
+                openCamera();
+                currentImageIdentifier = "electricitymeter";
+                break;
+            case R.id.rwflowrateCamera:
+                openCamera();
+                currentImageIdentifier = "rwflowrate";
+                break;
+            case R.id.twtdsCamera:
+                openCamera();
+                currentImageIdentifier = "twtds";
+                break;
+            case R.id.volumedispensedCamera: {
+                openCamera();
+                currentImageIdentifier = "volumedispnesed";
+                break;
+            }
             case R.id.operator_submit_button:
                 validateData();
                 break;
@@ -294,18 +308,12 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
     }
 
     private void validateData() {
-//        plantCapacity = plantCapacityEditText.getText().toString();
-//        if (plantCapacity.length() <= 0) {
-//            labelPlantCapacity.setTextColor(Color.RED);
-//            valuesSetFlag = false;
-//        }
+
+        Log.d("tankelevelImageID",String.valueOf(rwTankLevelImageId));
 
         if (plantVoltage.length() <= 0) {
             labelVoltage.setTextColor(Color.RED);
             valuesSetFlag = false;
-
-        } else {
-            labelVoltage.setTextColor(Color.BLACK);
 
         }
 
@@ -313,72 +321,50 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             labelRWTankLevel.setTextColor(Color.RED);
             valuesSetFlag = false;
 
-        } else {
-            labelRWTankLevel.setTextColor(Color.BLACK);
-
         }
 
         rwFlowRate = rwFlowRateSpinner.getSelectedItem().toString();
-        if (rwFlowRate.length() <= 0 || rwFlowRate.contains("-Please select-")) {
+        if (rwFlowRate.length() <= 0 || rwFlowRate.contains("- -")) {
             labelRWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
-        } else {
-            labelRWFlowRate.setTextColor(Color.BLACK);
-
         }
 
         twFlowRate = twFlowRateSpinner.getSelectedItem().toString();
-        if (twFlowRate.length() <= 0 || twFlowRate.contains("-Please select-")) {
+        if (twFlowRate.length() <= 0 || twFlowRate.contains("- -")) {
             labelTWFlowRate.setTextColor(Color.RED);
             valuesSetFlag = false;
-        } else {
-            labelTWFlowRate.setTextColor(Color.BLACK);
-
         }
 
         if (twTankLevel.length() <= 0) {
             labelTWTankLevel.setTextColor(Color.RED);
             valuesSetFlag = false;
-        } else {
-            labelTWTankLevel.setTextColor(Color.BLACK);
-
         }
 
-       volumeDispensed = volumeDispensedEditText.getText().toString();
-        if (Integer.valueOf(volumeDispensed) > Integer.valueOf(plantCapacity)) {
+        volumeDispensed = volumeDispensedEditText.getText().toString();
+        if (volumeDispensed.length() <= 0) {
             labelVolumeDispensed.setTextColor(Color.RED);
             valuesSetFlag = false;
-            Toast.makeText(getContext(), "Volume dispense value should be less than plant capacity value", Toast.LENGTH_LONG).show();
-
-        } else {
-            labelVolumeDispensed.setTextColor(Color.BLACK);
-
         }
 
         if (twTDS.length() <= 0) {
             labelTWTDS.setTextColor(Color.RED);
             valuesSetFlag = false;
-        } else {
-            labelTWTDS.setTextColor(Color.BLACK);
-
         }
 
         electricityMeter = electricityEditText.getText().toString();
         if (electricityMeter.length() <= 0) {
             labelElectricityMeter.setTextColor(Color.RED);
             valuesSetFlag = false;
-        } else {
-            labelElectricityMeter.setTextColor(Color.BLACK);
-
         }
 
         if (valuesSetFlag) {
             uploadData();
 
-        }else{
-            Toast.makeText(getContext(),"Please fill all fields before Submit!",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), "Please fill all fields before Submit!", Toast.LENGTH_LONG).show();
         }
     }
+
     private void uploadData() {
         try {
             JSONObject paramJson = new JSONObject();
@@ -388,16 +374,16 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             paramJson.put("voltage", plantVoltage);
             paramJson.put("rw_tank_level", rwTankLevel);
             paramJson.put("rw_flow_rate_in_lph", rwFlowRate);
-            paramJson.put("rw_flow_rate_in_lph_image_id", 1);
+            paramJson.put("rw_flow_rate_in_lph_image_id", rwFlowRateImageId);
             paramJson.put("tw_flow_rate_in_lph", twFlowRate);
-            paramJson.put("tw_flow_rate_in_lph_image_id", 2);
+            paramJson.put("tw_flow_rate_in_lph_image_id", twFlowRateImageId);
             paramJson.put("tw_tank_level", twTankLevel);
             paramJson.put("volume_dispensed_in_ltr", volumeDispensed);
-            paramJson.put("volume_dispensed_in_ltr_image_id", 3);
+            paramJson.put("volume_dispensed_in_ltr_image_id", volumeDispensedImageId);
             paramJson.put("tw_tds_ppm", twTDS);
-            paramJson.put("tw_tds_ppm_image_id", 4);
+            paramJson.put("tw_tds_ppm_image_id", twTDSImageId);
             paramJson.put("electricity_meter_kwh_or_units", electricityMeter);
-            paramJson.put("electricity_meter_kwh_or_units_image_id", 5);
+            paramJson.put("electricity_meter_kwh_or_units_image_id", electricityMeterImageId);
             paramJson.put("plant_working_status", 1);
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, dataUploadURL, paramJson, new Response.Listener<JSONObject>() {
@@ -463,19 +449,19 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
     }
 
     public void openCamera() {
-        Log.d("CAMERA", "called function");
+        Log.d("cameraintent", "called function");
         Dexter.withActivity(getActivity()).withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
-                            Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             File file = getOutputMediaFile(1);
-                            picUri = Uri.fromFile(file); // create
-                            i.putExtra(MediaStore.EXTRA_OUTPUT, picUri); // set the image file
+                            fileUri = Uri.fromFile(file);
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 
-                            startActivityForResult(i, CAPTURE_IMAGE);
+                            // start the image capture Intent
+                            startActivityForResult(intent, CAPTURE_IMAGE);
                         } else {
                             Toast.makeText(getContext(), "Permissions are not granted!", Toast.LENGTH_SHORT).show();
                         }
@@ -515,100 +501,77 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE && resultCode == RESULT_OK) {
-            Uri selectedImage = picUri;
-            Log.d("selectedImage", picUri.toString());
+            Uri selectedImage = fileUri;
+            Log.d("selectedImage", fileUri.toString());
 
-            String picturePath = getRealPathFromURI(selectedImage);
+            if (selectedImage != null) {
+                String[] projection = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getActivity().managedQuery(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        projection, null, null, null);
+                int column_index_data = cursor
+                        .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToLast();
+                final String imageFilePath = cursor.getString(column_index_data);
+                Log.d("imageURL", "image url : " + imageFilePath);
 
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
-                Bitmap lastBitmap = null;
-                lastBitmap = bitmap;
-                //encoding image to string
-                String image = getStringImage(lastBitmap);
-                Log.d("image", image);
-                sendImage(image);
-            } catch (IOException e) {
-
+                uploadMedia(imageFilePath);
             }
-
-            Log.d("picturePath", picturePath);
         }
 
     }
 
-    private void sendImage(final String image) {
-        Response.Listener<String> jsonListerner = new Response.Listener<String>() {
+    private void uploadMedia(String imageFilePath) {
+
+        final int[] imageId = new int[1];
+        File imageFile = new File(imageFilePath);
+        Log.d("imageName", imageFile.getName());
+        String mimeType = URLConnection.guessContentTypeFromName(imageFile.getName());
+        RequestBody requestBody = RequestBody.create(MediaType.parse(mimeType), imageFile);
+        final MultipartBody.Part body = MultipartBody.Part.createFormData("image_file", imageFile.getName(), requestBody);
+
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Uploading..");
+        progressDialog.show();
+        Call<ServerResponse> call = fileService.upload(body);
+        call.enqueue(new Callback<ServerResponse>() {
             @Override
-            public void onResponse(String list) {
-
+            public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
+                if (response.isSuccessful()) {
+                    progressDialog.dismiss();
+                    Log.d("response", "success");
+                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    int fileId = response.body().getFileId();
+                    Log.d("fileId",String.valueOf(fileId));
+                    Log.d("currentImage",currentImageIdentifier);
+                    switch (currentImageIdentifier) {
+                        case "rwtanklevel":
+                            rwTankLevelImageId = fileId;
+                            break;
+                        case "twflowrate":
+                            twFlowRateImageId = fileId;
+                            break;
+                        case  "electricitymeter":
+                            electricityMeterImageId = fileId;
+                            break;
+                        case "rwflowrate" :
+                            rwFlowRateImageId = fileId;
+                            break;
+                        case "twtds" :
+                            twTDSImageId = fileId;
+                            break;
+                        case "volumedispnesed" :
+                            volumeDispensedImageId = fileId;
+                            break;
+                    }
+                }
             }
-        };
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, fileUploadURL, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
-                Log.d("Response", response);
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                Log.d("response", "failure");
+                Toast.makeText(getContext(), "ERROR: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("fileUploadError", error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new Hashtable<String, String>();
-
-                params.put("image_file", image);
-                return super.getParams();
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-//                params.put("Content-Type", "multipart/form-data");
-                params.put("X-Requested-With", "XMLHttpRequest");
-                params.put("Authorization", "Bearer " + accessToken);
-                return params;
-            }
-
-//            @Override
-//            public String getBodyContentType() {
-//                return "multipart/form-data";
-//            }
-        };
-        {
-            int socketTimeout = 30000;
-            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-            stringRequest.setRetryPolicy(policy);
-            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-            requestQueue.add(stringRequest);
-        }
-    }
-
-
-    public String getStringImage(Bitmap bmp) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
-
-    }
-
-    private String getRealPathFromURI(Uri contentUri) {
-        Cursor cursor = getContext().getContentResolver().query(contentUri, null, null, null, null);
-        if (cursor == null) { // Source is Dropbox or other similar local file
-            // path
-            return contentUri.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            String path = cursor.getString(idx);
-            cursor.close();
-            return path;
-        }
+        });
     }
 }

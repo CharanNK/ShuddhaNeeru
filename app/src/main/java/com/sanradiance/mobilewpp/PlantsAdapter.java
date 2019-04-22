@@ -126,7 +126,7 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
                                             reasonOfFailure = "no_water";
                                             break;
                                         case 2:
-                                            reasonOfFailure = "break_down";
+                                            reasonOfFailure = "breakdown";
                                             break;
                                         default:
                                             reasonOfFailure = "no_power";
@@ -137,7 +137,7 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
                                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int i) {
-                                            updateFailureReason(currentPlant.getId(),reasonOfFailure);
+                                            updateFailureReason(currentPlant.getId(), reasonOfFailure);
                                             dialog.cancel();
                                         }
                                     })
@@ -167,9 +167,9 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
     private void updateFailureReason(int id, String reasonOfFailure) {
         try {
             JSONObject paramJson = new JSONObject();
-            paramJson.put("plant_id",id);
-            paramJson.put("plant_working_status","0");
-            paramJson.put("plant_failure_reason",reasonOfFailure);
+            paramJson.put("plant_id", "1");
+            paramJson.put("plant_working_status", "0");
+            paramJson.put("plant_failure_reason", "no_power");
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, failureStatusURL, paramJson, new Response.Listener<JSONObject>() {
                 @Override
@@ -181,7 +181,7 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
                 public void onErrorResponse(VolleyError error) {
 
                 }
-            }){
+            }) {
                 @Override
                 protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                     int mStatusCode = response.statusCode;
@@ -191,7 +191,7 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
                         currentActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(mContext,"Updated to server!",Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext, "Updated to server!", Toast.LENGTH_LONG).show();
                             }
                         });
 
@@ -210,7 +210,7 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
             };
             RequestQueue requestQueue = Volley.newRequestQueue(mContext);
             requestQueue.add(jsonObjectRequest);
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

@@ -25,7 +25,6 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".VerifyOTPActivity" />
-        <activity android:name=".OperatorInputActivity" />
         <activity
             android:name=".OperatorDashboardActivity"
             android:label="@string/title_activity_operator_dashboard"

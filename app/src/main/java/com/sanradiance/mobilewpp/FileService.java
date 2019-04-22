@@ -1,13 +1,16 @@
 package com.sanradiance.mobilewpp;
 
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
-public interface RetrofitInterface {
+public interface FileService {
     @Multipart
-    @POST("/images/upload")
-    Call<Response> uploadImage(@Part MultipartBody.Part image);
+    @Headers("X-Requested-With:XMLHttpRequest")
+    @POST("file")
+    Call<ServerResponse> upload(@Part MultipartBody.Part image);
 }
