@@ -515,7 +515,9 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                 final String imageFilePath = cursor.getString(column_index_data);
                 Log.d("imageURL", "image url : " + imageFilePath);
 
-                uploadMedia(imageFilePath);
+                String imagePath = selectedImage.toString();
+                imagePath = imagePath.replace("file://","");
+                uploadMedia(imagePath);
             }
         }
 
