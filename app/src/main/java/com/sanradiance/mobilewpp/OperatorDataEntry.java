@@ -65,11 +65,11 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
     Button twTankLevelButton1, twTankLevelButton2, twTankLevelButton3;
     Button twTdsButton1, twTdsButton2, twTdsButton3;
     Button operatorSubmitButton;
-    EditText plantCapacityEditText, volumeDispensedEditText, electricityEditText;
+    EditText volumeDispensedEditText, electricityEditText;
     Spinner rwFlowRateSpinner, twFlowRateSpinner;
-    TextView labelPlantCapacity, labelVoltage, labelRWTankLevel, labelRWFlowRate, labelTWFlowRate, labelTWTankLevel, labelVolumeDispensed, labelTWTDS, labelElectricityMeter;
+    TextView plantCapacityTextView, labelPlantCapacity, labelVoltage, labelRWTankLevel, labelRWFlowRate, labelTWFlowRate, labelTWTankLevel, labelVolumeDispensed, labelTWTDS, labelElectricityMeter;
     TextView operatorNameTv, operatorIdTv, operatorMobileNumberTv, plantLatLongTv;
-    ImageView rwTankLevelCamera, rwFlowRateCamera, twFlowRateCamera, volumeDispensedCamera, twTDSCamera, electricityMeterCamera;
+    ImageView rwFlowRateCamera, twFlowRateCamera, volumeDispensedCamera, twTDSCamera, electricityMeterCamera;
 
     int rwTankLevelImageId, rwFlowRateImageId, twFlowRateImageId, volumeDispensedImageId, twTDSImageId, electricityMeterImageId;
 
@@ -123,7 +123,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         twTdsButton2 = view.findViewById(R.id.twtds_button2);
         twTdsButton3 = view.findViewById(R.id.twtds_button3);
 
-        plantCapacityEditText = view.findViewById(R.id.plant_capacity_value);
+        plantCapacityTextView = view.findViewById(R.id.plant_capacity_value);
         volumeDispensedEditText = view.findViewById(R.id.volumedisposed_value);
         electricityEditText = view.findViewById(R.id.electricity_meter_value);
 
@@ -141,7 +141,6 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         labelElectricityMeter = view.findViewById(R.id.label_electricitymeter);
 
 
-//        rwTankLevelCamera = view.findViewById(R.id.rwtanklevelCamera);
         rwFlowRateCamera = view.findViewById(R.id.rwflowrateCamera);
         twFlowRateCamera = view.findViewById(R.id.twflowrateCamera);
         volumeDispensedCamera = view.findViewById(R.id.volumedispensedCamera);
@@ -162,7 +161,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         plantCapacity = capacity;
         accessToken = loginResponse;
 
-        plantCapacityEditText.setText(plantCapacity);
+        plantCapacityTextView.setText(plantCapacity);
         initializeFlowLevels(plantCapacity);
         operatorIdTv.setText(operatorId);
         operatorNameTv.setText(operatorName);
@@ -189,7 +188,6 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         twTdsButton2.setOnClickListener(this);
         twTdsButton3.setOnClickListener(this);
 
-//        rwTankLevelCamera.setOnClickListener(this);
         electricityMeterCamera.setOnClickListener(this);
         twTDSCamera.setOnClickListener(this);
         volumeDispensedCamera.setOnClickListener(this);
@@ -214,8 +212,8 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             twFlowLevel = Arrays.asList(getResources().getStringArray(R.array.tw_flow_level_2000));
         }
 
-        ArrayAdapter<String> rwAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, rwFlowLevel);
-        ArrayAdapter<String> twAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, twFlowLevel);
+        ArrayAdapter<String> rwAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, rwFlowLevel);
+        ArrayAdapter<String> twAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, twFlowLevel);
 
         rwFlowRateSpinner.setAdapter(rwAdapter);
         twFlowRateSpinner.setAdapter(twAdapter);
@@ -276,10 +274,6 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                 twTDS = twTdsButton3.getText().toString();
                 break;
 
-//            case R.id.rwtanklevelCamera:
-//                openCamera();
-//                currentImageIdentifier = "rwtanklevel";
-//                break;
             case R.id.twflowrateCamera:
                 openCamera();
                 currentImageIdentifier = "twflowrate";
@@ -309,7 +303,6 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
     private void validateData() {
 
-//        Log.d("tankelevelImageID",String.valueOf(rwTankLevelImageId));
 
         if (plantVoltage.length() <= 0) {
             labelVoltage.setTextColor(Color.RED);

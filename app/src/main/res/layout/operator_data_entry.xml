@@ -136,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/plant_capacity" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/plant_capacity_value"
                         style="@style/operatorEditText"
                         android:layout_width="match_parent"
@@ -167,7 +167,7 @@
                         <Button
                             android:id="@+id/voltage_button1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/operator_button_height"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:text="&lt; 180V" />
@@ -175,7 +175,7 @@
                         <Button
                             android:id="@+id/voltage_button2"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/operator_button_height"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:text="180 - 230V" />
@@ -183,7 +183,7 @@
                         <Button
                             android:id="@+id/voltage_button3"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/operator_button_height"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:text="&gt; 230V" />
@@ -219,7 +219,7 @@
                                 <Button
                                     android:id="@+id/rwtank_level1"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/operator_button_height"
                                     android:layout_weight="1"
                                     android:background="@drawable/edittext_bg"
                                     android:text="LOW" />
@@ -227,7 +227,7 @@
                                 <Button
                                     android:id="@+id/rwtank_level2"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/operator_button_height"
                                     android:layout_weight="1"
                                     android:background="@drawable/edittext_bg"
                                     android:text="HALF" />
@@ -235,7 +235,7 @@
                                 <Button
                                     android:id="@+id/rwtank_level3"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/operator_button_height"
                                     android:layout_weight="1"
                                     android:background="@drawable/edittext_bg"
                                     android:text="FULL" />
@@ -275,7 +275,7 @@
                                     android:id="@+id/rwflowrate_spinner"
                                     style="@style/spinnerBackground"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="40dp"
                                     android:entries="@array/rw_flow_level_500"
                                     android:padding="5dp"></Spinner>
 
@@ -322,7 +322,7 @@
                                     android:id="@+id/twflowrate_spinner"
                                     style="@style/spinnerBackground"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="40dp"
                                     android:entries="@array/tw_flow_level_500"
                                     android:padding="5dp"></Spinner>
 
@@ -357,7 +357,7 @@
                         <Button
                             android:id="@+id/twtanklevel1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/operator_button_height"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:text="LOW" />
@@ -365,7 +365,7 @@
                         <Button
                             android:id="@+id/twtanklevel2"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/operator_button_height"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:text="HALF" />
@@ -373,7 +373,7 @@
                         <Button
                             android:id="@+id/twtanklevel3"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/operator_button_height"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
                             android:text="FULL" />
@@ -458,7 +458,7 @@
                                 <Button
                                     android:id="@+id/twtds_button1"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/operator_button_height"
                                     android:layout_weight="1"
                                     android:background="@drawable/edittext_bg"
                                     android:text="&lt; 50" />
@@ -466,7 +466,7 @@
                                 <Button
                                     android:id="@+id/twtds_button2"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/operator_button_height"
                                     android:layout_weight="1"
                                     android:background="@drawable/edittext_bg"
                                     android:text="50 - 100" />
@@ -474,7 +474,7 @@
                                 <Button
                                     android:id="@+id/twtds_button3"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/operator_button_height"
                                     android:layout_weight="1"
                                     android:background="@drawable/edittext_bg"
                                     android:text="&gt; 100" />
