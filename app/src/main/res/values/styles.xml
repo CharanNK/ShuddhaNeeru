@@ -30,7 +30,6 @@
 
     <style name="spinnerBackground">
         <item name="android:background">@drawable/gradient_spinner</item>
-        <item name="android:padding">5sp</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

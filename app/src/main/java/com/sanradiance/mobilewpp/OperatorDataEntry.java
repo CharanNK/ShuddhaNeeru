@@ -13,10 +13,13 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,6 +95,8 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
     private String currentImagePath;
 
+    final int currentItem = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -102,34 +107,44 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
         plantCapacity = plantVoltage = rwTankLevel = rwFlowRate = twFlowRate = twTankLevel = volumeDispensed = twTDS = electricityMeter = "";
 
+        //operator fields
         operatorNameTv = view.findViewById(R.id.operatorname_value);
         operatorIdTv = view.findViewById(R.id.operatorid_value);
         operatorMobileNumberTv = view.findViewById(R.id.operatormobile_value);
         plantLatLongTv = view.findViewById(R.id.plant_location);
 
+        //voltage buttons
         voltageButton1 = view.findViewById(R.id.voltage_button1);
         voltageButton2 = view.findViewById(R.id.voltage_button2);
         voltageButton3 = view.findViewById(R.id.voltage_button3);
 
+        //raw water tank level buttons
         rwTankLevelButton1 = view.findViewById(R.id.rwtank_level1);
         rwTankLevelButton2 = view.findViewById(R.id.rwtank_level2);
         rwTanklevelButton3 = view.findViewById(R.id.rwtank_level3);
 
+        //treated water tank level buttons
         twTankLevelButton1 = view.findViewById(R.id.twtanklevel1);
         twTankLevelButton2 = view.findViewById(R.id.twtanklevel2);
         twTankLevelButton3 = view.findViewById(R.id.twtanklevel3);
 
+        //treated water TDS buttons
         twTdsButton1 = view.findViewById(R.id.twtds_button1);
         twTdsButton2 = view.findViewById(R.id.twtds_button2);
         twTdsButton3 = view.findViewById(R.id.twtds_button3);
 
+        //plant capacity
         plantCapacityTextView = view.findViewById(R.id.plant_capacity_value);
+
+        //volume and electricity entry fields
         volumeDispensedEditText = view.findViewById(R.id.volumedisposed_value);
         electricityEditText = view.findViewById(R.id.electricity_meter_value);
 
+        //Raw Water and Treated water flow rate Dropdowns
         rwFlowRateSpinner = view.findViewById(R.id.rwflowrate_spinner);
         twFlowRateSpinner = view.findViewById(R.id.twflowrate_spinner);
 
+        //Labels for all fields
         labelPlantCapacity = view.findViewById(R.id.label_plantcapacity);
         labelVoltage = view.findViewById(R.id.label_plantvoltage);
         labelRWTankLevel = view.findViewById(R.id.label_rwtanklevel);
@@ -141,16 +156,19 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         labelElectricityMeter = view.findViewById(R.id.label_electricitymeter);
 
 
+        //Camera buttons for required fields
         rwFlowRateCamera = view.findViewById(R.id.rwflowrateCamera);
         twFlowRateCamera = view.findViewById(R.id.twflowrateCamera);
         volumeDispensedCamera = view.findViewById(R.id.volumedispensedCamera);
         twTDSCamera = view.findViewById(R.id.twtdsCamera);
         electricityMeterCamera = view.findViewById(R.id.electricitymeterCamera);
 
+        //Submit button
         operatorSubmitButton = view.findViewById(R.id.operator_submit_button);
 
 
-        String loginResponse = this.getArguments().getString("accessToken").toString();
+        //Parsing the necessary operator details
+        String userAccessToken = this.getArguments().getString("accessToken").toString();
         String operatorName = this.getArguments().getString("operatorName").toString();
         String operatorId = String.valueOf(this.getArguments().getInt("operatorId"));
         Long operatorMobile = Long.valueOf(this.getArguments().getLong("operatorMobile"));
@@ -159,19 +177,17 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         String longitude = String.valueOf(this.getArguments().getString("plantLongitude"));
         plantId = Integer.valueOf(this.getArguments().getInt("plantId"));
         plantCapacity = capacity;
-        accessToken = loginResponse;
+        accessToken = userAccessToken;
 
-        plantCapacityTextView.setText(plantCapacity);
-        initializeFlowLevels(plantCapacity);
-        operatorIdTv.setText(operatorId);
-        operatorNameTv.setText(operatorName);
-        operatorMobileNumberTv.setText(operatorMobile.toString());
-        plantLatLongTv.setText(latitude + "," + longitude);
+        //set InitialValues
+        setInitValues(operatorId,operatorName,operatorMobile,latitude,longitude);
 
-        Log.d("loginResponse", loginResponse);
-
+        //instantiate the file upload Service
         fileService = APIUtils.getFileService();
 
+        initViews();
+
+        //set listeners for all buttons
         voltageButton1.setOnClickListener(this);
         voltageButton2.setOnClickListener(this);
         voltageButton3.setOnClickListener(this);
@@ -195,9 +211,118 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         rwFlowRateCamera.setOnClickListener(this);
 
         operatorSubmitButton.setOnClickListener(this);
+
+
         return view;
+    }
 
+    private void initViews() {
+        rwTankLevelButton1.setEnabled(false);
+        rwTankLevelButton2.setEnabled(false);
+        rwTanklevelButton3.setEnabled(false);
 
+        rwFlowRateSpinner.setEnabled(false);
+        rwFlowRateCamera.setEnabled(false);
+        rwFlowRateCamera.setImageResource(R.drawable.ic_camera_grey);
+
+        twFlowRateSpinner.setEnabled(false);
+        twFlowRateCamera.setEnabled(false);
+        twFlowRateCamera.setImageResource(R.drawable.ic_camera_grey);
+
+        twTankLevelButton1.setEnabled(false);
+        twTankLevelButton2.setEnabled(false);
+        twTankLevelButton3.setEnabled(false);
+
+        volumeDispensedEditText.setEnabled(false);
+        volumeDispensedCamera.setEnabled(false);
+        volumeDispensedCamera.setImageResource(R.drawable.ic_camera_grey);
+
+        twTdsButton1.setEnabled(false);
+        twTdsButton2.setEnabled(false);
+        twTdsButton3.setEnabled(false);
+        twTDSCamera.setEnabled(false);
+        twTDSCamera.setImageResource(R.drawable.ic_camera_grey);
+
+        electricityEditText.setEnabled(false);
+        electricityMeterCamera.setEnabled(false);
+        electricityMeterCamera.setImageResource(R.drawable.ic_camera_grey);
+
+        operatorSubmitButton.setEnabled(false);
+
+        rwFlowRateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(currentItem==i)
+                    return;
+                rwFlowRateCamera.setEnabled(true);
+                rwFlowRateCamera.setImageResource(R.drawable.ic_camera);
+                rwFlowRateSpinner.setEnabled(false);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        //spinner item listener
+        twFlowRateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(currentItem==i)
+                    return;
+                twFlowRateCamera.setEnabled(true);
+                twFlowRateCamera.setImageResource(R.drawable.ic_camera);
+                twFlowRateSpinner.setEnabled(false);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        volumeDispensedEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                enableCamera(volumeDispensedCamera);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        electricityEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                enableCamera(electricityMeterCamera);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+    }
+
+    private void setInitValues(String operatorId, String operatorName, Long operatorMobile, String latitude, String longitude) {
+        plantCapacityTextView.setText(plantCapacity);
+        initializeFlowLevels(plantCapacity);
+        operatorIdTv.setText(operatorId);
+        operatorNameTv.setText(operatorName);
+        operatorMobileNumberTv.setText(operatorMobile.toString());
+        plantLatLongTv.setText(latitude + "," + longitude);
     }
 
     private void initializeFlowLevels(String plantCapacity) {
@@ -227,51 +352,66 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             case R.id.voltage_button1:
                 modifyButtons(view, R.id.voltage_button1, R.id.voltage_button2, R.id.voltage_button3);
                 plantVoltage = voltageButton1.getText().toString();
+                enableButtons(rwTankLevelButton1,rwTankLevelButton2,rwTanklevelButton3);
                 break;
             case R.id.voltage_button2:
                 modifyButtons(view, R.id.voltage_button2, R.id.voltage_button1, R.id.voltage_button3);
                 plantVoltage = voltageButton2.getText().toString();
+                enableButtons(rwTankLevelButton1,rwTankLevelButton2,rwTanklevelButton3);
                 break;
             case R.id.voltage_button3:
                 modifyButtons(view, R.id.voltage_button3, R.id.voltage_button2, R.id.voltage_button1);
                 plantVoltage = voltageButton3.getText().toString();
+                enableButtons(rwTankLevelButton1,rwTankLevelButton2,rwTanklevelButton3);
                 break;
 
             case R.id.rwtank_level1:
                 modifyButtons(view, R.id.rwtank_level1, R.id.rwtank_level2, R.id.rwtank_level3);
                 rwTankLevel = rwTankLevelButton1.getText().toString();
+                rwFlowRateSpinner.setEnabled(true);
+//                enableCamera(rwFlowRateCamera);
                 break;
             case R.id.rwtank_level2:
                 modifyButtons(view, R.id.rwtank_level2, R.id.rwtank_level1, R.id.rwtank_level3);
                 rwTankLevel = rwTankLevelButton2.getText().toString();
+                rwFlowRateSpinner.setEnabled(true);
+//                enableCamera(rwFlowRateCamera);
                 break;
             case R.id.rwtank_level3:
                 modifyButtons(view, R.id.rwtank_level3, R.id.rwtank_level1, R.id.rwtank_level2);
                 rwTankLevel = rwTanklevelButton3.getText().toString();
+                rwFlowRateSpinner.setEnabled(true);
+//                enableCamera(rwFlowRateCamera);
                 break;
             case R.id.twtanklevel1:
                 modifyButtons(view, R.id.twtanklevel1, R.id.twtanklevel2, R.id.twtanklevel3);
                 twTankLevel = twTankLevelButton1.getText().toString();
+                volumeDispensedEditText.setEnabled(true);
                 break;
             case R.id.twtanklevel2:
                 modifyButtons(view, R.id.twtanklevel2, R.id.twtanklevel1, R.id.twtanklevel3);
                 twTankLevel = twTankLevelButton2.getText().toString();
+                volumeDispensedEditText.setEnabled(true);
                 break;
             case R.id.twtanklevel3:
-                modifyButtons(view, R.id.twtanklevel3, R.id.twtanklevel2, R.id.twtanklevel2);
+                modifyButtons(view, R.id.twtanklevel3, R.id.twtanklevel1, R.id.twtanklevel2);
                 twTankLevel = twTankLevelButton3.getText().toString();
+                volumeDispensedEditText.setEnabled(true);
                 break;
             case R.id.twtds_button1:
                 modifyButtons(view, R.id.twtds_button1, R.id.twtds_button2, R.id.twtds_button3);
                 twTDS = twTdsButton1.getText().toString();
+                enableCamera(twTDSCamera);
                 break;
             case R.id.twtds_button2:
                 modifyButtons(view, R.id.twtds_button2, R.id.twtds_button1, R.id.twtds_button3);
                 twTDS = twTdsButton2.getText().toString();
+                enableCamera(twTDSCamera);
                 break;
             case R.id.twtds_button3:
                 modifyButtons(view, R.id.twtds_button3, R.id.twtds_button2, R.id.twtds_button1);
                 twTDS = twTdsButton3.getText().toString();
+                enableCamera(twTDSCamera);
                 break;
 
             case R.id.twflowrateCamera:
@@ -280,6 +420,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                 break;
             case R.id.electricitymeterCamera:
                 openCamera();
+                electricityEditText.setEnabled(false);
                 currentImageIdentifier = "electricitymeter";
                 break;
             case R.id.rwflowrateCamera:
@@ -292,6 +433,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                 break;
             case R.id.volumedispensedCamera: {
                 openCamera();
+                volumeDispensedEditText.setEnabled(false);
                 currentImageIdentifier = "volumedispnesed";
                 break;
             }
@@ -299,6 +441,17 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                 validateData();
                 break;
         }
+    }
+
+    private void enableCamera(ImageView cameraButton) {
+        cameraButton.setEnabled(true);
+        cameraButton.setImageResource(R.drawable.ic_camera);
+    }
+
+    private void enableButtons(Button button1, Button button2, Button button3) {
+        button1.setEnabled(true);
+        button2.setEnabled(true);
+        button3.setEnabled(true);
     }
 
     private void validateData() {
@@ -403,6 +556,9 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             paramJson.put("electricity_meter_kwh_or_units_image_id", electricityMeterImageId);
             paramJson.put("plant_working_status", 1);
 
+            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Uploading data to server..");
+            progressDialog.show();
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, dataUploadURL, paramJson, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -420,6 +576,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                     int mStatusCode = response.statusCode;
                     Log.d("Status code", String.valueOf(mStatusCode));
                     if (mStatusCode == 200) {
+                        progressDialog.dismiss();
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(getContext(), "Data Uploaded Successfully!", Toast.LENGTH_LONG).show();
@@ -455,13 +612,15 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
         view = getView();
         Button button2 = view.findViewById(voltage_button2);
-        button2.setBackgroundResource(R.drawable.edittext_bg);
-        button2.setTextColor(Color.BLACK);
+//        button2.setBackgroundResource(R.drawable.edittext_bg);
+//        button2.setTextColor(Color.BLACK);
+        button2.setEnabled(false);
 
         view = getView();
         Button button3 = view.findViewById(voltage_button3);
-        button3.setBackgroundResource(R.drawable.edittext_bg);
-        button3.setTextColor(Color.BLACK);
+//        button3.setBackgroundResource(R.drawable.edittext_bg);
+//        button3.setTextColor(Color.BLACK);
+        button3.setEnabled(false);
 
     }
 
@@ -564,23 +723,35 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                     Log.d("fileId",String.valueOf(fileId));
                     Log.d("currentImage",currentImageIdentifier);
                     switch (currentImageIdentifier) {
-                        case "rwtanklevel":
-                            rwTankLevelImageId = fileId;
-                            break;
                         case "twflowrate":
                             twFlowRateImageId = fileId;
+                            twFlowRateCamera.setEnabled(false);
+                            twFlowRateCamera.setImageResource(R.drawable.ic_camera_grey);
+                            enableButtons(twTankLevelButton1,twTankLevelButton2,twTankLevelButton3);
                             break;
                         case  "electricitymeter":
                             electricityMeterImageId = fileId;
+                            electricityMeterCamera.setEnabled(false);
+                            electricityMeterCamera.setImageResource(R.drawable.ic_camera_grey);
+                            operatorSubmitButton.setEnabled(true);
                             break;
                         case "rwflowrate" :
                             rwFlowRateImageId = fileId;
+                            rwFlowRateCamera.setEnabled(false);
+                            rwFlowRateCamera.setImageResource(R.drawable.ic_camera_grey);
+                            twFlowRateSpinner.setEnabled(true);
                             break;
                         case "twtds" :
                             twTDSImageId = fileId;
+                            twTDSCamera.setEnabled(false);
+                            twTDSCamera.setImageResource(R.drawable.ic_camera_grey);
+                            electricityEditText.setEnabled(true);
                             break;
                         case "volumedispnesed" :
                             volumeDispensedImageId = fileId;
+                            volumeDispensedCamera.setEnabled(false);
+                            volumeDispensedCamera.setImageResource(R.drawable.ic_camera_grey);
+                            enableButtons(twTdsButton1,twTdsButton2,twTdsButton3);
                             break;
                     }
                 }
