@@ -12,40 +12,70 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         card_view:cardElevation="5dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/card_view_margintop"
-            android:layout_marginBottom="@dimen/card_view_margintop"
-            android:layout_marginLeft="@dimen/card_view_marginleft"
-            android:layout_marginRight="@dimen/card_view_marginleft"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/plantIdTv"
-                android:textColor="#f44336"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:text="Plant ID : 152500903500701A"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:drawableLeft="@drawable/ic_location"
-                android:id="@+id/plantAddressTv"
-                android:layout_marginTop="@dimen/card_view_marginleft"
-                android:layout_marginBottom="@dimen/card_view_marginleft"
-                android:textColor="@color/colorBlack"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/card_view_margintop"
-                android:text="KARANAKUPPE,DASARAHALLI,Ballagere,Tumakuru,Tumakuru"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/panelIdTv"
-                android:textColor="@color/colorBlueBackground"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:text="Panel ID : IN118-07--970"/>
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:background="#FEBD17"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/card_view_margintop"
+                android:layout_marginLeft="@dimen/card_view_marginleft"
+                android:layout_marginRight="@dimen/card_view_marginleft"
+                android:layout_marginTop="@dimen/card_view_margintop"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/plantIdTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Plant ID : 152500903500701A"
+                    android:textColor="#4A5A77"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/plantAddressTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/card_view_marginleft"
+                    android:layout_marginLeft="@dimen/card_view_margintop"
+                    android:layout_marginTop="@dimen/card_view_marginleft"
+                    android:textSize="16sp"
+                    android:drawableLeft="@drawable/ic_location"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="KARANAKUPPE,DASARAHALLI,Ballagere,Tumakuru,Tumakuru"
+                    android:textColor="@color/colorBlack" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/panelIdTv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Panel ID : IN118-07--970"
+                    android:textColor="#f44336"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.4"
+                        android:layout_height="wrap_content"
+                        android:text="ACTIVE"
+                        android:drawableLeft="@drawable/ic_plant_active"
+                        android:textStyle="bold"
+                        android:textColor="@color/plantActiveColor"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </FrameLayout>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -66,11 +67,19 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int position) {
         final PlantDataModel currentPlant = plantsList.get(position);
 
-        viewHolder.panelIdTextView.setText("Panel ID :" + currentPlant.getPanelId());
-        String completeAddress = currentPlant.getVillage() + ", " + currentPlant.getHabitation() + ", " + currentPlant.getPanchayat()
-                + ", " + currentPlant.getTaluk() + ", " + currentPlant.getDistrict();
+        Typeface roundsTypeFace = Typeface.createFromAsset(mContext.getAssets(),"fonts/ttrounds.ttf");
+        Typeface robotoMedium = Typeface.createFromAsset(mContext.getAssets(),"fonts/linottesemibold.otf");
+
+        viewHolder.panelIdTextView.setTypeface(roundsTypeFace);
+        viewHolder.panelIdTextView.setText("Panel ID : " + currentPlant.getPanelId());
+
+        viewHolder.plantAddressTextView.setTypeface(robotoMedium);
+        String completeAddress = currentPlant.getVillage() + ", " + currentPlant.getHabitation() + ", \n" + currentPlant.getPanchayat()
+                + ", " + currentPlant.getTaluk() + ", \n" + currentPlant.getDistrict();
         viewHolder.plantAddressTextView.setText(completeAddress);
-        viewHolder.plantIdTextView.setText("Plant ID :" + currentPlant.getPlantId());
+
+        viewHolder.plantIdTextView.setTypeface(roundsTypeFace);
+        viewHolder.plantIdTextView.setText("Plant ID : " + currentPlant.getPlantId());
 
         viewHolder.plantCardView.setOnClickListener(new View.OnClickListener() {
             @Override

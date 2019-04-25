@@ -10,4 +10,6 @@
     <color name="colorBlueBackground">#535288</color>
     <color name="colorBackground">#ffe0b2</color>
     <color name="colorDarkGrey">#9e9e9e</color>
+    <color name="plantInactiveColor">#f44336</color>
+    <color name="plantActiveColor">#4caf50</color>
 </resources>
