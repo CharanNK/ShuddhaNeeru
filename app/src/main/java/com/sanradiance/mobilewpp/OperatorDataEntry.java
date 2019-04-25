@@ -500,11 +500,9 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         }
 
         volumeDispensed = volumeDispensedEditText.getText().toString();
-        if (Integer.valueOf(volumeDispensed) > Integer.valueOf(plantCapacity)) {
+        if (volumeDispensed.length()<=0) {
             labelVolumeDispensed.setTextColor(Color.RED);
             valuesSetFlag = false;
-            Toast.makeText(getContext(), "Volume dispense value should be less than the plant capacity value", Toast.LENGTH_LONG).show();
-
         } else {
             labelVolumeDispensed.setTextColor(Color.BLACK);
 

@@ -33,7 +33,7 @@
                 android:gravity="center"
                 android:text="@string/nav_header_subtitle"
                 android:textColor="@color/colorBlack"
-                android:textSize="18sp" />
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/monitr_system_tv"
@@ -43,7 +43,7 @@
                 android:gravity="center"
                 android:text="WPP Status Monitoring System"
                 android:textColor="@color/colorBlack"
-                android:textSize="18sp" />
+                android:textSize="19sp" />
         </LinearLayout>
 
         <LinearLayout
