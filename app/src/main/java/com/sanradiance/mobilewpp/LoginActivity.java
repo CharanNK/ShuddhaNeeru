@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             intent.putExtra("userdetails", response.toString());
                             intent.putExtra("mobilenumber",mobileNumber);
                             startActivity(intent);
+                            finish();
                         }else{
                             errorMessage.setVisibility(View.VISIBLE);
                             errorMessage.setText("Not an operator!");

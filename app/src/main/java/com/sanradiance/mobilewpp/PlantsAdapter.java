@@ -68,12 +68,12 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
         final PlantDataModel currentPlant = plantsList.get(position);
 
         Typeface roundsTypeFace = Typeface.createFromAsset(mContext.getAssets(),"fonts/ttrounds.ttf");
-        Typeface robotoMedium = Typeface.createFromAsset(mContext.getAssets(),"fonts/linottesemibold.otf");
+        Typeface linottesemibold = Typeface.createFromAsset(mContext.getAssets(),"fonts/linottesemibold.otf");
 
         viewHolder.panelIdTextView.setTypeface(roundsTypeFace);
         viewHolder.panelIdTextView.setText("Panel ID : " + currentPlant.getPanelId());
 
-        viewHolder.plantAddressTextView.setTypeface(robotoMedium);
+        viewHolder.plantAddressTextView.setTypeface(linottesemibold);
         String completeAddress = currentPlant.getVillage() + ", " + currentPlant.getHabitation() + ", \n" + currentPlant.getPanchayat()
                 + ", " + currentPlant.getTaluk() + ", \n" + currentPlant.getDistrict();
         viewHolder.plantAddressTextView.setText(completeAddress);

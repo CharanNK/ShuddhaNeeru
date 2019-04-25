@@ -162,6 +162,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                     Intent intent = new Intent(VerifyOTPActivity.this, OperatorDashboardActivity.class);
                     intent.putExtra("userdetails", userDetailsString);
                     startActivity(intent);
+                    finish();
                 } else if (fullOTP.length() < 1) {
                     Toast.makeText(getApplicationContext(), "Please enter verification code", Toast.LENGTH_SHORT).show();
                 } else {

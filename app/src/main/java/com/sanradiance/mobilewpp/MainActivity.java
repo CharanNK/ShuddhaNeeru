@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dashboardsButton = findViewById(R.id.dashboards_button);
 
         //custom font typeface
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/zcoolfont.ttf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/linottesemibold.otf");
         monitoringSysTextView.setTypeface(typeface);
         govtDeptTextView.setTypeface(typeface);
 
