@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {
-                Toast.makeText(MainActivity.this, "Okay button clicked!!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,Dashboard.class);
+                startActivity(intent);
             }
         }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override

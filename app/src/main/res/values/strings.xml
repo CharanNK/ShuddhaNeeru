@@ -29,14 +29,14 @@
     <string name="plantbreakdown">Plant break-down</string>
     <string name="plant_id">Plant ID : </string>
     <string name="electricity_meter">Electricity Meter (KWH / Units) : </string>
-    
-    
+<string name="showdata">Show data</string>
+
     <string-array name="voltage_array">
         <item>&lt;180V</item>
         <item>180-230V</item>
         <item>&gt;230V</item>
     </string-array>
-    
+
     <string-array name="rw_tank_level">
         <item>Low</item>
         <item>Half</item>
