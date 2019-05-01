@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -119,7 +120,7 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
 
                             activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, operatorDataEntry).addToBackStack(null).commit();
                         } else {
-                            Log.d("testing", "true");
+                            /*Log.d("testing", "true");
 //                            dialogInterface.dismiss();
                             alertDialog.dismiss();
                             final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -157,7 +158,16 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.ViewHolder
                                         }
                                     });
                             final AlertDialog alert = builder.create();
-                            alert.show();
+                            alert.show();*/
+
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("plant_id",currentPlant.getId());
+                            bundle.putString("accessToken", userDetail.getAccessToken());
+
+                            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                            PlantFailureFragment plantFailureFragment = new PlantFailureFragment();
+                            plantFailureFragment.setArguments(bundle);
+                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, plantFailureFragment).addToBackStack(null).commit();
                         }
                     }
                 }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

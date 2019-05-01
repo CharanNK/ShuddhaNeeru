@@ -23,6 +23,11 @@
     <string name="twtl">TW Tank Level : </string>
     <string name="volume_disposed">Volume dispensed (Ltr) : </string>
     <string name="twtds">TW TDS(PPM) : </string>
+    <string name="failurelabel">Failure reason : </string>
+    <string name="nowater">No Water</string>
+    <string name="nopower">No Power</string>
+    <string name="plantbreakdown">Plant break-down</string>
+    <string name="plant_id">Plant ID : </string>
     <string name="electricity_meter">Electricity Meter (KWH / Units) : </string>
     
     
