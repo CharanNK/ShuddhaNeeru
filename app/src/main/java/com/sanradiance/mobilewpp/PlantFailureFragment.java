@@ -72,14 +72,9 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
     ImageView volumeDispensedCamera;
     Button submitButton;
 
-    final String CONSTANT_LOW = "LOW";
-    final String CONSTANT_HALF = "HALF";
-    final String CONSTANT_FULL = "FULL";
-    final String CONSTANT_NOPOWER = "no_power";
-    final String CONSTANT_NOWATER = "no_water";
-    final String CONSTANT_BREAKDOWN = "break_down";
-
     int plantId, volumeDispensedImageId;
+
+    ConstantValues constantValues = new ConstantValues();
 
     int CAPTURE_IMAGE = 1000;
     private Uri fileUri;
@@ -234,32 +229,32 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
         Log.d("clicked item", String.valueOf(view.getId()));
         switch (view.getId()) {
             case R.id.rwtank_level1:
-                rwTankLevel = CONSTANT_LOW;
+                rwTankLevel = constantValues.CONSTANT_LOW;
                 modifyButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
                 enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
                 break;
             case R.id.rwtank_level2:
-                rwTankLevel = CONSTANT_HALF;
+                rwTankLevel = constantValues.CONSTANT_HALF;
                 modifyButtons(rwTankLevelHalf, rwTankLevelLow, rwTankLevelFull);
                 enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
                 break;
             case R.id.rwtank_level3:
-                rwTankLevel = CONSTANT_FULL;
+                rwTankLevel = constantValues.CONSTANT_FULL;
                 modifyButtons(rwTankLevelFull, rwTankLevelLow, rwTankLevelHalf);
                 enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
                 break;
             case R.id.twtanklevel1:
-                twTankLevel = CONSTANT_LOW;
+                twTankLevel = constantValues.CONSTANT_LOW;
                 modifyButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
                 volumeDispensedEditText.setEnabled(true);
                 break;
             case R.id.twtanklevel2:
-                twTankLevel = CONSTANT_HALF;
+                twTankLevel = constantValues.CONSTANT_HALF;
                 modifyButtons(twTankLevelHalf, twTankLevelLow, twTankLevelFull);
                 volumeDispensedEditText.setEnabled(true);
                 break;
             case R.id.twtanklevel3:
-                twTankLevel = CONSTANT_FULL;
+                twTankLevel = constantValues.CONSTANT_FULL;
                 modifyButtons(twTankLevelFull, twTankLevelLow, twTankLevelHalf);
                 volumeDispensedEditText.setEnabled(true);
                 break;
