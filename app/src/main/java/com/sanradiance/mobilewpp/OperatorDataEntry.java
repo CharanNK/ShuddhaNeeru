@@ -560,6 +560,8 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, dataUploadURL, paramJson, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    Toast.makeText(getContext(), response.toString(), Toast.LENGTH_LONG).show();
+
                     Log.d("Response", response.toString());
                 }
             }, new Response.ErrorListener() {
@@ -595,6 +597,9 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                     params.put("Authorization", "Bearer " + accessToken);
                     return params;
                 }
+
+
+
             };
             RequestQueue requestQueue = Volley.newRequestQueue(getContext());
             requestQueue.add(jsonObjectRequest);

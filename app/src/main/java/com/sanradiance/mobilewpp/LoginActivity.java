@@ -39,6 +39,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -47,13 +48,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText phoneNumberField, passwordField;
     TextView errorMessage;
     Button loginButton;
+String dateString;
 
     private static String LOGIN_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/login";
+    final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/count/details";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        long date = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        dateString = sdf.format(date);
 
         phoneNumberField = findViewById(R.id.phoneNumberField);
         passwordField = findViewById(R.id.passwordField);
@@ -124,9 +131,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             intent.putExtra("mobilenumber",mobileNumber);
                             startActivity(intent);
                             finish();
+                        }else if(accountType.contains("admin")) {
+                            Intent intent = new Intent(LoginActivity.this, Dashboard.class);
+                            intent.putExtra("userdetails", response.toString());
+                            intent.putExtra("mobilenumber",mobileNumber);
+                            startActivity(intent);
+
+                            finish();
                         }else{
                             errorMessage.setVisibility(View.VISIBLE);
-                            errorMessage.setText("Not an operator!");
+                            errorMessage.setText("Not an member!");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

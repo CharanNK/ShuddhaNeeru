@@ -141,9 +141,11 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
                         break;
                     case R.id.radio_nowater:
                         failureReason = "no_water";
+                        enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
                         break;
                     case R.id.radio_breakdown:
                         failureReason = "break_down";
+                        enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
                         break;
                 }
 //                enableButtons(rwTankLevelLow,rwTankLevelHalf,rwTankLevelFull);
@@ -282,6 +284,7 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
 
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading data to server..");
+//            progressDialog.setMessage("Please wait..");
             progressDialog.show();
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, dataUploadURL, paramJson, new Response.Listener<JSONObject>() {
