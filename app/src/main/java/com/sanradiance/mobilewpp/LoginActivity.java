@@ -3,7 +3,6 @@ package com.sanradiance.mobilewpp;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -21,27 +19,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -132,12 +116,17 @@ String dateString;
                             startActivity(intent);
                             finish();
                         }else if(accountType.contains("admin")) {
-                            Intent intent = new Intent(LoginActivity.this, Dashboard.class);
+                            Intent intent = new Intent(LoginActivity.this, CommissionerDashboard.class);
                             intent.putExtra("userdetails", response.toString());
                             intent.putExtra("mobilenumber",mobileNumber);
                             startActivity(intent);
 
                             finish();
+                        }else if(accountType.contains("commissioner")){
+                            Intent intent = new Intent(LoginActivity.this,CommissionerDashboard.class);
+                            intent.putExtra("userdetails",response.toString());
+                            intent.putExtra("mobilenumber",mobileNumber);
+                            startActivity(intent);
                         }else{
                             errorMessage.setVisibility(View.VISIBLE);
                             errorMessage.setText("Not an member!");

@@ -24,6 +24,15 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="dasboardStatsValue" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="dasboardStatsTextView" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
     <style name="operatorEditText" parent="Base.V7.Widget.AppCompat.EditText">
         <item name="android:textColor">@color/colorBlack</item>
     </style>
