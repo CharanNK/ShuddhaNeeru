@@ -54,8 +54,8 @@ public class OperatorPlantsFragment extends Fragment {
 
             JSONArray assignedPlantList = loginResponse.getJSONArray("assigned_plant_list");
             for (int i = 0; i < assignedPlantList.length(); i++) {
-                JSONArray plantDetailsArray = assignedPlantList.getJSONObject(i).getJSONArray("plant_details");
-                JSONObject plantDetails = plantDetailsArray.getJSONObject(0);
+//                JSONArray plantDetailsArray = assignedPlantList.getJSONObject(i).getJSONArray("plant_details");
+                JSONObject plantDetails = assignedPlantList.getJSONObject(i);
                 int id = plantDetails.getInt("id");
                 String plantId = plantDetails.getString("plant_id");
                 String installedVendor = plantDetails.getString("installed_by_vendor");

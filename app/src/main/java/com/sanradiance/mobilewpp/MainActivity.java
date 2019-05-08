@@ -42,11 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//
-//        long date = System.currentTimeMillis();
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//      dateString = sdf.format(date);
-
 
 
         monitoringSysTextView = findViewById(R.id.monitr_system_tv); //WPP Status Monitoring System text
@@ -120,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialogInterface, int id) {
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                startActivity(intent);
-
                 }
 
         }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,11 +46,12 @@ import java.util.Map;
 public class Dashboard extends AppCompatActivity {
     TextView today,plantcount,working,notworking,notreported,waterdispense,waterforday;
     PieChart nchart;
-    String dateString;
+    String dateString,accessToken;
+
 //    int plant,notworkingplant,totalworkingplant,reportedplant,dispenseplant,fordayplant;
 
     final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/count/details";
-
+    final String District_URL="https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/district/detail";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +61,13 @@ public class Dashboard extends AppCompatActivity {
         nchart = (PieChart) findViewById(R.id.chart);
         today = (TextView) findViewById(R.id.todaydate);
 
+
         plantcount = (TextView) findViewById(R.id.totalplant);
         working = (TextView) findViewById(R.id.plantworking);
         notworking = (TextView) findViewById(R.id.plantnotworking);
         notreported = (TextView) findViewById(R.id.reporteddata);
         waterdispense = (TextView) findViewById(R.id.volumedispense);
         waterforday = (TextView) findViewById(R.id.volumeperday);
-
-
         long date = System.currentTimeMillis();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -73,7 +76,8 @@ public class Dashboard extends AppCompatActivity {
         updateDate(dateString);
     }
         private void updateDate(String dateString){
-        try {
+
+            try {
             JSONObject paramJson = new JSONObject();
             paramJson.put("date", dateString);
 
@@ -108,7 +112,7 @@ public class Dashboard extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getApplicationContext(), "error:" + error.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
                     Log.d("Error", error.toString());
                 }
             }) {
@@ -117,6 +121,11 @@ public class Dashboard extends AppCompatActivity {
                 protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                     int mStatusCode = response.statusCode;
                     Log.d("Status code", String.valueOf(mStatusCode));
+                    if (mStatusCode == 200) {
+                        if (getFragmentManager().getBackStackEntryCount() != 0) {
+                            getFragmentManager().popBackStack();
+                        }
+                    }
                     return super.parseNetworkResponse(response);
                 }
 
@@ -125,8 +134,12 @@ public class Dashboard extends AppCompatActivity {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("Content-Type", "application/json");
                     params.put("X-Requested-With", "XMLHttpRequest");
+                    params.put("Authorization", "Bearer " + accessToken);
                     return params;
                 }
+
+
+
             };
 
             RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -141,18 +154,20 @@ public class Dashboard extends AppCompatActivity {
 
         ArrayList<PieEntry> entries = new ArrayList<>();
 
-        entries.add(new PieEntry(totalworkingplant, "Total Number of Working Plant"));
-        entries.add(new PieEntry(notworkingplant, "Total Number of Not Working Plant "));
-        entries.add(new PieEntry(reportedplant, "Total Number of Plant Not Reported Data"));
+        entries.add(new PieEntry(totalworkingplant, "Working Plant"));
+        entries.add(new PieEntry(notworkingplant, "Not Working Plant "));
+        entries.add(new PieEntry(reportedplant, "Not Reported Data"));
 
         PieDataSet dataSet = new PieDataSet(entries, "");
         PieData data = new PieData(dataSet);
 
         dataSet.setColors(new int[]{Color.parseColor("#32CD32"), Color.parseColor("#FF0000"), Color.parseColor("#FE9200")});
-        dataSet.setSliceSpace(5f);
+        dataSet.setSliceSpace(3f);
         dataSet.setValueTextSize(10f);
         nchart.setUsePercentValues(false);
-        nchart.animateY(3000, Easing.EasingOption.Linear);
+        nchart.animateXY(1500, 1500);
+
+//        nchart.animateY(3000, Easing.EasingOption.Linear);
 //        nchart.animateY(3000, Easing.EasingOption.EaseOutBack);
         nchart.setDrawHoleEnabled(true);
         nchart.setData(data);
@@ -166,9 +181,9 @@ public class Dashboard extends AppCompatActivity {
         nchart.setRotationEnabled(false);
 
         Legend legend = nchart.getLegend();
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setWordWrapEnabled(true);
         legend.setDrawInside(false);
         legend.setYOffset(10f);
@@ -177,41 +192,3 @@ public class Dashboard extends AppCompatActivity {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//                if (error instanceof NetworkError) {
-//                    Toast.makeText(getApplicationContext(),"Cannot connect to Internet...Please check your connection!",Toast.LENGTH_SHORT).show();
-//                } else if (error instanceof ServerError) {
-//                    Toast.makeText(getApplicationContext(),"The server could not be found. Please try again after some time!!",Toast.LENGTH_SHORT).show();
-//                } else if (error instanceof AuthFailureError) {
-//                    Toast.makeText(getApplicationContext(),"AuthFailureError",Toast.LENGTH_SHORT).show();
-//                } else if (error instanceof ParseError) {
-//                    Toast.makeText(getApplicationContext(),"Parsing error! Please try again after some time!!",Toast.LENGTH_SHORT).show();
-//                } else if (error instanceof NoConnectionError) {
-//                    Toast.makeText(getApplicationContext(),"NoConnectionError",Toast.LENGTH_SHORT).show();
-//                } else if (error instanceof TimeoutError) {
-//                    Toast.makeText(getApplicationContext(),"Connection TimeOut! Please check your internet connection.",Toast.LENGTH_SHORT).show();
-//
-//                }
