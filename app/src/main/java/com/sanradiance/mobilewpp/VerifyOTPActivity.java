@@ -49,11 +49,6 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
         verifyOtpButton = findViewById(R.id.verifyOtpButton);
 
-
-
-
-
-
         otpDigit1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

@@ -31,6 +31,9 @@
     <string name="electricity_meter">Electricity Meter (KWH / Units) : </string>
     <string name="showdata">Show data</string>
     <string name="view">View District</string>
+    <string name="working_plants">Plants Working</string>
+    <string name="not_working_plants">Plants Not Working</string>
+    <string name="not_reported_data">Data Not Reported</string>
 
 
     <string-array name="voltage_array">

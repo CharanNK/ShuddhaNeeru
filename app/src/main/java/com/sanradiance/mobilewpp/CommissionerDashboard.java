@@ -20,6 +20,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,41 +31,51 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommissionerDashboard extends AppCompatActivity {
-    TextView today,plantcount,working,notworking,notreported,waterdispense,waterforday;
+    TextView today, plantcount, working, notworking, notreported, waterdispense, waterforday;
     PieChart nchart;
-    String dateString,accessToken;
-
+    String dateString, accessToken;
+    long date = System.currentTimeMillis();
 
     final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/count/details";
-    final String District_URL="https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/district/detail";
+    final String District_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/district/detail";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commissioner_dashboard);
 
-        nchart = (PieChart) findViewById(R.id.chart);
-        today = (TextView) findViewById(R.id.todaydate);
+        nchart = findViewById(R.id.commissionerpiechart);
+        today = findViewById(R.id.todaydate);
+
+        String userDetails = getIntent().getStringExtra("userdetails");
+
+        try {
+            JSONObject jsonObject = new JSONObject(userDetails);
+            accessToken = jsonObject.getString("access_token");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        plantcount = findViewById(R.id.totalplant);
+        working = findViewById(R.id.plantworking);
+        notworking = findViewById(R.id.plantnotworking);
+        notreported = findViewById(R.id.reporteddata);
+        waterdispense = findViewById(R.id.volumedispense);
+        waterforday = findViewById(R.id.volumeperday);
 
 
-        plantcount = (TextView) findViewById(R.id.totalplant);
-        working = (TextView) findViewById(R.id.plantworking);
-        notworking = (TextView) findViewById(R.id.plantnotworking);
-        notreported = (TextView) findViewById(R.id.reporteddata);
-        waterdispense = (TextView) findViewById(R.id.volumedispense);
-        waterforday = (TextView) findViewById(R.id.volumeperday);
-        long date = System.currentTimeMillis();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         dateString = sdf.format(date);
-        today.setText("Date:" + dateString);
+        today.setText(dateString);
         updateDate(dateString);
     }
-        private void updateDate(String dateString){
 
-            try {
+    private void updateDate(String dateString) {
+
+        try {
             JSONObject paramJson = new JSONObject();
-            paramJson.put("date", dateString);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            paramJson.put("date", sdf.format(date));
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Details_URL, paramJson, new Response.Listener<JSONObject>() {
                 @Override
@@ -97,7 +108,7 @@ public class CommissionerDashboard extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-            Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
                     Log.d("Error", error.toString());
                 }
             }) {
@@ -136,23 +147,29 @@ public class CommissionerDashboard extends AppCompatActivity {
 
         ArrayList<PieEntry> entries = new ArrayList<>();
 
-        entries.add(new PieEntry(totalworkingplant, "Working Plant"));
-        entries.add(new PieEntry(notworkingplant, "Not Working Plant "));
-        entries.add(new PieEntry(reportedplant, "Not Reported Data"));
+        entries.add(new PieEntry(totalworkingplant, "Plants Working"));
+        entries.add(new PieEntry(notworkingplant,"Plants Not Working"));
+        entries.add(new PieEntry(reportedplant,"Data Not Reported"));
 
         PieDataSet dataSet = new PieDataSet(entries, "");
-        PieData data = new PieData(dataSet);
+        PieData pieData = new PieData(dataSet);
 
-        dataSet.setColors(new int[]{Color.parseColor("#32CD32"), Color.parseColor("#FF0000"), Color.parseColor("#FE9200")});
+
+        dataSet.setColors(new int[]{Color.parseColor("#4caf50"), Color.parseColor("#f44336"), Color.parseColor("#ff9800")});
         dataSet.setSliceSpace(3f);
         dataSet.setValueTextSize(10f);
         nchart.setUsePercentValues(false);
         nchart.animateXY(1500, 1500);
 
+//        pieData.setValueFormatter(new PercentFormatter());
+
+        nchart.setCenterText("Plant\nStatistics");
+        nchart.setCenterTextSize(20f);
+
 //        nchart.animateY(3000, Easing.EasingOption.Linear);
 //        nchart.animateY(3000, Easing.EasingOption.EaseOutBack);
         nchart.setDrawHoleEnabled(true);
-        nchart.setData(data);
+        nchart.setData(pieData);
         nchart.setDrawSliceText(false); // To remove slice text
 
         nchart.setDrawMarkers(false); // To remove markers when click
@@ -162,13 +179,17 @@ public class CommissionerDashboard extends AppCompatActivity {
         nchart.setTouchEnabled(false);
         nchart.setRotationEnabled(false);
 
+        nchart.setUsePercentValues(true);
+
         Legend legend = nchart.getLegend();
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setWordWrapEnabled(true);
+        legend.setTextSize(11);
+        legend.setXEntrySpace(5f);
         legend.setDrawInside(false);
-        legend.setYOffset(10f);
+//        legend.setYOffset(10f);
     }
 //end pie chart code
 }
