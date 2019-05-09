@@ -43,22 +43,22 @@ public class CommissionerDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commissioner_dashboard);
 
-//        nchart = (PieChart) findViewById(R.id.chart);
-//        today = (TextView) findViewById(R.id.todaydate);
-//
-//
-//        plantcount = (TextView) findViewById(R.id.totalplant);
-//        working = (TextView) findViewById(R.id.plantworking);
-//        notworking = (TextView) findViewById(R.id.plantnotworking);
-//        notreported = (TextView) findViewById(R.id.reporteddata);
-//        waterdispense = (TextView) findViewById(R.id.volumedispense);
-//        waterforday = (TextView) findViewById(R.id.volumeperday);
+        nchart = (PieChart) findViewById(R.id.chart);
+        today = (TextView) findViewById(R.id.todaydate);
+
+
+        plantcount = (TextView) findViewById(R.id.totalplant);
+        working = (TextView) findViewById(R.id.plantworking);
+        notworking = (TextView) findViewById(R.id.plantnotworking);
+        notreported = (TextView) findViewById(R.id.reporteddata);
+        waterdispense = (TextView) findViewById(R.id.volumedispense);
+        waterforday = (TextView) findViewById(R.id.volumeperday);
         long date = System.currentTimeMillis();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         dateString = sdf.format(date);
-//        today.setText("Date:" + dateString);
-//        updateDate(dateString);
+        today.setText("Date:" + dateString);
+        updateDate(dateString);
     }
         private void updateDate(String dateString){
 
@@ -81,14 +81,14 @@ public class CommissionerDashboard extends AppCompatActivity {
                         int dispenseplant = Integer.valueOf(employee.getInt("total_water_dispensed_cumulative"));
                         int fordayplant = Integer.valueOf(employee.getInt("total_water_dispensed_for_the_day"));
 
-//                        setInitValues(totalworkingplant, notworkingplant, reportedplant);
+                        setInitValues(totalworkingplant, notworkingplant, reportedplant);
 
-//                        plantcount.setText(String.valueOf(plant));
-//                        working.setText(String.valueOf(totalworkingplant));
-//                        notworking.setText(String.valueOf(notworkingplant));
-//                        notreported.setText(String.valueOf(reportedplant));
-//                        waterdispense.setText(String.valueOf(dispenseplant));
-//                        waterforday.setText(String.valueOf(fordayplant));
+                        plantcount.setText(String.valueOf(plant));
+                        working.setText(String.valueOf(totalworkingplant));
+                        notworking.setText(String.valueOf(notworkingplant));
+                        notreported.setText(String.valueOf(reportedplant));
+                        waterdispense.setText(String.valueOf(dispenseplant));
+                        waterforday.setText(String.valueOf(fordayplant));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -122,9 +122,6 @@ public class CommissionerDashboard extends AppCompatActivity {
                     params.put("Authorization", "Bearer " + accessToken);
                     return params;
                 }
-
-
-
             };
 
             RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -135,44 +132,44 @@ public class CommissionerDashboard extends AppCompatActivity {
     }
 
     //start pie chart code
-//    private void setInitValues(int totalworkingplant, int notworkingplant, int reportedplant) {
-//
-//        ArrayList<PieEntry> entries = new ArrayList<>();
-//
-//        entries.add(new PieEntry(totalworkingplant, "Working Plant"));
-//        entries.add(new PieEntry(notworkingplant, "Not Working Plant "));
-//        entries.add(new PieEntry(reportedplant, "Not Reported Data"));
-//
-//        PieDataSet dataSet = new PieDataSet(entries, "");
-//        PieData data = new PieData(dataSet);
-//
-//        dataSet.setColors(new int[]{Color.parseColor("#32CD32"), Color.parseColor("#FF0000"), Color.parseColor("#FE9200")});
-//        dataSet.setSliceSpace(3f);
-//        dataSet.setValueTextSize(10f);
-//        nchart.setUsePercentValues(false);
-//        nchart.animateXY(1500, 1500);
-//
-////        nchart.animateY(3000, Easing.EasingOption.Linear);
-////        nchart.animateY(3000, Easing.EasingOption.EaseOutBack);
-//        nchart.setDrawHoleEnabled(true);
-//        nchart.setData(data);
-//        nchart.setDrawSliceText(false); // To remove slice text
-//
-//        nchart.setDrawMarkers(false); // To remove markers when click
-//        nchart.setDrawEntryLabels(false); // To remove labels from piece of pie
-//        nchart.getDescription().setEnabled(false);
-//        nchart.getData().setDrawValues(false);
-//        nchart.setTouchEnabled(false);
-//        nchart.setRotationEnabled(false);
-//
-//        Legend legend = nchart.getLegend();
-//        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-//        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-//        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-//        legend.setWordWrapEnabled(true);
-//        legend.setDrawInside(false);
-//        legend.setYOffset(10f);
-//    }
+    private void setInitValues(int totalworkingplant, int notworkingplant, int reportedplant) {
+
+        ArrayList<PieEntry> entries = new ArrayList<>();
+
+        entries.add(new PieEntry(totalworkingplant, "Working Plant"));
+        entries.add(new PieEntry(notworkingplant, "Not Working Plant "));
+        entries.add(new PieEntry(reportedplant, "Not Reported Data"));
+
+        PieDataSet dataSet = new PieDataSet(entries, "");
+        PieData data = new PieData(dataSet);
+
+        dataSet.setColors(new int[]{Color.parseColor("#32CD32"), Color.parseColor("#FF0000"), Color.parseColor("#FE9200")});
+        dataSet.setSliceSpace(3f);
+        dataSet.setValueTextSize(10f);
+        nchart.setUsePercentValues(false);
+        nchart.animateXY(1500, 1500);
+
+//        nchart.animateY(3000, Easing.EasingOption.Linear);
+//        nchart.animateY(3000, Easing.EasingOption.EaseOutBack);
+        nchart.setDrawHoleEnabled(true);
+        nchart.setData(data);
+        nchart.setDrawSliceText(false); // To remove slice text
+
+        nchart.setDrawMarkers(false); // To remove markers when click
+        nchart.setDrawEntryLabels(false); // To remove labels from piece of pie
+        nchart.getDescription().setEnabled(false);
+        nchart.getData().setDrawValues(false);
+        nchart.setTouchEnabled(false);
+        nchart.setRotationEnabled(false);
+
+        Legend legend = nchart.getLegend();
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setWordWrapEnabled(true);
+        legend.setDrawInside(false);
+        legend.setYOffset(10f);
+    }
 //end pie chart code
 }
 

@@ -597,7 +597,6 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("Content-Type", "application/json");
                     params.put("X-Requested-With", "XMLHttpRequest");
-                    params.put("Authorization", "Bearer " + accessToken);
                     return params;
                 }
 
