@@ -1,9 +1,13 @@
 package com.sanradiance.mobilewpp;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +25,9 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.google.gson.JsonArray;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,14 +36,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommissionerDashboard extends AppCompatActivity {
+public class CommissionerDashboard extends AppCompatActivity implements View.OnClickListener {
     TextView today, plantcount, working, notworking, notreported, waterdispense, waterforday;
     PieChart nchart;
     String dateString, accessToken;
     long date = System.currentTimeMillis();
+    LinearLayout plantsNotReported;
+
+    AlertDialog alertDialog;
+
+    String notReportedPlantDetails;
+
+    Boolean serverResponse = false;
 
     final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/count/details";
-    final String District_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/district/detail";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +75,17 @@ public class CommissionerDashboard extends AppCompatActivity {
         waterdispense = findViewById(R.id.volumedispense);
         waterforday = findViewById(R.id.volumeperday);
 
+        plantsNotReported = findViewById(R.id.plantsNotReported);
+
+        plantsNotReported.setOnClickListener(this);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         dateString = sdf.format(date);
         today.setText(dateString);
-        updateDate(dateString);
+        updateFields();
     }
 
-    private void updateDate(String dateString) {
+    private void updateFields() {
 
         try {
             JSONObject paramJson = new JSONObject();
@@ -81,6 +96,7 @@ public class CommissionerDashboard extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.d("Response", response.toString());
+                    notReportedPlantDetails = response.toString();
                     try {
                         JSONObject obj = new JSONObject(String.valueOf(response));
                         JSONObject employee = obj.getJSONObject("data");
@@ -118,9 +134,10 @@ public class CommissionerDashboard extends AppCompatActivity {
                     int mStatusCode = response.statusCode;
                     Log.d("Status code", String.valueOf(mStatusCode));
                     if (mStatusCode == 200) {
-                        if (getFragmentManager().getBackStackEntryCount() != 0) {
-                            getFragmentManager().popBackStack();
-                        }
+//                        if (getFragmentManager().getBackStackEntryCount() != 0) {
+//                            getFragmentManager().popBackStack();
+//                        }
+                        serverResponse = true;
                     }
                     return super.parseNetworkResponse(response);
                 }
@@ -142,7 +159,7 @@ public class CommissionerDashboard extends AppCompatActivity {
         }
     }
 
-    //start pie chart code
+//    start pie chart code
     private void setInitValues(int totalworkingplant, int notworkingplant, int reportedplant) {
 
         ArrayList<PieEntry> entries = new ArrayList<>();
@@ -189,7 +206,35 @@ public class CommissionerDashboard extends AppCompatActivity {
         legend.setTextSize(11);
         legend.setXEntrySpace(5f);
         legend.setDrawInside(false);
-//        legend.setYOffset(10f);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(serverResponse){
+            switch (view.getId()){
+                case R.id.plantsNotReported :
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CommissionerDashboard.this);
+                    builder.setTitle("Do you want to view not reported plants?");
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("notReportedPlants",notReportedPlantDetails);
+                            PlantNotReportedFragment plantFailureFragment = new PlantNotReportedFragment();
+                            plantFailureFragment.setArguments(bundle);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.commissionercontainer, plantFailureFragment,plantFailureFragment.getClass().getSimpleName()).commit();
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alertDialog.cancel();
+                        }
+                    });
+                    alertDialog = builder.create();
+                    alertDialog.show();
+                    break;
+            }
+        }
     }
 //end pie chart code
 }

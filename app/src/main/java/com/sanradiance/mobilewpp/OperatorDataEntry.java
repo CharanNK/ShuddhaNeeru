@@ -2,8 +2,11 @@ package com.sanradiance.mobilewpp;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -48,6 +51,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -79,6 +83,14 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
     int rwTankLevelImageId, rwFlowRateImageId, twFlowRateImageId, volumeDispensedImageId, twTDSImageId, electricityMeterImageId;
 
     String plantCapacity, plantVoltage, rwTankLevel, rwFlowRate, twFlowRate, twTankLevel, volumeDispensed, twTDS, electricityMeter;
+
+    Context mContext;
+
+    @Override
+    public void onAttach(Context context) {
+        mContext = context;
+        super.onAttach(context);
+    }
 
     int plantId;
 
@@ -563,14 +575,20 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, dataUploadURL, paramJson, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    Toast.makeText(getContext(), response.toString(), Toast.LENGTH_LONG).show();
-
+                    try {
+                        String responseMessage = response.getString("message");
+                        Toast.makeText(mContext, responseMessage, Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     Log.d("Response", response.toString());
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d("Error", error.toString());
+                    Toast.makeText(getContext(),"Oops! Something went wrong.",Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
             }) {
 
@@ -597,6 +615,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("Content-Type", "application/json");
                     params.put("X-Requested-With", "XMLHttpRequest");
+                    params.put("Authorization", "Bearer " + accessToken);
                     return params;
                 }
 
@@ -710,6 +729,17 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
         final int[] imageId = new int[1];
         File imageFile = new File(imageFilePath);
+        int compressionRatio = 25; //1 == originalImage, 2 = 50% compression, 4=25% compress
+
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile (imageFile.getPath ());
+            bitmap.compress (Bitmap.CompressFormat.JPEG, compressionRatio, new FileOutputStream(imageFile));
+        }
+        catch (Throwable t) {
+            Log.e("ERROR", "Error compressing file." + t.toString ());
+            t.printStackTrace ();
+        }
+
         Log.d("imageName", imageFile.getName());
         String mimeType = URLConnection.guessContentTypeFromName(imageFile.getName());
         RequestBody requestBody = RequestBody.create(MediaType.parse(mimeType), imageFile);

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/commissionercontainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    tools:context=".CommissionerDashboard">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,30 +34,30 @@
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:cardElevation="8dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:background="@drawable/gradient_total_plants"
+                    android:orientation="vertical"
                     android:padding="5dp">
 
                     <TextView
+                        style="@style/dasboardStatsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/dasboardStatsTextView"
                         android:text="Total Plants" />
 
                     <TextView
                         android:id="@+id/totalplant"
+                        style="@style/dasboardStatsValue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="bottom|right"
-                        style="@style/dasboardStatsValue"
-                        android:textSize="23sp"
-                        android:text="1234567" />
+                        android:text="1234567"
+                        android:textSize="23sp" />
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
@@ -69,30 +70,30 @@
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:cardElevation="8dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:background="@drawable/gradient_plants_working"
+                    android:orientation="vertical"
                     android:padding="5dp">
 
                     <TextView
+                        style="@style/dasboardStatsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/dasboardStatsTextView"
                         android:text="Plants Working" />
 
                     <TextView
                         android:id="@+id/plantworking"
+                        style="@style/dasboardStatsValue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="bottom|right"
-                        style="@style/dasboardStatsValue"
-                        android:textSize="23sp"
-                        android:text="232425" />
+                        android:text="232425"
+                        android:textSize="23sp" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -104,30 +105,30 @@
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:cardElevation="8dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:background="@drawable/gradient_plant_ntworking"
+                    android:orientation="vertical"
                     android:padding="5dp">
 
                     <TextView
+                        style="@style/dasboardStatsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/dasboardStatsTextView"
                         android:text="Plants Not Working" />
 
                     <TextView
                         android:id="@+id/plantnotworking"
+                        style="@style/dasboardStatsValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="bottom|right"
-                        style="@style/dasboardStatsValue"
-                        android:textSize="23sp"
-                        android:text="2332" />
+                        android:text="2332"
+                        android:textSize="23sp" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -142,30 +143,31 @@
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:cardElevation="8dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:cardElevation="8dp">
 
                 <LinearLayout
+                    android:id="@+id/plantsNotReported"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:background="@drawable/gradient_nodata"
+                    android:orientation="vertical"
                     android:padding="5dp">
 
                     <TextView
+                        style="@style/dasboardStatsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/dasboardStatsTextView"
                         android:text="Plants Not Reported" />
 
                     <TextView
                         android:id="@+id/reporteddata"
+                        style="@style/dasboardStatsValue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="bottom|right"
-                        style="@style/dasboardStatsValue"
-                        android:textSize="23sp"
-                        android:text="24325" />
+                        android:text="24325"
+                        android:textSize="23sp" />
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
@@ -178,20 +180,20 @@
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:cardElevation="8dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:background="@drawable/gradient_total_water"
+                    android:orientation="vertical"
                     android:padding="5dp">
 
                     <TextView
+                        style="@style/dasboardStatsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/dasboardStatsTextView"
                         android:text="Total Water Dispensed (lts)" />
 
                     <TextView
@@ -213,35 +215,36 @@
             <android.support.v7.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:cardElevation="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/gradient_total_plants"
-                android:layout_weight="1">
+                app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:background="@drawable/gradient_water_today"
+                    android:orientation="vertical"
                     android:padding="5dp">
 
                     <TextView
+                        style="@style/dasboardStatsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/dasboardStatsTextView"
                         android:text="Water Dispensed(lts) today" />
 
                     <TextView
                         android:id="@+id/volumeperday"
+                        style="@style/dasboardStatsValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|right"
-                        style="@style/dasboardStatsValue"
-                        android:textSize="23sp"
-                        android:text="29289" />
+                        android:text="29289"
+                        android:textSize="23sp" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
+
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/commissionerpiechart"
             android:layout_width="match_parent"
@@ -253,7 +256,7 @@
         </com.github.mikephil.charting.charts.PieChart>
     </LinearLayout>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
 
 
 

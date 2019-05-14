@@ -19,6 +19,29 @@ public class PlantDataModel {
     public String createdAt;
     public String updatedAt;
 
+    public String operatorName;
+    public Long operatorMobile;
+
+
+    public void setOperatorMobile(Long operatorMobile) {
+        this.operatorMobile = operatorMobile;
+    }
+
+
+
+    public String getOperatorName() {
+        return operatorName;
+    }
+
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
+    }
+
+    public Long getOperatorMobile() {
+        return operatorMobile;
+    }
+
+
     public int getId() {
         return id;
     }
@@ -155,7 +178,7 @@ public class PlantDataModel {
         this.updatedAt = updatedAt;
     }
 
-    public PlantDataModel(int id,String plantId, String vendorInstalled, String district, String taluk, String panchayat, String village, String habitation, String plantCapacityLPH, String eControllerMake, String panelId, String latitude, String longitude, String mobileNumber, String serviceProvider, String createdAt, String updatedAt) {
+    public PlantDataModel(int id, String plantId, String vendorInstalled, String district, String taluk, String panchayat, String village, String habitation, String plantCapacityLPH, String eControllerMake, String panelId, String latitude, String longitude, String mobileNumber, String serviceProvider, String createdAt, String updatedAt) {
         this.id = id;
         this.plantId = plantId;
         this.vendorInstalled = vendorInstalled;
@@ -173,5 +196,13 @@ public class PlantDataModel {
         this.serviceProvider = serviceProvider;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public PlantDataModel(int id, String plantId, String district, String operatorName, Long operatorMobile) {
+        this.id = id;
+        this.plantId = plantId;
+        this.district = district;
+        this.operatorName = operatorName;
+        this.operatorMobile = operatorMobile;
     }
 }
