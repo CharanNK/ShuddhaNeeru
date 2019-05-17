@@ -1,7 +1,10 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.LoginClasses;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +23,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sanradiance.mobilewpp.CommissionerViews.CommissionerDashboard;
+import com.sanradiance.mobilewpp.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +37,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText phoneNumberField, passwordField;
     TextView errorMessage;
     Button loginButton;
+
+
 String dateString;
 
     private static String LOGIN_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/login";
@@ -49,7 +56,6 @@ String dateString;
         phoneNumberField = findViewById(R.id.phoneNumberField);
         passwordField = findViewById(R.id.passwordField);
         phoneNumberField.setOnClickListener(this);
-
 
         errorMessage = findViewById(R.id.errorMessage);
 

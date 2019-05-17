@@ -1,4 +1,4 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.DataModels;
 
 public class UserDataModel {
     public String accessToken;

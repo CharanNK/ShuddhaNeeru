@@ -1,4 +1,4 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.CommissionerViews;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -35,14 +35,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.sanradiance.mobilewpp.ConstantValues;
+import com.sanradiance.mobilewpp.ImageUploadHelpers.APIUtils;
+import com.sanradiance.mobilewpp.ImageUploadHelpers.FileService;
+import com.sanradiance.mobilewpp.ImageUploadHelpers.ServerResponse;
+import com.sanradiance.mobilewpp.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;

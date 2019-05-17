@@ -1,7 +1,6 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.LoginClasses;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,12 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONObject;
+import com.sanradiance.mobilewpp.OperatorViews.OperatorDashboardActivity;
+import com.sanradiance.mobilewpp.R;
 
 public class VerifyOTPActivity extends AppCompatActivity {
 

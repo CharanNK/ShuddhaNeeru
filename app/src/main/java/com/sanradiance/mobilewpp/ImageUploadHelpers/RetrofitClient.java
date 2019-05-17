@@ -1,4 +1,4 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.ImageUploadHelpers;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

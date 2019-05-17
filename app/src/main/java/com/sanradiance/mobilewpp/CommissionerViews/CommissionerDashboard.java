@@ -1,4 +1,4 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.CommissionerViews;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -24,10 +24,8 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.google.gson.JsonArray;
+import com.sanradiance.mobilewpp.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.ImageUploadHelpers;
 
 
 import okhttp3.MultipartBody;

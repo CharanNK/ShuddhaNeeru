@@ -1,4 +1,4 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.CommissionerViews;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.sanradiance.mobilewpp.DataModels.PlantDataModel;
+import com.sanradiance.mobilewpp.R;
 
 import java.util.List;
 

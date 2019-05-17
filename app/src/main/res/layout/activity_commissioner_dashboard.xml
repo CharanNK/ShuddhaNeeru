@@ -6,7 +6,7 @@
     android:id="@+id/commissionercontainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CommissionerDashboard">
+    tools:context=".CommissionerViews.CommissionerDashboard">
 
     <LinearLayout
         android:layout_width="match_parent"

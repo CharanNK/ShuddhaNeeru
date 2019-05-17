@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/container"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".OperatorDashboardActivity"
+    tools:context=".OperatorViews.OperatorDashboardActivity"
     tools:showIn="@layout/app_bar_operator_dashboard">
 
 </android.support.constraint.ConstraintLayout>

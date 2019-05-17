@@ -1,4 +1,4 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.ImageUploadHelpers;
 
 public class ServerResponse {
     String message;

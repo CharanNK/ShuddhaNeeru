@@ -1,6 +1,5 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.OperatorViews;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,8 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import com.sanradiance.mobilewpp.DataModels.PlantDataModel;
+import com.sanradiance.mobilewpp.DataModels.UserDataModel;
+import com.sanradiance.mobilewpp.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +26,7 @@ public class OperatorPlantsFragment extends Fragment {
     public RecyclerView plantRecycler;
     public List<PlantDataModel> plantsList;
 
-    PlantsAdapter plantsAdapter;
+    OperatorPlantsAdapter operatorPlantsAdapter;
     String bearerToken;
     UserDataModel userDetail;
 
@@ -90,9 +91,9 @@ public class OperatorPlantsFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         plantRecycler.setLayoutManager(linearLayoutManager);
 
-        plantsAdapter = new PlantsAdapter(this.getContext(),plantsList,userDetail);
+        operatorPlantsAdapter = new OperatorPlantsAdapter(this.getContext(),plantsList,userDetail);
 
-        plantRecycler.setAdapter(plantsAdapter);
+        plantRecycler.setAdapter(operatorPlantsAdapter);
 
         return view;
     }

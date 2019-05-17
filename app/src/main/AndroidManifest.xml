@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -15,7 +17,7 @@
         android:roundIcon="@drawable/logo_government"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CommissionerDashboard" />
+        <activity android:name=".CommissionerViews.CommissionerDashboard" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +26,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".VerifyOTPActivity" />
+        <activity android:name=".LoginClasses.LoginActivity" />
+        <activity android:name=".LoginClasses.VerifyOTPActivity" />
         <activity
-            android:name=".OperatorDashboardActivity"
+            android:name=".OperatorViews.OperatorDashboardActivity"
             android:label="@string/title_activity_operator_dashboard"
             android:theme="@style/AppTheme" />
     </application>

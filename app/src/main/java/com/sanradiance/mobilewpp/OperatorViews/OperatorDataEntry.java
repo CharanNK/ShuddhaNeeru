@@ -1,4 +1,4 @@
-package com.sanradiance.mobilewpp;
+package com.sanradiance.mobilewpp.OperatorViews;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -46,6 +46,10 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.sanradiance.mobilewpp.ImageUploadHelpers.APIUtils;
+import com.sanradiance.mobilewpp.ImageUploadHelpers.FileService;
+import com.sanradiance.mobilewpp.ImageUploadHelpers.ServerResponse;
+import com.sanradiance.mobilewpp.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
