@@ -4,10 +4,12 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,6 +44,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -70,6 +76,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.app.Activity.RESULT_OK;
 
 public class OperatorDataEntry extends Fragment implements View.OnClickListener {
@@ -84,7 +91,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
     TextView operatorNameTv, operatorIdTv, operatorMobileNumberTv, plantLatLongTv;
     ImageView rwFlowRateCamera, twFlowRateCamera, volumeDispensedCamera, twTDSCamera, electricityMeterCamera;
 
-    int rwTankLevelImageId, rwFlowRateImageId, twFlowRateImageId, volumeDispensedImageId, twTDSImageId, electricityMeterImageId;
+    int  rwFlowRateImageId, twFlowRateImageId, volumeDispensedImageId, twTDSImageId, electricityMeterImageId;
 
     String plantCapacity, plantVoltage, rwTankLevel, rwFlowRate, twFlowRate, twTankLevel, volumeDispensed, twTDS, electricityMeter;
 
@@ -113,6 +120,9 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
     private String currentImagePath;
 
+
+    private FusedLocationProviderClient locationProviderClient;
+
     final int currentItem = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
@@ -123,6 +133,13 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+
+        requestPermission();
+
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        getLocations();
+//        Log.d("latitudevalue",latitude);
 
         plantCapacity = plantVoltage = rwTankLevel = rwFlowRate = twFlowRate = twTankLevel = volumeDispensed = twTDS = electricityMeter = "";
 
@@ -192,14 +209,14 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         String operatorId = String.valueOf(this.getArguments().getInt("operatorId"));
         Long operatorMobile = Long.valueOf(this.getArguments().getLong("operatorMobile"));
         String capacity = String.valueOf(this.getArguments().getString("plantCapacity"));
-        String latitude = String.valueOf(this.getArguments().getString("plantLatitude"));
-        String longitude = String.valueOf(this.getArguments().getString("plantLongitude"));
+//        String latitude = String.valueOf(this.getArguments().getString("plantLatitude"));
+//        String longitude = String.valueOf(this.getArguments().getString("plantLongitude"));
         plantId = Integer.valueOf(this.getArguments().getInt("plantId"));
         plantCapacity = capacity;
         accessToken = userAccessToken;
 
         //set InitialValues
-        setInitValues(operatorId,operatorName,operatorMobile,latitude,longitude);
+        setInitValues(operatorId, operatorName, operatorMobile);
 
         //instantiate the file upload Service
         fileService = APIUtils.getFileService();
@@ -233,6 +250,27 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
 
         return view;
+    }
+
+    private void getLocations()
+    {
+        if (ActivityCompat.checkSelfPermission(getActivity(), ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationProviderClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                Log.d(getClass().getName(),"location onSuccess");
+                Log.d(getClass().getName(), String.valueOf(location == null));
+                if (location != null) {
+                    Toast.makeText(getActivity(),"Latitude:"+String.valueOf(location.getLatitude())+"Longitude:"+String.valueOf(location.getLongitude()),Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void requestPermission(){
+        ActivityCompat.requestPermissions(getActivity(),new String[]{ACCESS_FINE_LOCATION},1);
     }
 
     private void initViews() {
@@ -335,13 +373,15 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
     }
 
-    private void setInitValues(String operatorId, String operatorName, Long operatorMobile, String latitude, String longitude) {
+    private void setInitValues(String operatorId, String operatorName, Long operatorMobile) {
         plantCapacityTextView.setText(plantCapacity);
         initializeFlowLevels(plantCapacity);
         operatorIdTv.setText(operatorId);
         operatorNameTv.setText(operatorName);
         operatorMobileNumberTv.setText(operatorMobile.toString());
-        plantLatLongTv.setText(latitude + "," + longitude);
+//        Log.d("latitudeValue", String.valueOf(latitude));
+//        Log.d("longitudeValue", String.valueOf(longitude));
+//        plantLatLongTv.setText(latitude + "," + longitude);
     }
 
     private void initializeFlowLevels(String plantCapacity) {
