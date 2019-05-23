@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -49,6 +51,7 @@ import com.sanradiance.mobilewpp.R;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -422,7 +425,18 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
 
     private void uploadMedia(String imageFilePath) {
 
+        final int[] imageId = new int[1];
         File imageFile = new File(imageFilePath);
+        int compressionRatio = 25; //1 == originalImage, 2 = 50% compression, 4=25% compress
+
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile (imageFile.getPath ());
+            bitmap.compress (Bitmap.CompressFormat.JPEG, compressionRatio, new FileOutputStream(imageFile));
+        }
+        catch (Throwable t) {
+            Log.e("ERROR", "Error compressing file." + t.toString ());
+            t.printStackTrace ();
+        }
         Log.d("imageName", imageFile.getName());
         String mimeType = URLConnection.guessContentTypeFromName(imageFile.getName());
         RequestBody requestBody = RequestBody.create(MediaType.parse(mimeType), imageFile);

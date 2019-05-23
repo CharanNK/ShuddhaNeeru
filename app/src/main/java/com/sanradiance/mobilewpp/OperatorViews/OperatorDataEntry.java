@@ -264,6 +264,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                 Log.d(getClass().getName(), String.valueOf(location == null));
                 if (location != null) {
                     Toast.makeText(getActivity(),"Latitude:"+String.valueOf(location.getLatitude())+"Longitude:"+String.valueOf(location.getLongitude()),Toast.LENGTH_LONG).show();
+                    plantLatLongTv.setText(String.valueOf(location.getLatitude())+ "" +String.valueOf(location.getLongitude()));
                 }
             }
         });
