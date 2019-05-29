@@ -154,7 +154,9 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
                         enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
                         break;
                 }
-//                enableButtons(rwTankLevelLow,rwTankLevelHalf,rwTankLevelFull);
+             // enableButtons(rwTankLevelLow,rwTankLevelHalf,rwTankLevelFull);
+              disableButtons(noPowerButton,noWaterButton,plantBreakdownButton);
+
             }
         });
 
@@ -193,6 +195,7 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
             }
         });
 
+       // disableButtons(noPowerButton, noWaterButton, plantBreakdownButton);
 
         disableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
 

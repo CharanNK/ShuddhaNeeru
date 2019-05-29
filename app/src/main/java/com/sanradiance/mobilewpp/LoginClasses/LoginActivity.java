@@ -37,9 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText phoneNumberField, passwordField;
     TextView errorMessage;
     Button loginButton;
-
-
-String dateString;
+    String dateString;
 
     private static String LOGIN_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/login";
     final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/count/details";

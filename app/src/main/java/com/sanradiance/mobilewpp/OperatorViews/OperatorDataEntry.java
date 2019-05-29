@@ -32,6 +32,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -91,7 +93,11 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
     TextView operatorNameTv, operatorIdTv, operatorMobileNumberTv, plantLatLongTv;
     ImageView rwFlowRateCamera, twFlowRateCamera, volumeDispensedCamera, twTDSCamera, electricityMeterCamera;
 
-    int  rwFlowRateImageId, twFlowRateImageId, volumeDispensedImageId, twTDSImageId, electricityMeterImageId;
+    RadioGroup failureRadioGroup,twtdsRadioGroup;
+    RadioButton noPowerButton,twtdsRadioButton;
+    String failureReason;
+
+    int  rwFlowRateImageId=0, twFlowRateImageId=0, volumeDispensedImageId=0, twTDSImageId=0, electricityMeterImageId=0;
 
     String plantCapacity, plantVoltage, rwTankLevel, rwFlowRate, twFlowRate, twTankLevel, volumeDispensed, twTDS, electricityMeter;
 
@@ -148,6 +154,13 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         operatorIdTv = view.findViewById(R.id.operatorid_value);
         operatorMobileNumberTv = view.findViewById(R.id.operatormobile_value);
         plantLatLongTv = view.findViewById(R.id.plant_location);
+
+        failureRadioGroup = view.findViewById(R.id.failure_radiogroup);
+         noPowerButton = view.findViewById(R.id.radio_notapplicable);
+        twtdsRadioGroup = view.findViewById(R.id.twtds_radiogroup);
+        twtdsRadioButton = view.findViewById(R.id.twtds_notapplicable);
+
+
 
         //voltage buttons
         voltageButton1 = view.findViewById(R.id.voltage_button1);
@@ -264,7 +277,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                 Log.d(getClass().getName(), String.valueOf(location == null));
                 if (location != null) {
                     Toast.makeText(getActivity(),"Latitude:"+String.valueOf(location.getLatitude())+"Longitude:"+String.valueOf(location.getLongitude()),Toast.LENGTH_LONG).show();
-                    plantLatLongTv.setText(String.valueOf(location.getLatitude())+ "" +String.valueOf(location.getLongitude()));
+                    plantLatLongTv.setText(String.valueOf(location.getLatitude())+ "," +String.valueOf(location.getLongitude()));
                 }
             }
         });
@@ -282,6 +295,8 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         rwFlowRateSpinner.setEnabled(false);
         rwFlowRateCamera.setEnabled(false);
         rwFlowRateCamera.setImageResource(R.drawable.ic_camera_grey);
+        noPowerButton.setEnabled(false);
+
 
         twFlowRateSpinner.setEnabled(false);
         twFlowRateCamera.setEnabled(false);
@@ -300,6 +315,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         twTdsButton3.setEnabled(false);
         twTDSCamera.setEnabled(false);
         twTDSCamera.setImageResource(R.drawable.ic_camera_grey);
+        twtdsRadioButton.setEnabled(false);
 
         electricityEditText.setEnabled(false);
         electricityMeterCamera.setEnabled(false);
@@ -307,11 +323,50 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
         operatorSubmitButton.setEnabled(false);
 
+
+
+        failureRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                                                         @Override
+             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+              switch (checkedId) {
+                case R.id.radio_notapplicable:
+                    failureReason = "not_applicable";
+                    twFlowRateSpinner.setEnabled(true);
+                    rwFlowRateCamera.setEnabled(false);
+                    rwFlowRateCamera.setImageResource(R.drawable.ic_camera_grey);
+                    noPowerButton.setEnabled(false);
+                    break;
+
+
+                   }
+               }
+        });
+
+
+        twtdsRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch (checkedId) {
+                    case R.id.twtds_notapplicable:
+                        failureReason = "not_applicable";
+                        electricityEditText.setEnabled(true);
+                        twTDSCamera.setEnabled(false);
+                        twTDSCamera.setImageResource(R.drawable.ic_camera_grey);
+                        twtdsRadioButton.setEnabled(false);
+                        break;
+
+
+                }
+            }
+        });
+
         rwFlowRateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(currentItem==i)
                     return;
+              //  twFlowRateSpinner.setEnabled(true);
+                noPowerButton.setEnabled(true);
                 rwFlowRateCamera.setEnabled(true);
                 rwFlowRateCamera.setImageResource(R.drawable.ic_camera);
                 rwFlowRateSpinner.setEnabled(false);
@@ -461,16 +516,22 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             case R.id.twtds_button1:
                 modifyButtons(view, R.id.twtds_button1, R.id.twtds_button2, R.id.twtds_button3);
                 twTDS = twTdsButton1.getText().toString();
+               // electricityEditText.setEnabled(true);
+                twtdsRadioButton.setEnabled(true);
                 enableCamera(twTDSCamera);
                 break;
             case R.id.twtds_button2:
                 modifyButtons(view, R.id.twtds_button2, R.id.twtds_button1, R.id.twtds_button3);
                 twTDS = twTdsButton2.getText().toString();
+                //electricityEditText.setEnabled(true);
+                twtdsRadioButton.setEnabled(true);
                 enableCamera(twTDSCamera);
                 break;
             case R.id.twtds_button3:
                 modifyButtons(view, R.id.twtds_button3, R.id.twtds_button2, R.id.twtds_button1);
                 twTDS = twTdsButton3.getText().toString();
+               // electricityEditText.setEnabled(true);
+                twtdsRadioButton.setEnabled(true);
                 enableCamera(twTDSCamera);
                 break;
 
@@ -484,6 +545,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                 currentImageIdentifier = "electricitymeter";
                 break;
             case R.id.rwflowrateCamera:
+
                 openCamera();
                 currentImageIdentifier = "rwflowrate";
                 break;
@@ -818,15 +880,18 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                             operatorSubmitButton.setEnabled(true);
                             break;
                         case "rwflowrate" :
+
                             rwFlowRateImageId = fileId;
                             rwFlowRateCamera.setEnabled(false);
                             rwFlowRateCamera.setImageResource(R.drawable.ic_camera_grey);
+                            noPowerButton.setEnabled(false);
                             twFlowRateSpinner.setEnabled(true);
                             break;
                         case "twtds" :
                             twTDSImageId = fileId;
                             twTDSCamera.setEnabled(false);
                             twTDSCamera.setImageResource(R.drawable.ic_camera_grey);
+                            twtdsRadioButton.setEnabled(false);
                             electricityEditText.setEnabled(true);
                             break;
                         case "volumedispnesed" :
