@@ -251,7 +251,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="45dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.8"
                             android:orientation="vertical">
@@ -284,7 +284,7 @@
 
                         <ImageView
                             android:id="@+id/rwflowrateCamera"
-                            android:layout_width="0dp"
+                            android:layout_width="7dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.2"
                             android:paddingTop="20dp"
@@ -295,7 +295,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:paddingTop="20dp">
+                            android:paddingTop="23dp">
 
                             <RadioButton
                                 android:id="@+id/radio_notapplicable"
@@ -450,7 +450,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="45dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.8"
                             android:orientation="vertical">
@@ -498,7 +498,7 @@
 
                         <ImageView
                             android:id="@+id/twtdsCamera"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="0.1"
                             android:paddingTop="20dp"
@@ -509,7 +509,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:paddingTop="20dp">
+                            android:paddingTop="23dp">
 
                             <RadioButton
                                 android:id="@+id/twtds_notapplicable"
