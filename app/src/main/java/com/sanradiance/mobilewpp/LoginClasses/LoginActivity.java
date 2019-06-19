@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String dateString;
     SharedPreferences pref;
 
-
+    private static String Sendotp_URL ="https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/sendOTP";
     private static String LOGIN_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/login";
     final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/count/details";
 
@@ -80,18 +81,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Snackbar.make(findViewById(R.id.loginLayout), "No Internet!", Snackbar.LENGTH_LONG).show();
                 }
                 String phoneNumber = phoneNumberField.getText().toString();
-                String password = passwordField.getText().toString();
+               // String password = passwordField.getText().toString();
                 if (phoneNumber.length() < 1) {
                     errorMessage.setVisibility(View.VISIBLE);
                     errorMessage.setText("Please enter a phone number & try again!");
                 }else if (phoneNumber.length() != 10) {
                     errorMessage.setVisibility(View.VISIBLE);
                     errorMessage.setText("Please enter valid phone number & try again!");
-                } else if (password.length() < 1) {
-                    errorMessage.setVisibility(View.VISIBLE);
-                    errorMessage.setText("Please enter a password & try again!");
+//                } else if (password.length() < 1) {
+//                    errorMessage.setVisibility(View.VISIBLE);
+//                    errorMessage.setText("Please enter a password & try again!");
                 } else {
-                    performLogin(phoneNumber, password);
+                    performLogin(phoneNumber);
                 }
                 break;
         }
@@ -102,45 +103,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
-    private void performLogin(final String phoneNumber, String password) {
+    private void performLogin(final String phoneNumber) {
         try {
 
             JSONObject paramJson = new JSONObject();
             paramJson.put("mobile", phoneNumber);
-            paramJson.put("password", password);
-            paramJson.put("remember_me", true);
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, paramJson, new Response.Listener<JSONObject>() {
+          //  paramJson.put("password", password);
+           // paramJson.put("remember_me", true);
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Sendotp_URL, paramJson, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
 
                     Log.d("Response", response.toString());
                     try {
+                        String phoneNumber = phoneNumberField.getText().toString();
+
+                        Toast.makeText(getApplicationContext(),"enter try" , Toast.LENGTH_LONG).show();
+
                         JSONObject loginResponse = new JSONObject(response.toString());
-                        JSONObject userDetails = loginResponse.getJSONObject("user");
-                        Long mobileNumber = userDetails.getLong("mobile");
-                        String accountType = userDetails.getString("account_type");
-                        if (accountType.contains("operator")) {
+                        String success = loginResponse.getString("success");
+                        Toast.makeText(getApplicationContext(),success , Toast.LENGTH_LONG).show();
+                        if(success.contains("true")){
+                            Toast.makeText(getApplicationContext(),phoneNumber , Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(LoginActivity.this, VerifyOTPActivity.class);
-                            intent.putExtra("userdetails", response.toString());
-                            intent.putExtra("mobilenumber",mobileNumber);
-                            startActivity(intent);
-                            finish();
-                        }else if(accountType.contains("admin")) {
-                            Intent intent = new Intent(LoginActivity.this, CommissionerDashboard.class);
-                            intent.putExtra("userdetails", response.toString());
-                            intent.putExtra("mobilenumber",mobileNumber);
-                            startActivity(intent);
-                            finish();
-                        }else if(accountType.contains("commissioner")){
-                            Intent intent = new Intent(LoginActivity.this,CommissionerDashboard.class);
-                            intent.putExtra("userdetails",response.toString());
-                            intent.putExtra("mobilenumber",mobileNumber);
+                            intent.putExtra("mobilenumber",phoneNumber);
                             startActivity(intent);
                             finish();
                         }else{
                             errorMessage.setVisibility(View.VISIBLE);
-                            errorMessage.setText("Not an member!");
+                            errorMessage.setText("Please enter valid phone number");
                         }
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

@@ -159,19 +159,19 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
                 switch (checkedId) {
                     case R.id.radio_nopower:
                         failureReason = "no_power";
-                       // enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
+                      enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
                         break;
                     case R.id.radio_nowater:
                         failureReason = "no_water";
-                        //enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
+                      enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
                         break;
                     case R.id.radio_breakdown:
                         failureReason = "break_down";
-                        //enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
+                        enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
                         break;
                 }
              // enableButtons(rwTankLevelLow,rwTankLevelHalf,rwTankLevelFull);
-              disableButtons(noPowerButton,noWaterButton,plantBreakdownButton);
+            //  disableButtons(noPowerButton,noWaterButton,plantBreakdownButton);
 
             }
         });
@@ -211,21 +211,6 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
             }
         });
 
-       // disableButtons(noPowerButton, noWaterButton, plantBreakdownButton);
-
-        disableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
-
-        disableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
-
-       // volumeDispensedEditText.setEnabled(false);
-
-       // volumeDispensedCamera.setEnabled(false);
-       // volumeDispensedCamera.setImageResource(R.drawable.ic_camera_grey);
-
-        //twTDSEdiText.setEnabled(false);
-
-      //  submitButton.setEnabled(false);
-
         rwTankLevelLow.setOnClickListener(this);
         rwTankLevelHalf.setOnClickListener(this);
         rwTankLevelFull.setOnClickListener(this);
@@ -258,32 +243,32 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
             case R.id.rwtank_level1:
                 rwTankLevel = constantValues.CONSTANT_LOW;
                 modifyButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
-                //enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
+                enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
                 break;
             case R.id.rwtank_level2:
                 rwTankLevel = constantValues.CONSTANT_HALF;
                 modifyButtons(rwTankLevelHalf, rwTankLevelLow, rwTankLevelFull);
-               // enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
+                enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
                 break;
             case R.id.rwtank_level3:
                 rwTankLevel = constantValues.CONSTANT_FULL;
                 modifyButtons(rwTankLevelFull, rwTankLevelLow, rwTankLevelHalf);
-              //  enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
+               enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
                 break;
             case R.id.twtanklevel1:
                 twTankLevel = constantValues.CONSTANT_LOW;
                 modifyButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
-                //volumeDispensedEditText.setEnabled(true);
+                volumeDispensedEditText.setEnabled(true);
                 break;
             case R.id.twtanklevel2:
                 twTankLevel = constantValues.CONSTANT_HALF;
                 modifyButtons(twTankLevelHalf, twTankLevelLow, twTankLevelFull);
-               // volumeDispensedEditText.setEnabled(true);
+                volumeDispensedEditText.setEnabled(true);
                 break;
             case R.id.twtanklevel3:
                 twTankLevel = constantValues.CONSTANT_FULL;
                 modifyButtons(twTankLevelFull, twTankLevelLow, twTankLevelHalf);
-               // volumeDispensedEditText.setEnabled(true);
+                volumeDispensedEditText.setEnabled(true);
                 break;
             case R.id.volumedispensedCamera:
                 openCamera();
@@ -359,12 +344,12 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
     }
 
     private void modifyButtons(Button button1, Button button2, Button button3) {
-//        button1.setBackgroundResource(R.drawable.edittext_selected_bg);
-//        button1.setTextColor(Color.WHITE);
+        button1.setBackgroundResource(R.drawable.edittext_selected_bg);
+        button1.setTextColor(Color.WHITE);
 
-       // button2.setEnabled(false);
+        button2.setEnabled(false);
 
-       // button3.setEnabled(false);
+        button3.setEnabled(false);
     }
 
     public void openCamera() {
