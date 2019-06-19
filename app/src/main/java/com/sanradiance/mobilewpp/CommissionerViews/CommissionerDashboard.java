@@ -1,6 +1,7 @@
 package com.sanradiance.mobilewpp.CommissionerViews;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,8 @@ public class CommissionerDashboard extends AppCompatActivity implements View.OnC
     String notReportedPlantDetails;
 
     Boolean serverResponse = false;
+    SharedPreferences prf;
+
 
     final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/count/details";
 
@@ -53,6 +56,9 @@ public class CommissionerDashboard extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commissioner_dashboard);
+
+       // prf = getSharedPreferences("user_details", MODE_PRIVATE);
+
 
         nchart = findViewById(R.id.commissionerpiechart);
         today = findViewById(R.id.todaydate);
@@ -162,9 +168,9 @@ public class CommissionerDashboard extends AppCompatActivity implements View.OnC
 
         ArrayList<PieEntry> entries = new ArrayList<>();
 
-        entries.add(new PieEntry(totalworkingplant, "Plants Working"));
-        entries.add(new PieEntry(notworkingplant,"Plants Not Working"));
-        entries.add(new PieEntry(reportedplant,"Data Not Reported"));
+        entries.add(new PieEntry(totalworkingplant, "Working"));
+        entries.add(new PieEntry(notworkingplant,"Not Working"));
+        entries.add(new PieEntry(reportedplant,"Not Reported"));
 
         PieDataSet dataSet = new PieDataSet(entries, "");
         PieData pieData = new PieData(dataSet);

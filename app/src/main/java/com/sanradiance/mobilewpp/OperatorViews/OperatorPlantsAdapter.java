@@ -73,11 +73,11 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
         Typeface roundsTypeFace = Typeface.createFromAsset(mContext.getAssets(),"fonts/ttrounds.ttf");
         Typeface linottesemibold = Typeface.createFromAsset(mContext.getAssets(),"fonts/linottesemibold.otf");
 
-        viewHolder.panelIdTextView.setTypeface(roundsTypeFace);
-        viewHolder.panelIdTextView.setText("Panel ID : " + currentPlant.getPanelId());
+       // viewHolder.panelIdTextView.setTypeface(roundsTypeFace);
+       // viewHolder.panelIdTextView.setText("Panel ID : " + currentPlant.getPanelId());
 
         viewHolder.plantAddressTextView.setTypeface(linottesemibold);
-        String completeAddress = currentPlant.getVillage() + ", " + currentPlant.getHabitation() + ", \n" + currentPlant.getPanchayat()
+        String completeAddress = currentPlant.getVillage() +  "," + currentPlant.getPanchayat()
                 + ", " + currentPlant.getTaluk() + ", \n" + currentPlant.getDistrict();
         viewHolder.plantAddressTextView.setText(completeAddress);
 
@@ -186,6 +186,8 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
                     bundle.putInt("operatorId", userDetail.getUserId());
                     bundle.putLong("operatorMobile", userDetail.getUserMobile());
                     bundle.putInt("plantId", currentPlant.getId());
+                    bundle.putString("plantdisplayId" ,currentPlant.getPlantId());
+                    bundle.putString("plantVillage" ,currentPlant.getVillage());
                     bundle.putString("plantCapacity", currentPlant.getPlantCapacityLPH());
                     bundle.putString("plantLatitude", currentPlant.getLatitude());
                     bundle.putString("plantLongitude", currentPlant.getLongitude());
@@ -197,6 +199,8 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
                     Bundle bundle = new Bundle();
                     bundle.putInt("plant_id", currentPlant.getId());
                     bundle.putString("accessToken", userDetail.getAccessToken());
+                    bundle.putString("plantdisplayId" ,currentPlant.getPlantId());
+                    bundle.putString("plantVillage" ,currentPlant.getVillage());
 
                     AppCompatActivity activity = (AppCompatActivity) mContext;
                     PlantFailureFragment plantFailureFragment = new PlantFailureFragment();
@@ -283,7 +287,7 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
 
             plantIdTextView = itemView.findViewById(R.id.plantIdTv);
             plantAddressTextView = itemView.findViewById(R.id.plantAddressTv);
-            panelIdTextView = itemView.findViewById(R.id.panelIdTv);
+          //  panelIdTextView = itemView.findViewById(R.id.panelIdTv);
         }
     }
 }

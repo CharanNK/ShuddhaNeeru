@@ -2,6 +2,7 @@ package com.sanradiance.mobilewpp.LoginClasses;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,6 +26,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.sanradiance.mobilewpp.CommissionerViews.CommissionerDashboard;
 import com.sanradiance.mobilewpp.R;
+import com.sanradiance.mobilewpp.SplashScreen;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +40,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView errorMessage;
     Button loginButton;
     String dateString;
+    SharedPreferences pref;
+
 
     private static String LOGIN_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/login";
     final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/dashboard/count/details";
@@ -46,6 +50,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
 
         long date = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -124,13 +130,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             intent.putExtra("userdetails", response.toString());
                             intent.putExtra("mobilenumber",mobileNumber);
                             startActivity(intent);
-
                             finish();
                         }else if(accountType.contains("commissioner")){
                             Intent intent = new Intent(LoginActivity.this,CommissionerDashboard.class);
                             intent.putExtra("userdetails",response.toString());
                             intent.putExtra("mobilenumber",mobileNumber);
                             startActivity(intent);
+                            finish();
                         }else{
                             errorMessage.setVisibility(View.VISIBLE);
                             errorMessage.setText("Not an member!");

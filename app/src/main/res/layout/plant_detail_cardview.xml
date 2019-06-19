@@ -53,28 +53,28 @@
                     android:text="KARANAKUPPE,DASARAHALLI,Ballagere,Tumakuru,Tumakuru"
                     android:textColor="@color/colorBlack" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/panelIdTv"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Panel ID : IN118-07--970"
-                    android:textColor="#f44336"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.4"
-                        android:layout_height="wrap_content"
-                        android:text="ACTIVE"
-                        android:drawableLeft="@drawable/ic_plant_active"
-                        android:textStyle="bold"
-                        android:textColor="@color/plantActiveColor"/>
-                </LinearLayout>
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+                <!--<TextView-->
+                    <!--android:id="@+id/panelIdTv"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Panel ID : IN118-07&#45;&#45;970"-->
+                    <!--android:textColor="#f44336"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textStyle="bold" />-->
+                    <!--<TextView-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_weight="0.4"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="ACTIVE"-->
+                        <!--android:drawableLeft="@drawable/ic_plant_active"-->
+                        <!--android:textStyle="bold"-->
+                        <!--android:textColor="@color/plantActiveColor"/>-->
+                <!--</LinearLayout>-->
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

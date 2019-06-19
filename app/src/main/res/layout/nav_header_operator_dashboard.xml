@@ -38,12 +38,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:id="@+id/nav_header_userName"
-        android:text="Username : Charan"/>
+        android:text="Name : Charan"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nav_header_userId"
-        android:text="User ID : 101010"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/nav_header_userId"-->
+        <!--android:text="User ID : 101010"/>-->
 
 </LinearLayout>

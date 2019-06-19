@@ -1,5 +1,6 @@
 package com.sanradiance.mobilewpp.OperatorViews;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,11 +22,16 @@ import org.json.JSONObject;
 
 public class OperatorDashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    SharedPreferences prf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operator_dashboard);
+
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -52,10 +58,10 @@ public class OperatorDashboardActivity extends AppCompatActivity
 
             View headerView = navigationView.getHeaderView(0);
             TextView navHeaderUserName = headerView.findViewById(R.id.nav_header_userName);
-            TextView navHeaderUserId = headerView.findViewById(R.id.nav_header_userId);
+         //   TextView navHeaderUserId = headerView.findViewById(R.id.nav_header_userId);
 
-            navHeaderUserName.setText("Username : "+userName);
-            navHeaderUserId.setText("User ID : "+userNumber);
+            navHeaderUserName.setText("Name : "+userName);
+           // navHeaderUserId.setText("User ID : "+userNumber);
 
             Log.d("UserInfoName",userName);
             Log.d("UserInfoNumber", String.valueOf(userNumber));

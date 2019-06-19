@@ -22,20 +22,113 @@
             android:layout_marginRight="10dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginLeft="@dimen/card_view_marginleft"
+                android:layout_marginTop="@dimen/card_view_margintop"
+                android:layout_marginRight="@dimen/card_view_marginleft"
+                android:layout_marginBottom="@dimen/card_view_margintop"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    style="@style/operatorTextView"
-                    android:id="@+id/label_plantid"
-                    android:text="@string/plant_id"/>
-            </LinearLayout>
 
+                <TableRow android:layout_marginTop="5dp">
+
+                    <TextView
+                        style="@style/operatorTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:drawableLeft="@drawable/ic_operatorid"
+                        android:text="Plant Id :" />
+
+                    <TextView
+                        android:id="@+id/operatorid_value"
+                        style="@style/operatorTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="testing testing testing testing" />
+                </TableRow>
+                <TableRow android:layout_marginTop="5dp">
+
+                    <TextView
+                        style="@style/operatorTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:drawableLeft="@drawable/ic_person"
+                        android:text="Village :" />
+
+                    <TextView
+                        android:id="@+id/operatorname_value"
+                        style="@style/operatorTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="testing testing testing testing" />
+                </TableRow>
+
+
+                <!--<TableRow android:layout_marginTop="5dp">-->
+
+                <!--<TextView-->
+                <!--style="@style/operatorTextView"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_weight="0.75"-->
+                <!--android:drawableLeft="@drawable/ic_mobile"-->
+                <!--android:text="@string/mobile_number" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/operatormobile_value"-->
+                <!--style="@style/operatorTextView"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_weight="1" />-->
+                <!--</TableRow>-->
+
+                <!--<TableRow android:layout_marginTop="5dp">-->
+
+                <!--<TextView-->
+                <!--style="@style/operatorTextView"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="0.75"-->
+                <!--android:drawableLeft="@drawable/ic_location"-->
+                <!--android:text="@string/location" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/plant_location"-->
+                <!--style="@style/operatorTextView"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_weight="1" />-->
+                <!--</TableRow>-->
+                <!--<TableRow android:layout_marginTop="5dp">-->
+
+                <!--<TextView-->
+                <!--style="@style/operatorTextView"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="0.75"-->
+                <!--android:drawableLeft="@drawable/ic_operatorid"-->
+                <!--android:text="Plant Id" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/plantId_value"-->
+                <!--style="@style/operatorTextView"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="testing testing testing testing" />-->
+                <!--</TableRow>-->
+
+            </TableLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

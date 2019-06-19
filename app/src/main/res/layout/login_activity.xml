@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".LoginClasses.LoginActivity">
+    tools:context=".LoginClasses.ActivityLogin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,17 +26,16 @@
             android:layout_marginTop="40dp"
             android:src="@drawable/logo_government"
             />
-
         <TextView
             android:id="@+id/monitr_system_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="40dp"
             android:gravity="center"
             android:text="WPP Status Monitoring System"
             android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_marginBottom="40dp" />
 
 
     </LinearLayout>
@@ -54,7 +53,7 @@
             android:layout_marginLeft="@dimen/mainActivityPadding"
             android:layout_marginRight="@dimen/mainActivityPadding"
 
-            android:text="Phone number  : "
+            android:text="Phone number"
             android:textColor="#000000"
             android:textSize="16sp" />
         <EditText
@@ -63,43 +62,24 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/mainActivityPadding"
             android:layout_marginRight="@dimen/mainActivityPadding"
-            android:hint="Enter phone No."
+            android:hint="Phone No."
             android:inputType="number"
             android:maxLength="10"
             android:layout_marginTop="7dp"/>
+
         <TextView
-            android:id="@+id/passwordFieldtv1"
+            android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="@dimen/mainActivityPadding"
             android:layout_marginRight="@dimen/mainActivityPadding"
 
-            android:text="Password  : "
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:text="Tap Send to verify your account with your phone number. "
             android:textColor="#000000"
-            android:textSize="16sp" />
-        <EditText
-        android:id="@+id/passwordField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/mainActivityPadding"
-        android:layout_marginRight="@dimen/mainActivityPadding"
-        android:hint="Enter password"
-        android:inputType="textPassword" />
-
-        <!--<TextView-->
-            <!--android:id="@+id/message"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="@dimen/mainActivityPadding"-->
-            <!--android:layout_marginRight="@dimen/mainActivityPadding"-->
-
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:layout_marginBottom="30dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="Tap Send to verify your account with your phone number. "-->
-            <!--android:textColor="#000000"-->
-            <!--android:textSize="16sp" />-->
+            android:textSize="17sp" />
         <!--<EditText-->
         <!--android:id="@+id/passwordField"-->
         <!--android:layout_width="match_parent"-->
@@ -111,12 +91,13 @@
 
         <Button
             android:id="@+id/loginButton"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="5dp"
             android:background="@color/colorBlueBackground"
             android:text="Send OTP"
             android:textColor="#FFFFFF"/>
@@ -136,7 +117,7 @@
 
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
     <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
     <!--xmlns:tools="http://schemas.android.com/tools"-->
@@ -230,7 +211,7 @@
     <!--android:src="@drawable/logo_government" />-->
 
     <!--</FrameLayout>-->
-<!--</LinearLayout>-->
+    <!--</LinearLayout>-->
 
 
 
@@ -246,12 +227,12 @@
 
 
 
-        <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--tools:context=".LoginClasses.LoginActivity">-->
+    <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:context=".LoginClasses.LoginActivity">-->
 
-<!--<android.support.v7.widget.CardView-->
+    <!--<android.support.v7.widget.CardView-->
     <!--android:id="@+id/first"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
@@ -262,65 +243,65 @@
     <!--card_view:cardUseCompatPadding="true">-->
 
     <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="320dp"-->
-        <!--android:background="#ffe0b2"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:orientation="vertical">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="320dp"-->
+    <!--android:background="#ffe0b2"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:orientation="vertical">-->
 
-        <!--<TextView-->
-            <!--android:id="@+id/monitr_system_tv"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="WPP Status Monitoring System"-->
-            <!--android:textColor="@color/colorBlack"-->
-            <!--android:textSize="18sp" />-->
+    <!--<TextView-->
+    <!--android:id="@+id/monitr_system_tv"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:gravity="center"-->
+    <!--android:text="WPP Status Monitoring System"-->
+    <!--android:textColor="@color/colorBlack"-->
+    <!--android:textSize="18sp" />-->
 
-        <!--<EditText-->
-            <!--android:id="@+id/phoneNumberField"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="@dimen/mainActivityPadding"-->
-            <!--android:layout_marginRight="@dimen/mainActivityPadding"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:hint="Phone No."-->
-            <!--android:inputType="number"-->
-            <!--android:maxLength="10" />-->
+    <!--<EditText-->
+    <!--android:id="@+id/phoneNumberField"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/mainActivityPadding"-->
+    <!--android:layout_marginRight="@dimen/mainActivityPadding"-->
+    <!--android:layout_marginTop="15dp"-->
+    <!--android:hint="Phone No."-->
+    <!--android:inputType="number"-->
+    <!--android:maxLength="10" />-->
 
-        <!--<EditText-->
-            <!--android:id="@+id/passwordField"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="@dimen/mainActivityPadding"-->
-            <!--android:layout_marginRight="@dimen/mainActivityPadding"-->
-            <!--android:hint="Password"-->
-            <!--android:inputType="textPassword" />-->
+    <!--<EditText-->
+    <!--android:id="@+id/passwordField"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/mainActivityPadding"-->
+    <!--android:layout_marginRight="@dimen/mainActivityPadding"-->
+    <!--android:hint="Password"-->
+    <!--android:inputType="textPassword" />-->
 
-        <!--<Button-->
-            <!--android:id="@+id/loginButton"-->
-            <!--style="@style/AppTheme.Button"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:layout_marginLeft="40dp"-->
-            <!--android:layout_marginRight="40dp"-->
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:text="LOGIN" />-->
+    <!--<Button-->
+    <!--android:id="@+id/loginButton"-->
+    <!--style="@style/AppTheme.Button"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_marginLeft="40dp"-->
+    <!--android:layout_marginRight="40dp"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:text="LOGIN" />-->
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="center"-->
-            <!--android:id="@+id/errorMessage"-->
-            <!--android:visibility="gone"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--android:textColor="@color/colorRed"/>-->
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:id="@+id/errorMessage"-->
+    <!--android:visibility="gone"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:textColor="@color/colorRed"/>-->
     <!--</LinearLayout>-->
-<!--</android.support.v7.widget.CardView>-->
+    <!--</android.support.v7.widget.CardView>-->
 
-<!--<ImageView-->
+    <!--<ImageView-->
     <!--android:layout_width="100dp"-->
     <!--android:layout_height="100dp"-->
     <!--android:layout_gravity="center_horizontal"-->
@@ -329,4 +310,4 @@
     <!--android:elevation="10dp"-->
     <!--android:src="@drawable/logo_government" />-->
 
-<!--</FrameLayout>-->
+    <!--</FrameLayout>-->

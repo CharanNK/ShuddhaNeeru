@@ -10,8 +10,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="40dp"
-        android:orientation="vertical">
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -109,6 +112,43 @@
                 android:inputType="numberPassword"
                 android:maxLength="1" />
 
+
+
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5" />
+
+            <EditText
+                android:id="@+id/otpDigit5"
+                style="@style/otpField"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dm_42sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="numberPassword"
+                android:maxLength="1"
+                android:nextFocusRight="@id/otpDigit4" />
+
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5" />
+
+            <EditText
+                android:id="@+id/otpDigit6"
+                style="@style/otpField"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dm_42sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="numberPassword"
+                android:maxLength="1"
+                android:nextFocusRight="@id/otpDigit5" />
             <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
