@@ -116,8 +116,8 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
     String accessToken;
 
-    private static final String dataUploadURL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/user/survey-details/upload";
-    private static final String fileUploadURL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/upload/file";
+    private static final String dataUploadURL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/user/survey-details/upload";
+    private static final String fileUploadURL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/upload/file";
 
     int CAPTURE_IMAGE = 1000;
     private Uri fileUri;
@@ -233,7 +233,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         accessToken = userAccessToken;
 
         //set InitialValues
-        setInitValues(operatorId, operatorName, operatorMobile,plantdisplayid,plantdisplayVillage);
+        setInitValues(operatorId, operatorName, operatorMobile,plantdisplayid,plantdisplayVillage,plantCapacity);
 
         //instantiate the file upload Service
         fileService = APIUtils.getFileService();
@@ -400,7 +400,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
     }
 
-    private void setInitValues(String operatorId, String operatorName, Long operatorMobile,String plantdisplayid,String plantdisplayVillage) {
+    private void setInitValues(String operatorId, String operatorName, Long operatorMobile,String plantdisplayid,String plantdisplayVillage,String plantCapacity) {
         plantCapacityTextView.setText(plantCapacity);
         initializeFlowLevels(plantCapacity);
         plant_display_id.setText(plantdisplayid);
@@ -434,58 +434,100 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             case R.id.voltage_button1:
                 modifyButtons(view, R.id.voltage_button1, R.id.voltage_button2, R.id.voltage_button3);
                 plantVoltage = voltageButton1.getText().toString();
-                voltageButton2.setClickable(false);
-                voltageButton3.setClickable(false);
-
+                voltageButton2.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                voltageButton2.setTextColor(Color.BLACK);
+                voltageButton3.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                voltageButton3.setTextColor(Color.BLACK);
                 break;
             case R.id.voltage_button2:
-                voltageButton1.setClickable(false);
-                voltageButton3.setClickable(false);
                 modifyButtons(view, R.id.voltage_button2, R.id.voltage_button1, R.id.voltage_button3);
                 plantVoltage = voltageButton2.getText().toString();
+                voltageButton1.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                voltageButton1.setTextColor(Color.BLACK);
+                voltageButton3.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                voltageButton3.setTextColor(Color.BLACK);
+
                 break;
             case R.id.voltage_button3:
                 modifyButtons(view, R.id.voltage_button3, R.id.voltage_button2, R.id.voltage_button1);
                 plantVoltage = voltageButton3.getText().toString();
-                voltageButton1.setClickable(false);
-                voltageButton2.setClickable(false);
+                voltageButton1.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                voltageButton1.setTextColor(Color.BLACK);
+                voltageButton2.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                voltageButton2.setTextColor(Color.BLACK);
                 break;
 
             case R.id.rwtank_level1:
                 modifyButtons(view, R.id.rwtank_level1, R.id.rwtank_level2, R.id.rwtank_level3);
                 rwTankLevel = rwTankLevelButton1.getText().toString();
+                rwTankLevelButton2.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTankLevelButton2.setTextColor(Color.BLACK);
+                rwTanklevelButton3.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTanklevelButton3.setTextColor(Color.BLACK);
                 break;
             case R.id.rwtank_level2:
                 modifyButtons(view, R.id.rwtank_level2, R.id.rwtank_level1, R.id.rwtank_level3);
                 rwTankLevel = rwTankLevelButton2.getText().toString();
+                rwTankLevelButton1.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTankLevelButton1.setTextColor(Color.BLACK);
+                rwTanklevelButton3.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTanklevelButton3.setTextColor(Color.BLACK);
                 break;
             case R.id.rwtank_level3:
                 modifyButtons(view, R.id.rwtank_level3, R.id.rwtank_level1, R.id.rwtank_level2);
                 rwTankLevel = rwTanklevelButton3.getText().toString();
+                rwTankLevelButton1.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTankLevelButton1.setTextColor(Color.BLACK);
+                rwTankLevelButton2.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTankLevelButton2.setTextColor(Color.BLACK);
                 break;
             case R.id.twtanklevel1:
                 modifyButtons(view, R.id.twtanklevel1, R.id.twtanklevel2, R.id.twtanklevel3);
                 twTankLevel = twTankLevelButton1.getText().toString();
+                twTankLevelButton2.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelButton2.setTextColor(Color.BLACK);
+                twTankLevelButton3.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelButton3.setTextColor(Color.BLACK);
                 break;
             case R.id.twtanklevel2:
                 modifyButtons(view, R.id.twtanklevel2, R.id.twtanklevel1, R.id.twtanklevel3);
                 twTankLevel = twTankLevelButton2.getText().toString();
+                twTankLevelButton1.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelButton1.setTextColor(Color.BLACK);
+                twTankLevelButton3.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelButton3.setTextColor(Color.BLACK);
                 break;
             case R.id.twtanklevel3:
                 modifyButtons(view, R.id.twtanklevel3, R.id.twtanklevel1, R.id.twtanklevel2);
                 twTankLevel = twTankLevelButton3.getText().toString();
+                twTankLevelButton1.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelButton1.setTextColor(Color.BLACK);
+                twTankLevelButton2.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelButton2.setTextColor(Color.BLACK);
                 break;
             case R.id.twtds_button1:
                 modifyButtons(view, R.id.twtds_button1, R.id.twtds_button2, R.id.twtds_button3);
                 twTDS = twTdsButton1.getText().toString();
+                twTdsButton2.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTdsButton2.setTextColor(Color.BLACK);
+                twTdsButton3.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTdsButton3.setTextColor(Color.BLACK);
                 break;
             case R.id.twtds_button2:
                 modifyButtons(view, R.id.twtds_button2, R.id.twtds_button1, R.id.twtds_button3);
                 twTDS = twTdsButton2.getText().toString();
+                twTdsButton3.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTdsButton3.setTextColor(Color.BLACK);
+                twTdsButton1.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTdsButton1.setTextColor(Color.BLACK);
                 break;
             case R.id.twtds_button3:
                 modifyButtons(view, R.id.twtds_button3, R.id.twtds_button2, R.id.twtds_button1);
                 twTDS = twTdsButton3.getText().toString();
+                twTdsButton1.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTdsButton1.setTextColor(Color.BLACK);
+                twTdsButton2.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTdsButton2.setTextColor(Color.BLACK);
                 break;
 
             case R.id.twflowrateCamera:

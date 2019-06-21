@@ -1,8 +1,10 @@
 package com.sanradiance.mobilewpp.LoginClasses;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,8 +16,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.ProgressDialog;
+
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -26,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.sanradiance.mobilewpp.CommissionerViews.CommissionerDashboard;
+import com.sanradiance.mobilewpp.OperatorViews.OperatorDashboardActivity;
 import com.sanradiance.mobilewpp.R;
 import com.sanradiance.mobilewpp.SplashScreen;
 
@@ -42,6 +49,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button loginButton;
     String dateString;
     SharedPreferences pref;
+    private ProgressBar spinner;
+    LinearLayout main_layout;
+
 
     private static String Sendotp_URL ="https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/sendOTP";
     private static String LOGIN_URL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/login";
@@ -52,14 +62,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
         long date = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         dateString = sdf.format(date);
 
         phoneNumberField = findViewById(R.id.phoneNumberField);
-        passwordField = findViewById(R.id.passwordField);
+        main_layout =(LinearLayout)findViewById(R.id.loginLayout);
+
+
+        phoneNumberField = findViewById(R.id.phoneNumberField);
+       // passwordField = findViewById(R.id.passwordField);
         phoneNumberField.setOnClickListener(this);
 
         errorMessage = findViewById(R.id.errorMessage);
@@ -67,13 +79,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton = findViewById(R.id.loginButton);
 
         loginButton.setOnClickListener(this);
+        spinner=(ProgressBar)findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
+
 
     }
 
     @Override
     public void onClick(View view) {
-
-
 
         switch (view.getId()) {
             case R.id.loginButton:
@@ -92,6 +105,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                    errorMessage.setVisibility(View.VISIBLE);
 //                    errorMessage.setText("Please enter a password & try again!");
                 } else {
+                    loginButton.setEnabled(false);
+                    loginButton.setBackgroundColor(Color.parseColor("#F4F4F4"));
+                    phoneNumberField.setEnabled(false);
+                    spinner.setVisibility(View.VISIBLE);
                     performLogin(phoneNumber);
                 }
                 break;
@@ -117,20 +134,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Log.d("Response", response.toString());
                     try {
                         String phoneNumber = phoneNumberField.getText().toString();
-
-                        Toast.makeText(getApplicationContext(),"enter try" , Toast.LENGTH_LONG).show();
-
                         JSONObject loginResponse = new JSONObject(response.toString());
                         String success = loginResponse.getString("success");
-                        Toast.makeText(getApplicationContext(),success , Toast.LENGTH_LONG).show();
                         if(success.contains("true")){
-                            Toast.makeText(getApplicationContext(),phoneNumber , Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(LoginActivity.this, VerifyOTPActivity.class);
                             intent.putExtra("mobilenumber",phoneNumber);
                             startActivity(intent);
                             finish();
                         }else{
                             errorMessage.setVisibility(View.VISIBLE);
+                            spinner.setVisibility(View.GONE);
+                            phoneNumberField.setEnabled(true);
+                            loginButton.setEnabled(true);
+                            loginButton.setBackgroundColor(Color.parseColor("#3F51B5"));
+
                             errorMessage.setText("Please enter valid phone number");
                         }
 
@@ -148,6 +165,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (errorMessage.toString().contains("NoConnectionError")) {
                         Snackbar.make(findViewById(R.id.loginLayout), "No Internet!", Snackbar.LENGTH_LONG).show();
                     } else
+                        errorMessage.setVisibility(View.VISIBLE);
+                    spinner.setVisibility(View.GONE);
+                    phoneNumberField.setEnabled(true);
+                    loginButton.setEnabled(true);
+                    loginButton.setBackgroundColor(Color.parseColor("#3F51B5"));
                         errorMessage.setText("Invalid login details. Please try again!");
                 }
             }) {

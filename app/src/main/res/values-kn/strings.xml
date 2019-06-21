@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ಶುದ್ದ ನೀರು</string>
+    <string name="operator_buttontext">ನಿರ್ವಾಹಕ</string>
+    <string name="supervisor_buttontext">ಮೇಲ್ವಿಚಾರಕ</string>
+    <string name="dashboards_buttontext">ತಡೆಹಲಗೆ</string>
+    <string name="title_activity_operator_dashboard">ನಿರ್ವಾಹಕ ತಡೆಹಲಗೆ</string>
+    <string name="navigation_drawer_open">ನ್ಯಾವಿಗೇಷನ್ ಡ್ರಾಯರ್ ತೆರೆಯಿರಿ</string>
+    <string name="navigation_drawer_close">ಸಂಚರಣೆ ಡ್ರಾಯರ್ ಮುಚ್ಚಿ</string>
+    <string name="nav_header_title">WPP ಸ್ಥಿತಿ ಮಾನಿಟರಿಂಗ್ ವ್ಯವಸ್ಥೆ</string>
+    <string name="nav_header_subtitle">ಆರ್ಡಿಡಬ್ಲ್ಯೂಎಸ್ ಮತ್ತು ಎಸ್ಡಿ, ಕರ್ನಾಟಕ ಸರ್ಕಾರ</string>
+    <string name="nav_header_desc">ನ್ಯಾವಿಗೇಷನ್ ಹೆಡರ್</string>
+    <string name="action_settings">ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
+    <string name="action_logout">ಹೊರಗಡೆ</string>
+    <string name="operator_name">ನಿರ್ವಾಹಕ ಹೆಸರು :</string>
+    <string name="operator_id">ನಿರ್ವಾಹಕ ಐಡಿ : </string>
+    <string name="mobile_number">ಮೊಬೈಲ್ ನಂಬರ : </string>
+    <string name="location">ಸ್ಥಳ : </string>
+    <string name="plant_capacity">ಸಸ್ಯ ಸಾಮರ್ಥ್ಯ : </string>
+    <string name="voltage">ವಿದ್ಯುತ್ ವಿಭವಾಂತರದ ಪ್ರಮಾಣ : </string>
+    <string name="rwtl">ಆರ್ಡಬ್ಲ್ಯೂ ಟ್ಯಾಂಕ್ ಮಟ್ಟ : </string>
+    <string name="rwfl">LPH ನಲ್ಲಿ RW ಫ್ಲೋ ರೇಟ್ : </string>
+    <string name="twfl">LPH ನಲ್ಲಿ TW ಹರಿವಿನ ಪ್ರಮಾಣ: </string>
+    <string name="twtl">ಟಿಡಬ್ಲ್ಯೂ ಟ್ಯಾಂಕ್ ಮಟ್ಟ : </string>
+    <string name="volume_disposed">ಸಂಪುಟ ವಿತರಿಸಲಾಗಿದೆ (ಎಲ್‌ಟಿಆರ್) : </string>
+    <string name="twtds">ಟಿಡಬ್ಲ್ಯೂ ಟಿಡಿಎಸ್ (ಪಿಪಿಎಂ) : </string>
+    <string name="failurelabel">ವೈಫಲ್ಯದ ಕಾರಣ: </string>
+    <string name="nowater">ನೀರು ಇಲ್ಲ</string>
+    <string name="nopower">ವಿದ್ಯುತ್ ಇಲ್ಲ</string>
+    <string name="plantbreakdown">ಸಸ್ಯ ವಿಭಜನೆ</string>
+    <string name="plant_id">ಸಸ್ಯ ಐಡಿ : </string>
+    <string name="electricity_meter">ವಿದ್ಯುತ್ ಮೀಟರ್ (ಕೆಡಬ್ಲ್ಯೂಹೆಚ್ / ಘಟಕಗಳು) : </string>
+    <string name="showdata">ಡೇಟಾವನ್ನು ತೋರಿಸಿ</string>
+    <string name="view">ಜಿಲ್ಲೆಯನ್ನು ವೀಕ್ಷಿಸಿ</string>
+    <string name="working_plants">ಸಸ್ಯಗಳು ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿವೆ</string>
+    <string name="not_working_plants">ಸಸ್ಯಗಳು ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ</string>
+    <string name="not_reported_data">ಡೇಟಾ ವರದಿ ಮಾಡಿಲ್ಲ</string>
+    <string name="enter_phone_number">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.</string>
+    <string name="sendotp">ಒಟಿಪಿ ಕಳುಹಿಸಿ</string>
+    <string name="verify_otp">ಪರಿಶೀಲನೆ ಕೋಡ್</string>
+    <string name="verify">ಪರಿಶೀಲಿಸಿ</string>
+
+
+
+
+
+</resources>

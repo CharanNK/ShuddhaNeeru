@@ -159,15 +159,12 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
                 switch (checkedId) {
                     case R.id.radio_nopower:
                         failureReason = "no_power";
-                      enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
                         break;
                     case R.id.radio_nowater:
                         failureReason = "no_water";
-                      enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
                         break;
                     case R.id.radio_breakdown:
                         failureReason = "break_down";
-                        enableButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
                         break;
                 }
              // enableButtons(rwTankLevelLow,rwTankLevelHalf,rwTankLevelFull);
@@ -243,32 +240,50 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
             case R.id.rwtank_level1:
                 rwTankLevel = constantValues.CONSTANT_LOW;
                 modifyButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
-                enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
+                rwTankLevelHalf.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTankLevelHalf.setTextColor(Color.BLACK);
+                rwTankLevelFull.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTankLevelFull.setTextColor(Color.BLACK);
                 break;
             case R.id.rwtank_level2:
                 rwTankLevel = constantValues.CONSTANT_HALF;
                 modifyButtons(rwTankLevelHalf, rwTankLevelLow, rwTankLevelFull);
-                enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
+                rwTankLevelLow.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTankLevelLow.setTextColor(Color.BLACK);
+                rwTankLevelFull.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTankLevelFull.setTextColor(Color.BLACK);
                 break;
             case R.id.rwtank_level3:
                 rwTankLevel = constantValues.CONSTANT_FULL;
                 modifyButtons(rwTankLevelFull, rwTankLevelLow, rwTankLevelHalf);
-               enableButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
+                rwTankLevelLow.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTankLevelLow.setTextColor(Color.BLACK);
+                rwTankLevelHalf.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                rwTankLevelHalf.setTextColor(Color.BLACK);
                 break;
             case R.id.twtanklevel1:
                 twTankLevel = constantValues.CONSTANT_LOW;
                 modifyButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
-                volumeDispensedEditText.setEnabled(true);
+                twTankLevelHalf.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelHalf.setTextColor(Color.BLACK);
+                twTankLevelFull.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelFull.setTextColor(Color.BLACK);
                 break;
             case R.id.twtanklevel2:
                 twTankLevel = constantValues.CONSTANT_HALF;
                 modifyButtons(twTankLevelHalf, twTankLevelLow, twTankLevelFull);
-                volumeDispensedEditText.setEnabled(true);
+                twTankLevelLow.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelLow.setTextColor(Color.BLACK);
+                twTankLevelFull.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelFull.setTextColor(Color.BLACK);
                 break;
             case R.id.twtanklevel3:
                 twTankLevel = constantValues.CONSTANT_FULL;
                 modifyButtons(twTankLevelFull, twTankLevelLow, twTankLevelHalf);
-                volumeDispensedEditText.setEnabled(true);
+                twTankLevelLow.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelLow.setTextColor(Color.BLACK);
+                twTankLevelHalf.setBackgroundResource(R.drawable.edittext_selected_white_color);
+                twTankLevelHalf.setTextColor(Color.BLACK);
                 break;
             case R.id.volumedispensedCamera:
                 openCamera();
@@ -347,9 +362,9 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
         button1.setBackgroundResource(R.drawable.edittext_selected_bg);
         button1.setTextColor(Color.WHITE);
 
-        button2.setEnabled(false);
-
-        button3.setEnabled(false);
+//        button2.setEnabled(false);
+//
+//        button3.setEnabled(false);
     }
 
     public void openCamera() {

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.sanradiance.mobilewpp.DataModels.PlantDataModel;
 import com.sanradiance.mobilewpp.DataModels.UserDataModel;
@@ -54,31 +55,34 @@ public class OperatorPlantsFragment extends Fragment {
             userDetail = new UserDataModel(bearerToken,userName,userId,userMobile);
 
             JSONArray assignedPlantList = loginResponse.getJSONArray("assigned_plant_list");
+
             for (int i = 0; i < assignedPlantList.length(); i++) {
 //                JSONArray plantDetailsArray = assignedPlantList.getJSONObject(i).getJSONArray("plant_details");
                 JSONObject plantDetails = assignedPlantList.getJSONObject(i);
                 int id = plantDetails.getInt("id");
                 String plantId = plantDetails.getString("plant_id");
-                String installedVendor = plantDetails.getString("installed_by_vendor");
                 String district = plantDetails.getString("district");
                 String taluk = plantDetails.getString("taluk");
                 String panchayath = plantDetails.getString("panchayath");
                 String village = plantDetails.getString("village");
-                String habitation = plantDetails.getString("habitation");
-                String plantCapacity = plantDetails.getString("plant_capacity_lph");
-                String eControllerMake = plantDetails.getString("e_controller_make");
-                String panelId = plantDetails.getString("panel_id");
+                String address = plantDetails.getString("address");
                 String latitude = plantDetails.getString("latitude");
                 String longitude = plantDetails.getString("longitude");
-                String mobileNumber = plantDetails.getString("mobile_number");
+                String wpp_status = plantDetails.getString("wpp_status");
+                String dateOfInstallation = plantDetails.getString("date_of_installation");
+                String schemeinstalled = plantDetails.getString("scheme_under_which_installed");
+                String plantCapacity = plantDetails.getString("plant_capacity");
+                String plantSupplier = plantDetails.getString("plant_supplier");
+                String aAndmagency = plantDetails.getString("o_and_m_agency");
                 String serviceProvider = plantDetails.getString("service_provider");
+                String omforservice = plantDetails.getString("o_and_m_or_amc_for_service");
                 String createdAt = plantDetails.getString("created_at");
                 String updatedAt = plantDetails.getString("updated_at");
 
                 Log.d("JsonParsing plantId", plantId);
-                PlantDataModel plantDataModel = new PlantDataModel(id,plantId, installedVendor, district, taluk, panchayath,
-                        village, habitation, plantCapacity, eControllerMake, panelId, latitude, longitude,
-                        mobileNumber, serviceProvider, createdAt, updatedAt);
+                PlantDataModel plantDataModel = new PlantDataModel(id,plantId, district, taluk, panchayath,
+                        village, address, latitude, longitude,wpp_status,dateOfInstallation,schemeinstalled,
+                        plantCapacity,plantSupplier,aAndmagency, serviceProvider, omforservice,createdAt, updatedAt);
 
                 plantsList.add(plantDataModel);
             }

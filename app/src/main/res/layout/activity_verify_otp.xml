@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Verification Code"
+            android:text="@string/verify_otp"
             android:textColor="@color/colorWhite"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -162,8 +162,17 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="@color/colorWhite"
-            android:text="Verify"
+            android:text="@string/verify"
             android:textSize="22sp" />
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            />
     </LinearLayout>
 
 </LinearLayout>

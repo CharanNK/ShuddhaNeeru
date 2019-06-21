@@ -3,18 +3,20 @@ package com.sanradiance.mobilewpp.DataModels;
 public class PlantDataModel {
     public int id;
     public String plantId;
-    public String vendorInstalled;
+    public String address;
     public String district;
     public String taluk;
     public String panchayat;
     public String village;
-    public String habitation;
-    public String plantCapacityLPH;
-    public String eControllerMake;
-    public String panelId;
+    public String wpp_status;
+    public String plantCapacity;
+    public String dateOfInstallation;
+    public String schemeinstalled;
     public String latitude;
     public String longitude;
-    public String mobileNumber;
+    public String plantSupplier;
+    public String aAndmagency;
+    public String omforservice;
     public String serviceProvider;
     public String createdAt;
     public String updatedAt;
@@ -58,12 +60,12 @@ public class PlantDataModel {
         this.plantId = plantId;
     }
 
-    public String getVendorInstalled() {
-        return vendorInstalled;
+    public String getaddress() {
+        return address;
     }
 
-    public void setVendorInstalled(String vendorInstalled) {
-        this.vendorInstalled = vendorInstalled;
+    public void setaddress(String address) {
+        this.address = address;
     }
 
     public String getDistrict() {
@@ -98,36 +100,36 @@ public class PlantDataModel {
         this.village = village;
     }
 
-    public String getHabitation() {
-        return habitation;
+    public String getwpp_status() {
+        return wpp_status;
     }
 
-    public void setHabitation(String habitation) {
-        this.habitation = habitation;
+    public void setwpp_status(String wpp_status) {
+        this.wpp_status = wpp_status;
     }
 
-    public String getPlantCapacityLPH() {
-        return plantCapacityLPH;
+    public String getPlantCapacity() {
+        return plantCapacity;
     }
 
-    public void setPlantCapacityLPH(String plantCapacityLPH) {
-        this.plantCapacityLPH = plantCapacityLPH;
+    public void setPlantCapacity(String plantCapacity) {
+        this.plantCapacity = plantCapacity;
     }
 
-    public String geteControllerMake() {
-        return eControllerMake;
+    public String getdateOfInstallation() {
+        return dateOfInstallation;
     }
 
-    public void seteControllerMake(String eControllerMake) {
-        this.eControllerMake = eControllerMake;
+    public void setdateOfInstallation(String dateOfInstallation) {
+        this.dateOfInstallation = dateOfInstallation;
     }
 
-    public String getPanelId() {
-        return panelId;
+    public String getschemeinstalled() {
+        return schemeinstalled;
     }
 
-    public void setPanelId(String panelId) {
-        this.panelId = panelId;
+    public void setschemeinstalled(String schemeinstalled) {
+        this.schemeinstalled = schemeinstalled;
     }
 
     public String getLatitude() {
@@ -146,12 +148,28 @@ public class PlantDataModel {
         this.longitude = longitude;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getplantSupplier() {
+        return plantSupplier;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setplantSupplier(String plantSupplier) {
+        this.plantSupplier = plantSupplier;
+    }
+
+    public String getaAndmagency() {
+        return aAndmagency;
+    }
+
+    public void setaAndmagency(String aAndmagency) {
+        this.aAndmagency = aAndmagency;
+    }
+
+    public String getomforservice() {
+        return omforservice;
+    }
+
+    public void setomforservice(String omforservice) {
+        this.omforservice = omforservice;
     }
 
     public String getServiceProvider() {
@@ -178,21 +196,23 @@ public class PlantDataModel {
         this.updatedAt = updatedAt;
     }
 
-    public PlantDataModel(int id, String plantId, String vendorInstalled, String district, String taluk, String panchayat, String village, String habitation, String plantCapacityLPH, String eControllerMake, String panelId, String latitude, String longitude, String mobileNumber, String serviceProvider, String createdAt, String updatedAt) {
+    public PlantDataModel(int id, String plantId,String district, String taluk, String panchayat, String village, String address, String latitude, String longitude,  String wpp_status, String dateOfInstallation, String schemeinstalled, String plantCapacity,String plantSupplier, String aAndmagency, String serviceProvider,String omforservice,String createdAt, String updatedAt) {
         this.id = id;
         this.plantId = plantId;
-        this.vendorInstalled = vendorInstalled;
         this.district = district;
         this.taluk = taluk;
         this.panchayat = panchayat;
         this.village = village;
-        this.habitation = habitation;
-        this.plantCapacityLPH = plantCapacityLPH;
-        this.eControllerMake = eControllerMake;
-        this.panelId = panelId;
+        this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.mobileNumber = mobileNumber;
+        this.wpp_status = wpp_status;
+        this.dateOfInstallation = dateOfInstallation;
+        this.schemeinstalled = schemeinstalled;
+        this.plantCapacity = plantCapacity;
+        this.plantSupplier = plantSupplier;
+        this.aAndmagency = aAndmagency;
+        this.omforservice = omforservice;
         this.serviceProvider = serviceProvider;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

@@ -34,7 +34,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
             android:gravity="center"
-            android:text="WPP Status Monitoring System"
+            android:text="@string/nav_header_title"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
 
@@ -54,7 +54,7 @@
             android:layout_marginLeft="@dimen/mainActivityPadding"
             android:layout_marginRight="@dimen/mainActivityPadding"
 
-            android:text="Phone number  : "
+            android:text="@string/mobile_number"
             android:textColor="#000000"
             android:textSize="16sp" />
         <EditText
@@ -63,51 +63,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/mainActivityPadding"
             android:layout_marginRight="@dimen/mainActivityPadding"
-            android:hint="Enter phone No."
+            android:hint="@string/enter_phone_number"
             android:inputType="number"
             android:maxLength="10"
             android:layout_marginTop="7dp"/>
-        <TextView
-            android:id="@+id/passwordFieldtv1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="@dimen/mainActivityPadding"
-            android:layout_marginRight="@dimen/mainActivityPadding"
 
-            android:text="Password  : "
-            android:textColor="#000000"
-            android:textSize="16sp" />
-        <EditText
-        android:id="@+id/passwordField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/mainActivityPadding"
-        android:layout_marginRight="@dimen/mainActivityPadding"
-        android:hint="Enter password"
-        android:inputType="textPassword" />
 
-        <!--<TextView-->
-            <!--android:id="@+id/message"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="@dimen/mainActivityPadding"-->
-            <!--android:layout_marginRight="@dimen/mainActivityPadding"-->
-
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:layout_marginBottom="30dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="Tap Send to verify your account with your phone number. "-->
-            <!--android:textColor="#000000"-->
-            <!--android:textSize="16sp" />-->
-        <!--<EditText-->
-        <!--android:id="@+id/passwordField"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="@dimen/mainActivityPadding"-->
-        <!--android:layout_marginRight="@dimen/mainActivityPadding"-->
-        <!--android:hint="Password"-->
-        <!--android:inputType="textPassword" />-->
 
         <Button
             android:id="@+id/loginButton"
@@ -118,8 +79,11 @@
             android:layout_marginRight="100dp"
             android:layout_marginTop="30dp"
             android:background="@color/colorBlueBackground"
-            android:text="Send OTP"
+            android:text="@string/sendotp"
             android:textColor="#FFFFFF"/>
+
+
+
 
         <TextView
             android:layout_width="match_parent"
@@ -129,6 +93,17 @@
             android:visibility="gone"
             android:layout_marginTop="8dp"
             android:textColor="@color/colorRed"/>
+
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            />
+
     </LinearLayout>
 
 </LinearLayout>

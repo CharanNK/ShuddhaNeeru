@@ -49,8 +49,8 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
     private UserDataModel userDetail;
     private String reasonOfFailure;
 
-    private String failureStatusURL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/user/plant/not-working/status/update";
-    private String operatorSurveyStatusURL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/check/opertor-survey/status";
+    private String failureStatusURL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/user/plant/not-working/status/update";
+    private String operatorSurveyStatusURL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/check/opertor-survey/status";
 
     public OperatorPlantsAdapter(Context mContext, List<PlantDataModel> plantsList, UserDataModel userDetail) {
         this.mContext = mContext;
@@ -73,7 +73,7 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
         Typeface roundsTypeFace = Typeface.createFromAsset(mContext.getAssets(),"fonts/ttrounds.ttf");
         Typeface linottesemibold = Typeface.createFromAsset(mContext.getAssets(),"fonts/linottesemibold.otf");
 
-       // viewHolder.panelIdTextView.setTypeface(roundsTypeFace);
+   // viewHolder.panelIdTextView.setTypeface(roundsTypeFace);
        // viewHolder.panelIdTextView.setText("Panel ID : " + currentPlant.getPanelId());
 
         viewHolder.plantAddressTextView.setTypeface(linottesemibold);
@@ -83,6 +83,7 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
 
         viewHolder.plantIdTextView.setTypeface(roundsTypeFace);
         viewHolder.plantIdTextView.setText("Plant ID : " + currentPlant.getPlantId());
+
 
         viewHolder.plantCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,9 +189,10 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
                     bundle.putInt("plantId", currentPlant.getId());
                     bundle.putString("plantdisplayId" ,currentPlant.getPlantId());
                     bundle.putString("plantVillage" ,currentPlant.getVillage());
-                    bundle.putString("plantCapacity", currentPlant.getPlantCapacityLPH());
+                    bundle.putString("plantCapacity", currentPlant.getPlantCapacity());
                     bundle.putString("plantLatitude", currentPlant.getLatitude());
                     bundle.putString("plantLongitude", currentPlant.getLongitude());
+
                     operatorDataEntry.setArguments(bundle);
 
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, operatorDataEntry).addToBackStack(null).commit();
@@ -287,7 +289,7 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
 
             plantIdTextView = itemView.findViewById(R.id.plantIdTv);
             plantAddressTextView = itemView.findViewById(R.id.plantAddressTv);
-          //  panelIdTextView = itemView.findViewById(R.id.panelIdTv);
+            //  panelIdTextView = itemView.findViewById(R.id.panelIdTv);
         }
     }
 }

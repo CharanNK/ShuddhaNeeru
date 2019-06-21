@@ -1,6 +1,8 @@
 package com.sanradiance.mobilewpp.LoginClasses;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +41,10 @@ public class VerifyOTPActivity extends AppCompatActivity {
     private static StringBuilder otpEntered = new StringBuilder();
     private String userDetailsString;
     private Long userMobileNumber;
+    SharedPreferences pref;
+    private ProgressBar spinner;
+
+
 
     private static String Verifyotp_URL ="https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/verifyOTP";
 
@@ -46,10 +53,9 @@ public class VerifyOTPActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
 
+
         Bundle bundle = getIntent().getExtras();
         final String mobile_number = bundle.getString("mobilenumber");
-        Toast.makeText(getApplicationContext(),"mobile number is" +mobile_number , Toast.LENGTH_LONG).show();
-
 
 //          userDetailsString = getIntent().getStringExtra("userdetails");
 //        userMobileNumber = getIntent().getLongExtra("mobilenumber",0);
@@ -68,6 +74,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
         operatorMobileNumberTv.setText(mobile_number);
 //
         verifyOtpButton = findViewById(R.id.verifyOtpButton);
+        spinner=(ProgressBar)findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
 
         otpDigit1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -222,108 +230,108 @@ public class VerifyOTPActivity extends AppCompatActivity {
             }
         });
 
+
+
         verifyOtpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final String fullOTP = otpEntered.toString();
+                if (fullOTP.length() < 1) {
+                    Toast.makeText(getApplicationContext(), "Please enter verification code", Toast.LENGTH_LONG).show();
+                } else {
+                    verifyOtpButton.setEnabled(false);
+                    verifyOtpButton.setBackgroundColor(Color.parseColor("#F4F4F4"));
+                    spinner.setVisibility(View.VISIBLE);
+                    try {
 
-                try {
+                        JSONObject paramJson = new JSONObject();
 
-                    JSONObject paramJson = new JSONObject();
-                    paramJson.put("mobile", mobile_number);
-                    paramJson.put("otp", otpEntered);
-                    Toast.makeText(getApplicationContext(), otpEntered , Toast.LENGTH_LONG).show();
+                        paramJson.put("mobile", mobile_number);
+                        paramJson.put("otp", otpEntered);
 
-                    // paramJson.put("remember_me", true);
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Verifyotp_URL, paramJson, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
+                        // paramJson.put("remember_me", true);
+                        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Verifyotp_URL, paramJson, new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
 
-                            Log.d("Response", response.toString());
-                            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                Log.d("Response", response.toString());
+                                try {
+                                    JSONObject loginResponse = new JSONObject(response.toString());
+                                    String success = loginResponse.getString("success");
 
-                            try {
-                                Toast.makeText(getApplicationContext(), "enter try", Toast.LENGTH_LONG).show();
-
-                                JSONObject loginResponse = new JSONObject(response.toString());
-                                String success = loginResponse.getString("success");
-
-                                Toast.makeText(getApplicationContext(), success, Toast.LENGTH_LONG).show();
-
-                                if (success.contains("true")) {
-                                     String userAccessToken = loginResponse.getString("access_token");
-                                        Toast.makeText(getApplicationContext(), userAccessToken, Toast.LENGTH_LONG).show();
+                                    if (success.contains("true")) {
+                                        String userAccessToken = loginResponse.getString("access_token");
                                         JSONObject userDetails = loginResponse.getJSONObject("user");
-                                        Toast.makeText(getApplicationContext(), userDetails.toString(), Toast.LENGTH_LONG).show();
 
                                         String accountType = userDetails.getString("account_type");
-//                                    if(!userAccessToken.isEmpty() && !accountType.isEmpty()){
-                                    if (accountType.contains("operator")) {
-                                        Toast.makeText(getApplicationContext(), "operator", Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(VerifyOTPActivity.this, OperatorDashboardActivity.class);
-                                        intent.putExtra("userdetails", response.toString());
-                                        startActivity(intent);
-                                        finish();
-                                    } else if (accountType.contains("admin")) {
-                                        Intent intent = new Intent(VerifyOTPActivity.this, CommissionerDashboard.class);
-                                        startActivity(intent);
-                                        finish();
-                                    } else if (accountType.contains("commissioner")) {
-                                        Intent intent = new Intent(VerifyOTPActivity.this, CommissionerDashboard.class);
-                                        startActivity(intent);
-                                        finish();
+                                        if (accountType.contains("operator")) {
+                                            Intent intent = new Intent(VerifyOTPActivity.this, OperatorDashboardActivity.class);
+                                            intent.putExtra("userdetails", response.toString());
+                                            startActivity(intent);
+                                            finish();
+                                        } else if (accountType.contains("admin")) {
+                                            Intent intent = new Intent(VerifyOTPActivity.this, CommissionerDashboard.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else if (accountType.contains("commissioner")) {
+                                            Intent intent = new Intent(VerifyOTPActivity.this, CommissionerDashboard.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            verifyOtpButton.setEnabled(true);
+                                            verifyOtpButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                                            spinner.setVisibility(View.GONE);
+                                            Toast.makeText(getApplicationContext(), "invalid operator", Toast.LENGTH_LONG).show();
+                                        }
                                     } else {
-                                        Toast.makeText(getApplicationContext(), "invalid operator", Toast.LENGTH_LONG).show();
+                                        verifyOtpButton.setEnabled(true);
+                                        verifyOtpButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                                        spinner.setVisibility(View.GONE);
+                                        Toast.makeText(getApplicationContext(), "Invalid OTP", Toast.LENGTH_LONG).show();
                                     }
-                            }else{
-                                Toast.makeText(getApplicationContext(), "invalid otp details", Toast.LENGTH_LONG).show();
-
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
 
-
-
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("Error", error.toString());
                             }
-                        }
+                        }) {
 
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("Error", error.toString());
-                            Toast.makeText(getApplicationContext(),error.toString() , Toast.LENGTH_LONG).show();
+                            @Override
+                            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                                int mStatusCode = response.statusCode;
+                                Log.d("Status code", String.valueOf(mStatusCode));
+                                return super.parseNetworkResponse(response);
+                            }
 
-                            //errorMessage.setVisibility(View.VISIBLE);
-//                            if (errorMessage.toString().contains("NoConnectionError")) {
-//                                Snackbar.make(findViewById(R.id.loginLayout), "No Internet!", Snackbar.LENGTH_LONG).show();
-//                            } else
-//                                errorMessage.setText("Invalid login details. Please try again!");
-                        }
-                    }) {
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("Content-Type", "application/json");
+                                params.put("X-Requested-With", "XMLHttpRequest");
+                                return params;
+                            }
+                        };
 
-                        @Override
-                        protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                            int mStatusCode = response.statusCode;
-                            Log.d("Status code", String.valueOf(mStatusCode));
-                            return super.parseNetworkResponse(response);
-                        }
-
-                        @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("Content-Type", "application/json");
-                            params.put("X-Requested-With", "XMLHttpRequest");
-                            return params;
-                        }
-                    };
-
-                    RequestQueue requestQueue = Volley.newRequestQueue(VerifyOTPActivity.this);
-                    requestQueue.add(jsonObjectRequest);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        RequestQueue requestQueue = Volley.newRequestQueue(VerifyOTPActivity.this);
+                        requestQueue.add(jsonObjectRequest);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
+
+        });
+
+    }
+}
+
+
 
 
 //                String fullOTP = otpEntered.toString();
@@ -338,7 +346,3 @@ public class VerifyOTPActivity extends AppCompatActivity {
 //                    Toast.makeText(getApplicationContext(), "Invalid OTP! Try again!", Toast.LENGTH_SHORT).show();
 //                }
 //            }
-        });
-
-    }
-}
