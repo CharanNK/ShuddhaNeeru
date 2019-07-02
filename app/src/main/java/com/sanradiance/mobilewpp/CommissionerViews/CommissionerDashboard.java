@@ -1,6 +1,8 @@
 package com.sanradiance.mobilewpp.CommissionerViews;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
@@ -8,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +28,8 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.sanradiance.mobilewpp.LoginClasses.LoginActivity;
+import com.sanradiance.mobilewpp.OperatorViews.OperatorDashboardActivity;
 import com.sanradiance.mobilewpp.R;
 
 import org.json.JSONException;
@@ -47,48 +52,71 @@ public class CommissionerDashboard extends AppCompatActivity implements View.OnC
     String notReportedPlantDetails;
 
     Boolean serverResponse = false;
-    SharedPreferences prf;
+    SharedPreferences pref;
 
 
     final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/dashboard/count/details";
-
+    Button logout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commissioner_dashboard);
 
-       // prf = getSharedPreferences("user_details", MODE_PRIVATE);
-
-
         nchart = findViewById(R.id.commissionerpiechart);
         today = findViewById(R.id.todaydate);
-
-        String userDetails = getIntent().getStringExtra("userdetails");
+        logout = findViewById(R.id.logout);
 
         try {
-            JSONObject jsonObject = new JSONObject(userDetails);
-            accessToken = jsonObject.getString("access_token");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            pref = getSharedPreferences("user_save", Context.MODE_PRIVATE);
+            String session_check = pref.getString("user_session_save", null);
+            if (session_check != null) {
+                try {
+                    JSONObject loginResponse = new JSONObject(session_check);
+                    String success = loginResponse.getString("success");
+                    if (success.equals("true")) {
+                        accessToken = loginResponse.getString("access_token");
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+            }else{
+                Intent mainActivityIntent = new Intent(CommissionerDashboard.this, LoginActivity.class);
+                startActivity(mainActivityIntent);
+            }
+             }catch (Exception e){
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+             }
 
-        plantcount = findViewById(R.id.totalplant);
-        working = findViewById(R.id.plantworking);
-        notworking = findViewById(R.id.plantnotworking);
-        notreported = findViewById(R.id.reporteddata);
-        waterdispense = findViewById(R.id.volumedispense);
-        waterforday = findViewById(R.id.volumeperday);
+                        plantcount = findViewById(R.id.totalplant);
+                        working = findViewById(R.id.plantworking);
+                        notworking = findViewById(R.id.plantnotworking);
+                        notreported = findViewById(R.id.reporteddata);
+                        waterdispense = findViewById(R.id.volumedispense);
+                        waterforday = findViewById(R.id.volumeperday);
 
-        plantsNotReported = findViewById(R.id.plantsNotReported);
+                        plantsNotReported = findViewById(R.id.plantsNotReported);
 
-        plantsNotReported.setOnClickListener(this);
+                        plantsNotReported.setOnClickListener(this);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        dateString = sdf.format(date);
-        today.setText(dateString);
-        updateFields();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        dateString = sdf.format(date);
+                        today.setText(dateString);
+
+                    logout.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.clear();
+                            editor.commit();
+                            Intent intent= new Intent(CommissionerDashboard.this,LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+
+                    updateFields();
+
+
     }
-
     private void updateFields() {
 
         try {
@@ -105,7 +133,7 @@ public class CommissionerDashboard extends AppCompatActivity implements View.OnC
                         JSONObject obj = new JSONObject(String.valueOf(response));
                         JSONObject employee = obj.getJSONObject("data");
 
-                        int plant = Integer.valueOf(employee.getInt("total_plant_count"));
+                        int plant = Integer.valueOf(employee.getInt("total_active_plant"));
                         int totalworkingplant = Integer.valueOf(employee.getInt("total_working_plant"));
                         int notworkingplant = Integer.valueOf(employee.getInt("total_not_working_plant"));
                         int reportedplant = Integer.valueOf(employee.getInt("total_not_reported_plant"));
@@ -138,14 +166,10 @@ public class CommissionerDashboard extends AppCompatActivity implements View.OnC
                     int mStatusCode = response.statusCode;
                     Log.d("Status code", String.valueOf(mStatusCode));
                     if (mStatusCode == 200) {
-//                        if (getFragmentManager().getBackStackEntryCount() != 0) {
-//                            getFragmentManager().popBackStack();
-//                        }
                         serverResponse = true;
                     }
                     return super.parseNetworkResponse(response);
                 }
-
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
@@ -181,14 +205,9 @@ public class CommissionerDashboard extends AppCompatActivity implements View.OnC
         dataSet.setValueTextSize(10f);
         nchart.setUsePercentValues(false);
         nchart.animateXY(1500, 1500);
-
-//        pieData.setValueFormatter(new PercentFormatter());
-
         nchart.setCenterText("Plant\nStatistics");
         nchart.setCenterTextSize(20f);
 
-//        nchart.animateY(3000, Easing.EasingOption.Linear);
-//        nchart.animateY(3000, Easing.EasingOption.EaseOutBack);
         nchart.setDrawHoleEnabled(true);
         nchart.setData(pieData);
         nchart.setDrawSliceText(false); // To remove slice text
@@ -241,6 +260,11 @@ public class CommissionerDashboard extends AppCompatActivity implements View.OnC
         }
     }
 //end pie chart code
+    public void onBackPressed() {
+
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }
-
-

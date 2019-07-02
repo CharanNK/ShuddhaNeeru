@@ -1,5 +1,6 @@
 package com.sanradiance.mobilewpp.LoginClasses;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -41,8 +42,9 @@ public class VerifyOTPActivity extends AppCompatActivity {
     private static StringBuilder otpEntered = new StringBuilder();
     private String userDetailsString;
     private Long userMobileNumber;
-    SharedPreferences pref;
+    SharedPreferences sharedPre;
     private ProgressBar spinner;
+     String mobile_number;
 
 
 
@@ -53,296 +55,143 @@ public class VerifyOTPActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
 
-
         Bundle bundle = getIntent().getExtras();
-        final String mobile_number = bundle.getString("mobilenumber");
-
-//          userDetailsString = getIntent().getStringExtra("userdetails");
-//        userMobileNumber = getIntent().getLongExtra("mobilenumber",0);
-//        Log.d("User details:",userDetailsString);
+          mobile_number = bundle.getString("mobile_number");
 
         otpDigit1 = findViewById(R.id.otpDigit1);
-        otpDigit2 = findViewById(R.id.otpDigit2);
-        otpDigit3 = findViewById(R.id.otpDigit3);
-        otpDigit4 = findViewById(R.id.otpDigit4);
-        otpDigit5 = findViewById(R.id.otpDigit5);
-        otpDigit6 = findViewById(R.id.otpDigit6);
-//
+
         TextView operatorMobileNumberTv = findViewById(R.id.operatormobile_value);
-////        String existingText = operatorMobileNumberTv.getText().toString();
-////        existingText+= String.valueOf(userMobileNumber);
         operatorMobileNumberTv.setText(mobile_number);
-//
         verifyOtpButton = findViewById(R.id.verifyOtpButton);
         spinner=(ProgressBar)findViewById(R.id.progressBar);
         spinner.setVisibility(View.GONE);
-
-        otpDigit1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==1){
-                    otpEntered.deleteCharAt(0);
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==0&&otpDigit1.length()==1){
-                    otpEntered.append(charSequence);
-//                    otpDigit1.clearFocus();
-                    otpDigit2.requestFocus();
-                    otpDigit2.setCursorVisible(true);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(otpEntered.length()==0)
-                    otpDigit1.requestFocus();
-            }
-        });
-
-        otpDigit2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==2){
-                    otpEntered.deleteCharAt(1);
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==1&&otpDigit1.length()==1){
-                    otpEntered.append(charSequence);
-//                    otpDigit2.clearFocus();
-                    otpDigit3.requestFocus();
-                    otpDigit3.setCursorVisible(true);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(otpEntered.length()==1)
-                    otpDigit2.requestFocus();
-            }
-        });
-
-        otpDigit3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==3){
-                    otpEntered.deleteCharAt(2);
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==2&&otpDigit1.length()==1){
-                    otpEntered.append(charSequence);
-//                    otpDigit3.clearFocus();
-                    otpDigit4.requestFocus();
-                    otpDigit4.setCursorVisible(true);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(otpEntered.length()==2)
-                    otpDigit3.requestFocus();
-            }
-        });
-
-        otpDigit4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==4){
-                    otpEntered.deleteCharAt(3);
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==3&&otpDigit1.length()==1){
-                    otpEntered.append(charSequence);
-                   // otpDigit3.clearFocus();
-                    otpDigit5.requestFocus();
-                    otpDigit5.setCursorVisible(true);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(otpEntered.length()==3)
-                    otpDigit4.requestFocus();
-            }
-        });
-
-
-
-        otpDigit5.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==5){
-                    otpEntered.deleteCharAt(4);
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==4&&otpDigit1.length()==1){
-                    otpEntered.append(charSequence);
-//                   otpDigit3.clearFocus();
-                    otpDigit6.requestFocus();
-                    otpDigit6.setCursorVisible(true);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(otpEntered.length()==4)
-                    otpDigit4.requestFocus();
-            }
-        });
-
-
-        otpDigit6.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==6){
-                    otpEntered.deleteCharAt(5);
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(otpEntered.length()==5&&otpDigit1.length()==1){
-                    otpEntered.append(charSequence);
-                   otpDigit5.clearFocus();
-//                    otpDigit6.requestFocus();
-//                    otpDigit6.setCursorVisible(true);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(otpEntered.length()==5)
-                    otpDigit5.requestFocus();
-            }
-        });
-
-
-
+        sharedPre= getSharedPreferences("user_save", Context.MODE_PRIVATE);
         verifyOtpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String fullOTP = otpEntered.toString();
-                if (fullOTP.length() < 1) {
-                    Toast.makeText(getApplicationContext(), "Please enter verification code", Toast.LENGTH_LONG).show();
-                } else {
-                    verifyOtpButton.setEnabled(false);
-                    verifyOtpButton.setBackgroundColor(Color.parseColor("#F4F4F4"));
-                    spinner.setVisibility(View.VISIBLE);
-                    try {
+                    final String fullOTP = otpDigit1.getText().toString();
+                    if (fullOTP.length() < 1) {
+                        Toast.makeText(getApplicationContext(), "Please enter verification code", Toast.LENGTH_LONG).show();
+                    }else if(fullOTP.length() < 6){
+                        Toast.makeText(getApplicationContext(), "Please enter valid verification code", Toast.LENGTH_LONG).show();
+                    } else {
+                        Log.i("verify","success8528");
+                        verifyOtpButton.setEnabled(false);
+                        verifyOtpButton.setBackgroundColor(Color.parseColor("#F4F4F4"));
+                        spinner.setVisibility(View.VISIBLE);
+                        try {
+                            JSONObject paramJson = new JSONObject();
+                            paramJson.put("mobile", mobile_number);
+                            paramJson.put("otp", fullOTP);
+                            Log.i("verify","calling success8528");
+                            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Verifyotp_URL, paramJson, new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
 
-                        JSONObject paramJson = new JSONObject();
+                                    Log.d("Response", response.toString());
+                                    Log.i("verify","before try");
+                                    try {
+                                        Log.i("verify","inside try");
+                                        JSONObject loginResponse = new JSONObject(response.toString());
+                                        String success = loginResponse.getString("success");
+                                        Log.i("verify",success);
+                                        if (success.equals("true")) {
+                                            String userAccessToken = loginResponse.getString("access_token");
+                                            JSONObject userDetails = loginResponse.getJSONObject("user");
 
-                        paramJson.put("mobile", mobile_number);
-                        paramJson.put("otp", otpEntered);
+                                            String accountType = userDetails.getString("account_type");
+                                            if (accountType.equals("operator")) {
+                                                try {
+                                                    SharedPreferences.Editor editor = sharedPre.edit();
+                                                    editor.putString("user_session_save", response.toString());
+                                                    editor.commit();
+                                                    Intent intent = new Intent(VerifyOTPActivity.this, OperatorDashboardActivity.class);
+                                                    intent.putExtra("userdetails", response.toString());
+                                                    startActivity(intent);
+                                                    finish();
+                                                }catch(Exception e){
+                                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                                }
+                                                //end session
 
-                        // paramJson.put("remember_me", true);
-                        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Verifyotp_URL, paramJson, new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-
-                                Log.d("Response", response.toString());
-                                try {
-                                    JSONObject loginResponse = new JSONObject(response.toString());
-                                    String success = loginResponse.getString("success");
-
-                                    if (success.contains("true")) {
-                                        String userAccessToken = loginResponse.getString("access_token");
-                                        JSONObject userDetails = loginResponse.getJSONObject("user");
-
-                                        String accountType = userDetails.getString("account_type");
-                                        if (accountType.contains("operator")) {
-                                            Intent intent = new Intent(VerifyOTPActivity.this, OperatorDashboardActivity.class);
-                                            intent.putExtra("userdetails", response.toString());
-                                            startActivity(intent);
-                                            finish();
-                                        } else if (accountType.contains("admin")) {
-                                            Intent intent = new Intent(VerifyOTPActivity.this, CommissionerDashboard.class);
-                                            startActivity(intent);
-                                            finish();
-                                        } else if (accountType.contains("commissioner")) {
-                                            Intent intent = new Intent(VerifyOTPActivity.this, CommissionerDashboard.class);
-                                            startActivity(intent);
-                                            finish();
+                                            } else if (accountType.equals("admin")) {
+                                                SharedPreferences.Editor editor = sharedPre.edit();
+                                                editor.putString("user_session_save", response.toString());
+                                                editor.commit();
+                                                Intent intent = new Intent(VerifyOTPActivity.this, CommissionerDashboard.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else if (accountType.equals("commissioner")) {
+                                                SharedPreferences.Editor editor = sharedPre.edit();
+                                                editor.putString("user_session_save", response.toString());
+                                                editor.commit();
+                                                Intent intent = new Intent(VerifyOTPActivity.this, CommissionerDashboard.class);
+                                               // intent.putExtra("userdetails", response.toString());
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                verifyOtpButton.setEnabled(true);
+                                                verifyOtpButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                                                spinner.setVisibility(View.GONE);
+                                                Toast.makeText(getApplicationContext(), "Invalid member", Toast.LENGTH_LONG).show();
+                                            }
                                         } else {
                                             verifyOtpButton.setEnabled(true);
                                             verifyOtpButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                                             spinner.setVisibility(View.GONE);
-                                            Toast.makeText(getApplicationContext(), "invalid operator", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(), "Invalid OTP", Toast.LENGTH_LONG).show();
                                         }
-                                    } else {
-                                        verifyOtpButton.setEnabled(true);
-                                        verifyOtpButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                        spinner.setVisibility(View.GONE);
-                                        Toast.makeText(getApplicationContext(), "Invalid OTP", Toast.LENGTH_LONG).show();
+                                    } catch (JSONException e) {
+                                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+
+                                        e.printStackTrace();
+
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
-                            }
 
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.d("Error", error.toString());
-                            }
-                        }) {
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("Error", error.toString());
+                                    verifyOtpButton.setEnabled(true);
+                                    verifyOtpButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                                    spinner.setVisibility(View.GONE);
+                                    Toast.makeText(getApplicationContext(),  error.toString(), Toast.LENGTH_LONG).show();
 
-                            @Override
-                            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                                int mStatusCode = response.statusCode;
-                                Log.d("Status code", String.valueOf(mStatusCode));
-                                return super.parseNetworkResponse(response);
-                            }
+                                }
+                            }) {
 
-                            @Override
-                            public Map<String, String> getHeaders() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put("Content-Type", "application/json");
-                                params.put("X-Requested-With", "XMLHttpRequest");
-                                return params;
-                            }
-                        };
+                                @Override
+                                protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                                    int mStatusCode = response.statusCode;
+                                    Log.d("Status code", String.valueOf(mStatusCode));
+                                    return super.parseNetworkResponse(response);
+                                }
 
-                        RequestQueue requestQueue = Volley.newRequestQueue(VerifyOTPActivity.this);
-                        requestQueue.add(jsonObjectRequest);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                                @Override
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("Content-Type", "application/json");
+                                    params.put("X-Requested-With", "XMLHttpRequest");
+                                    return params;
+                                }
+                            };
+
+                            RequestQueue requestQueue = Volley.newRequestQueue(VerifyOTPActivity.this);
+                            requestQueue.add(jsonObjectRequest);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-
-            }
-
         });
 
     }
+    public void onBackPressed() {
+
+        Intent intent = new Intent(VerifyOTPActivity.this,LoginActivity.class);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }
-
-
-
-
-//                String fullOTP = otpEntered.toString();
-//                if (fullOTP.equals("1725")) {
-//                    Intent intent = new Intent(VerifyOTPActivity.this, OperatorDashboardActivity.class);
-//                    intent.putExtra("userdetails", userDetailsString);
-//                    startActivity(intent);
-//                    finish();
-//                } else if (fullOTP.length() < 1) {
-//                    Toast.makeText(getApplicationContext(), "Please enter verification code", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "Invalid OTP! Try again!", Toast.LENGTH_SHORT).show();
-//                }
-//            }

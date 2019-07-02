@@ -1,8 +1,11 @@
 package com.sanradiance.mobilewpp.CommissionerViews;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -46,6 +49,9 @@ import com.sanradiance.mobilewpp.ConstantValues;
 import com.sanradiance.mobilewpp.ImageUploadHelpers.APIUtils;
 import com.sanradiance.mobilewpp.ImageUploadHelpers.FileService;
 import com.sanradiance.mobilewpp.ImageUploadHelpers.ServerResponse;
+import com.sanradiance.mobilewpp.LoginClasses.LoginActivity;
+import com.sanradiance.mobilewpp.LoginClasses.VerifyOTPActivity;
+import com.sanradiance.mobilewpp.OperatorViews.OperatorDashboardActivity;
 import com.sanradiance.mobilewpp.R;
 
 import org.json.JSONObject;
@@ -78,7 +84,7 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
     ImageView volumeDispensedCamera;
     Button submitButton;
 
-    int plantId, volumeDispensedImageId;
+    int plantId, volumeDispensedImageId=0;
     TextView operatorVillageTv,plant_display_id;
 
     ConstantValues constantValues = new ConstantValues();
@@ -88,18 +94,33 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
     FileService fileService;
 
     String failureReason, rwTankLevel, twTankLevel, volumeDispensed, twTdsValue;
-    private String dataUploadURL = "https://domytaxonline.com.au/shuddha-neeru/public/api/auth/user/plant/not-working/status/update";
+    private String dataUploadURL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/user/plant/not-working/status/update";
     private String accessToken;
+    private boolean flagmale = false;
+    private boolean flagfemale = false;
+    SharedPreferences pref;
+    Boolean valuesSetFlag = true;
+
+     TextView plantFailureLabel, labelRWTankLevel, labelTWTankLevel, labelVolumeDispensed, labelTWTDS;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        try {
+            pref = this.getActivity().getSharedPreferences("user_save", Context.MODE_PRIVATE);
+            String session_check = pref.getString("user_session_save", null);
+            if (session_check == null) {
+                Intent mainActivityIntent = new Intent(this.getActivity(), LoginActivity.class);
+                startActivity(mainActivityIntent);
+            }
+        }catch (Exception e){
+            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+
         View view = inflater.inflate(R.layout.plant_failure_layout, container, false);
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-
-     //   plantIdTextView = view.findViewById(R.id.label_plantid);
 
         rwTankLevelLow = view.findViewById(R.id.rwtank_level1);
         rwTankLevelHalf = view.findViewById(R.id.rwtank_level2);
@@ -120,6 +141,39 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
 
         failureRadioGroup = view.findViewById(R.id.failure_radiogroup);
 
+        plantFailureLabel= view.findViewById(R.id.label_plantFailure);
+        labelRWTankLevel = view.findViewById(R.id.label_rwtanklevel);
+        labelTWTankLevel = view.findViewById(R.id.label_twtanklevel);
+        labelVolumeDispensed = view.findViewById(R.id.label_volumedispensed);
+        labelTWTDS = view.findViewById(R.id.label_twtds);
+
+        noPowerButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                noWaterButton.setChecked(false);
+                plantBreakdownButton.setChecked(false);
+                noPowerButton.setChecked(true);
+                failureReason = "no_power";
+            }
+        });
+
+        noWaterButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                noWaterButton.setChecked(true);
+                plantBreakdownButton.setChecked(false);
+                noPowerButton.setChecked(false);
+                failureReason = "no_water";
+            }
+        });
+
+        plantBreakdownButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                noWaterButton.setChecked(false);
+                plantBreakdownButton.setChecked(true);
+                noPowerButton.setChecked(false);
+                failureReason = "break_down";
+            }
+        });
+
         submitButton = view.findViewById(R.id.operator_submit_button);
         operatorVillageTv = view.findViewById(R.id.operatorname_value);
         plant_display_id = view.findViewById(R.id.operatorid_value);
@@ -129,12 +183,9 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
         String plantdisplayid = String.valueOf(this.getArguments().getString("plantdisplayId"));
         String plantdisplayVillage = String.valueOf(this.getArguments().getString("plantVillage"));
 
-        Toast.makeText(getActivity(),plantdisplayVillage,Toast.LENGTH_LONG).show();
         setInitValues(plantdisplayid,plantdisplayVillage);
 
-
         plantId = Integer.valueOf(this.getArguments().getInt("plant_id"));
-
         initViews();
 
         fileService = APIUtils.getFileService();
@@ -142,36 +193,13 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
-    private void setInitValues(String plantdisplayid,String plantdisplayVillage) {
+    private void setInitValues(String plantdisplayid, String plantdisplayVillage) {
 
         plant_display_id.setText(plantdisplayid);
         operatorVillageTv.setText(plantdisplayVillage);
     }
 
     private void initViews() {
-
-       // String plantIdLabel = plantIdTextView.getText().toString();
-       // plantIdTextView.setText(plantIdLabel + " " + String.valueOf(plantId));
-
-        failureRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radio_nopower:
-                        failureReason = "no_power";
-                        break;
-                    case R.id.radio_nowater:
-                        failureReason = "no_water";
-                        break;
-                    case R.id.radio_breakdown:
-                        failureReason = "break_down";
-                        break;
-                }
-             // enableButtons(rwTankLevelLow,rwTankLevelHalf,rwTankLevelFull);
-            //  disableButtons(noPowerButton,noWaterButton,plantBreakdownButton);
-
-            }
-        });
 
         twTDSEdiText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -290,11 +318,64 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.operator_submit_button:
                 twTdsValue = twTDSEdiText.getText().toString();
-                uploadData();
+                validateData();
                 break;
         }
     }
+    private void validateData() {
+        valuesSetFlag = true;
+        if(failureReason==null){
+            plantFailureLabel.setTextColor(Color.RED);
+            valuesSetFlag = false;
+        } else {
+            plantFailureLabel.setTextColor(Color.BLACK);
+        }
 
+        if (rwTankLevel == null) {
+            labelRWTankLevel.setTextColor(Color.RED);
+            valuesSetFlag = false;
+        } else {
+            labelRWTankLevel.setTextColor(Color.BLACK);
+
+        }
+
+        if (twTankLevel == null) {
+            labelTWTankLevel.setTextColor(Color.RED);
+            valuesSetFlag = false;
+        } else {
+            labelTWTankLevel.setTextColor(Color.BLACK);
+
+        }
+
+        volumeDispensed = volumeDispensedEditText.getText().toString();
+        if (volumeDispensed.length() <= 0) {
+            labelVolumeDispensed.setTextColor(Color.RED);
+            valuesSetFlag = false;
+        } else {
+            labelVolumeDispensed.setTextColor(Color.BLACK);
+        }
+
+        if(volumeDispensedImageId==0){
+            volumeDispensedCamera.setImageResource(R.drawable.ic_camera_red);
+            valuesSetFlag = false;
+        }else{
+            volumeDispensedCamera.setImageResource(R.drawable.ic_camera_grey);
+        }
+        twTdsValue = twTDSEdiText.getText().toString();
+        if (twTdsValue.length() <= 0) {
+            labelTWTDS.setTextColor(Color.RED);
+            valuesSetFlag = false;
+        } else {
+            labelTWTDS.setTextColor(Color.BLACK);
+
+        }
+
+        if (valuesSetFlag) {
+            uploadData();
+        } else {
+            Toast.makeText(getContext(), "Please fill all fields before Submit!", Toast.LENGTH_LONG).show();
+        }
+    }
     private void uploadData() {
         try {
             JSONObject paramJson = new JSONObject();
@@ -306,7 +387,6 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
             paramJson.put("volume_dispensed_in_ltr", volumeDispensed);
             paramJson.put("volume_dispensed_in_ltr_image_id", volumeDispensedImageId);
             paramJson.put("tw_tds_ppm", twTdsValue);
-
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading data to server..");
 //            progressDialog.setMessage("Please wait..");
@@ -321,6 +401,7 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d("Error", error.toString());
+                    Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
                 }
             }) {
 
@@ -332,6 +413,8 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
                         progressDialog.dismiss();
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
+                                Intent routing = new Intent(getActivity(), OperatorDashboardActivity.class);
+                                startActivity(routing);
                                 Toast.makeText(getContext(), "Data Uploaded Successfully!", Toast.LENGTH_LONG).show();
                             }
                         });
@@ -355,6 +438,8 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
             requestQueue.add(jsonObjectRequest);
         } catch (Exception e) {
             Log.e("JsonError", e.getMessage());
+            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -471,13 +556,13 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
                     Log.d("response", "success");
-                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                     int fileId = response.body().getFileId();
                     Log.d("fileId", String.valueOf(fileId));
                     volumeDispensedImageId = fileId;
                   //  volumeDispensedCamera.setEnabled(false);
                   //  volumeDispensedCamera.setImageResource(R.drawable.ic_camera_grey);
                     volumeDispensed = volumeDispensedEditText.getText().toString();
+                    volumeDispensedCamera.setImageResource(R.drawable.ic_camera_grey);
                    // volumeDispensedEditText.setEnabled(false);
 
                    // twTDSEdiText.setEnabled(true);
@@ -490,5 +575,14 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
                 Toast.makeText(getContext(), "ERROR: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+    public void onBackPressed() {
+
+// make sure you have this outcommented
+// super.onBackPressed();
+        Intent intent = new Intent(getActivity(),OperatorDashboardActivity.class);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

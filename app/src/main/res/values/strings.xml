@@ -7,44 +7,57 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">WPP Status Monitoring System</string>
-    <string name="nav_header_subtitle">RDWS and SD, Government of Karnataka</string>
+    <string name="nav_header_title_kannada" translatable="false">ಶುದ್ಧ ಕುಡಿಯುವ ನೀರಿನ ಘಟಕಗಳ ಉಸ್ತುವಾರಿ ವ್ಯವಸ್ಥೆ</string>
+    <string name="nav_header_subtitle">RDW &amp; SD, Government of Karnataka</string>
+    <string name="nav_header_subtitle_kannada" translatable="false">ಗ್ರಾಮೀಣ ಕುಡಿಯುವ ನೀರು ಮತ್ತು ನೈರ್ಮಲ್ಯ ಇಲಾಖೆ, ಕರ್ನಾಟಕ ಸರ್ಕಾರ</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
     <string name="operator_name">Operator Name :</string>
     <string name="operator_id">Operator ID : </string>
-    <string name="mobile_number">Mobile Number : </string>
+    <string name="mobile_number">Mobile Number (ಮೊಬೈಲ್ ಸಂಖ್ಯೆ): </string>
     <string name="location">Location : </string>
-    <string name="plant_capacity">Plant Capacity : </string>
-    <string name="voltage">Voltage : </string>
-    <string name="rwtl">RW Tank Level : </string>
-    <string name="rwfl">RW Flow Rate in LPH : </string>
-    <string name="twfl">TW Flow Rate in LPH: </string>
-    <string name="twtl">TW Tank Level : </string>
-    <string name="volume_disposed">Volume dispensed (Ltr) : </string>
-    <string name="twtds">TW TDS(PPM) : </string>
-    <string name="failurelabel">Failure reason : </string>
-    <string name="nowater">No Water</string>
+    <string name="plant_capacity">Plant Capacity </string>
+    <string name="plant_capacity_kannada" translatable="false">(ಘಟಕದ ಸಾಮರ್ಥ್ಯ): </string>
+    <string name="voltage">Voltage  </string>
+    <string name="voltage_kannada" translatable="false">(ವೋಲ್ಟೇಜ್): </string>
+    <string name="rwtl">RW Tank Level </string>
+    <string name="rwtl_kannada" translatable="false">(ಕಚ್ಚಾ ನೀರಿನ ಮಟ್ಟ): </string>
+    <string name="rwfl">RW Flow Rate in LPH  </string>
+    <string name="rwfl_kannada" translatable="false"> (ಕಚ್ಚಾ ನೀರಿನ ಹರಿವು ಪ್ರಮಾಣ): </string>
+    <string name="twfl">TW Flow Rate in LPH  </string>
+    <string name="twfl_kannada" translatable="false">(ಶುದ್ಧ ನೀರಿನ ಹರಿವು ಪ್ರಮಾಣ): </string>
+    <string name="twtl">TW Tank Level</string>
+    <string name="twtl_kannada" translatable="false">(ಶುದ್ಧ ನೀರಿನ ಮಟ್ಟ): </string>
+    <string name="volume_disposed">Volume dispensed (Ltr) </string>
+    <string name="volume_disposed_kannada" translatable="false">(ಶುದ್ಧ ನೀರಿನ ಪ್ರಮಾಣ ವಿತರಣೆ): </string>
+    <string name="twtds">TW TDS(PPM)</string>
+    <string name="twtds_kannada" translatable="false">(ಸಂಪೂರ್ಣ ಕರಗಿದ ಲವಣಗಳು) : </string>
+    <string name="failurelabel">Failure reason</string>
+    <string name="failurelabel_kannada" translatable="false">(ವೈಫಲ್ಯದ ಕಾರಣ): </string>
+    <string name="nowater">No Water </string>
+    <string name="nowater_kannada" translatable="false">(ಕಚ್ಚಾ ನೀರು ಸರಬರಾಜು ಇರುವುದಿಲ್ಲ)</string>
     <string name="nopower">No Power</string>
+    <string name="nopower_kannada" translatable="false">(ವಿದ್ಯುತ್ ಸರಬರಾಜು ಇರುವುದಿಲ್ಲ)</string>
     <string name="plantbreakdown">Plant break-down</string>
+    <string name="plantbreakdown_kannada" translatable="false">(ಘಟಕ ದುರಸ್ಥಿಯಲ್ಲಿದೆ)</string>
     <string name="plant_id">Plant ID : </string>
-    <string name="electricity_meter">Electricity Meter (KWH / Units) : </string>
+    <string name="electricity_meter">Electricity Meter (KWH / Units) </string>
+    <string name="electricity_meter_kannada" translatable="false">(ವಿದ್ಯುತ್ ಮೀಟರ್):</string>
     <string name="showdata">Show data</string>
     <string name="view">View District</string>
     <string name="working_plants">Plants Working</string>
     <string name="not_working_plants">Plants Not Working</string>
     <string name="not_reported_data">Data Not Reported</string>
     <string name="enter_phone_number">Enter mobile no.</string>
-    <string name="sendotp">Send OTP</string>
-    <string name="verify_otp">Verification Code</string>
-    <string name="verify">Verify</string>
-
-
-
-
-
-
-
+    <string name="sendotp">Send OTP (ಓ.ಟಿ.ಪಿ ಯನ್ನು ನಮೂದಿಸಿ)</string>
+    <string name="verify_otp">Verification Code (ಪರಿಶೀಲನೆ  ಸ೦ಕೇತ)</string>
+    <string name="verify">Verify (ಪರಿಶೀಲಿಸಿ)</string>
+    <string name="submit" translatable="false">Submit (ಸಲ್ಲಿಸು)</string>
+    <string name="low" translatable="false">LOW<font fgcolor='#FF4CD964'>(ಕಡಿಮೆ)</font></string>
+    <string name="half" translatable="false">HALF(ಅರ್ಧ)</string>
+    <string name="full" translatable="false">FULL(ತುಂಬಿದೆ)</string>
+    <string name="plantid" translatable="false">(ಘಟಕದ ಗುರುತು ಸಂಖ್ಯೆ)</string>
 
 
     <string-array name="voltage_array">
@@ -100,6 +113,5 @@
         <item>1600 - 2000</item>
         <item>&gt;2000</item>
     </string-array>
-
 
 </resources>

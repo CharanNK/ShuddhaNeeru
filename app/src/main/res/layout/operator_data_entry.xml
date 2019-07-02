@@ -18,9 +18,9 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="@dimen/mainActivityPadding"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginBottom="20dp"
                 app:cardElevation="8dp">
 
@@ -42,7 +42,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.75"
                             android:drawableLeft="@drawable/ic_operatorid"
-                            android:text="Plant Id :" />
+                            android:text="Plant Id :"
+                            />
+
 
                         <TextView
                             android:id="@+id/operatorid_value"
@@ -51,6 +53,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="testing testing testing testing" />
+
                     </TableRow>
                     <TableRow android:layout_marginTop="5dp">
 
@@ -77,26 +80,41 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginBottom="20dp"
                 app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_margin="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/label_plantcapacity"
                         style="@style/operatorTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/plant_capacity" />
+                        android:text="@string/plant_capacity"
+                        android:textSize="13dp"/>
+                        <TextView
+                            android:id="@+id/label_plantcapacity_kannada"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/plant_capacity_kannada"
+                            android:textSize="9dp"
 
+                            android:layout_marginStart="4dp"
+                            android:layout_marginLeft="4dp" />
+
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/plant_capacity_value"
                         style="@style/operatorEditText"
@@ -108,6 +126,10 @@
                         android:background="@drawable/edittext_bg"
                         android:editable="false"
                         android:padding="5dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/label_plantvoltage"
@@ -115,8 +137,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="@string/voltage" />
+                        android:text="@string/voltage"
+                        android:textSize="13dp"/>
+                    <TextView
+                        android:id="@+id/label_plantvoltage_kannada"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/voltage_kannada"
+                        android:textSize="9dp"
 
+                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="4dp"/>
+                </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -161,14 +194,28 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.8"
                             android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/label_rwtanklevel"
                                 style="@style/operatorTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/rwtl" />
+                                android:text="@string/rwtl"
+                                android:textSize="13dp"/>
+                                <TextView
+                                    android:id="@+id/label_rwtanklevel_kannada"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/rwtl_kannada"
+                                    android:textSize="9dp"
 
+                                    android:layout_marginStart="4dp"
+                                    android:layout_marginLeft="4dp"/>
+                            </LinearLayout>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -177,13 +224,14 @@
                                 android:layout_marginRight="10dp"
                                 android:orientation="horizontal">
 
+
                                 <Button
                                     android:id="@+id/rwtank_level1"
                                     android:layout_width="0dp"
                                     android:layout_height="@dimen/operator_button_height"
                                     android:layout_weight="1"
                                     android:background="@drawable/edittext_bg"
-                                    android:text="LOW" />
+                                    android:text="LOW(ಕಡಿಮೆ)" />
 
                                 <Button
                                     android:id="@+id/rwtank_level2"
@@ -191,7 +239,7 @@
                                     android:layout_height="@dimen/operator_button_height"
                                     android:layout_weight="1"
                                     android:background="@drawable/edittext_bg"
-                                    android:text="HALF" />
+                                    android:text="HALF(ಅರ್ಧ)" />
 
                                 <Button
                                     android:id="@+id/rwtank_level3"
@@ -199,30 +247,52 @@
                                     android:layout_height="@dimen/operator_button_height"
                                     android:layout_weight="1"
                                     android:background="@drawable/edittext_bg"
-                                    android:text="FULL" />
+                                    android:text="FULL(ತುಂಬಿದೆ)" />
                             </LinearLayout>
                         </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        >
+
+
+                        <TextView
+                            android:id="@+id/label_rwflowrate"
+                            style="@style/operatorTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rwfl"
+                            android:textSize="12dp"/>
+
+                        <TextView
+                            android:id="@+id/label_rwflowrate_kannada"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rwfl_kannada"
+                            android:textSize="9dp"
+
+                            android:layout_marginStart="3dp"
+                            android:layout_marginLeft="0dp"/>
+
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp"
+                        >
 
                         <LinearLayout
                             android:layout_width="45dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.8"
                             android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/label_rwflowrate"
-                                style="@style/operatorTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/rwfl" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -248,30 +318,57 @@
                             android:layout_width="7dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.2"
-                            android:paddingTop="20dp"
-                            android:src="@drawable/ic_camera" />
+                            android:src="@drawable/ic_camera"
+                           android:padding="5dp"/>
 
                         <RadioGroup
-                            android:id="@+id/failure_radiogroup"
+                            android:id="@+id/rwflowrate_notapplicable_radiogroup"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:paddingTop="23dp">
+                            android:orientation="vertical">
 
                             <RadioButton
-                                android:id="@+id/radio_notapplicable"
+                                android:id="@+id/rwflowrate_notapplicable_radio"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="NA" />
+                                android:layout_height="match_parent"
+                                android:text="NA"
+                                android:onClick="onRadioButtonClicked"
+                                />
                         </RadioGroup>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp">
+
+
+                        <TextView
+                            android:id="@+id/label_twflowrate"
+                            style="@style/operatorTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twfl"
+                            android:textSize="12dp"/>
+                        <TextView
+                            android:id="@+id/label_twflowrate_kannada"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twfl_kannada"
+                            android:textSize="9dp"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginLeft="0dp"/>
+
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp"
+                        >
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -279,12 +376,7 @@
                             android:layout_weight="0.8"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/label_twflowrate"
-                                style="@style/operatorTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/twfl" />
+
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -310,17 +402,38 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.2"
-                            android:paddingTop="20dp"
-                            android:src="@drawable/ic_camera" />
+                            android:src="@drawable/ic_camera"
+                            android:padding="5dp"/>
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/label_twtanklevel"
-                        style="@style/operatorTextView"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/twtl" />
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp">
+
+
+                        <TextView
+                            android:id="@+id/label_twtanklevel"
+                            style="@style/operatorTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/twtl"
+                            android:textSize="12dp"/>
+                        <TextView
+                            android:id="@+id/label_twtanklevel_kannada"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/twtl_kannada"
+                            android:textSize="10dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginLeft="4dp"/>
+
+
+
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -336,7 +449,8 @@
                             android:layout_height="@dimen/operator_button_height"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:text="LOW" />
+                            android:text="LOW(ಕಡಿಮೆ)"
+                           />
 
                         <Button
                             android:id="@+id/twtanklevel2"
@@ -344,7 +458,7 @@
                             android:layout_height="@dimen/operator_button_height"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:text="HALF" />
+                            android:text="HALF(ಅರ್ಧ)" />
 
                         <Button
                             android:id="@+id/twtanklevel3"
@@ -352,14 +466,40 @@
                             android:layout_height="@dimen/operator_button_height"
                             android:layout_weight="1"
                             android:background="@drawable/edittext_bg"
-                            android:text="FULL" />
+                            android:text="FULL(ತುಂಬಿದೆ)" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp">
+
+
+                        <TextView
+                            android:id="@+id/label_volumedispensed"
+                            style="@style/operatorTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/volume_disposed"
+                            android:textSize="13dp"/>
+                        <TextView
+                            android:id="@+id/label_volumedispensed_kannada"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/volume_disposed_kannada"
+                            android:textSize="8dp"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginLeft="0dp"/>
+
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -367,12 +507,7 @@
                             android:layout_weight="0.8"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/label_volumedispensed"
-                                style="@style/operatorTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/volume_disposed" />
+
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -400,14 +535,40 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.2"
-                            android:paddingTop="20dp"
-                            android:src="@drawable/ic_camera" />
+                            android:src="@drawable/ic_camera"
+                            android:padding="5dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp">
+
+
+                        <TextView
+                            android:id="@+id/label_twtds"
+                            style="@style/operatorTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twtds"
+                            android:textSize="14dp"/>
+                        <TextView
+                            android:id="@+id/label_twtd_kannada"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/twtds_kannada"
+                            android:textSize="9dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginLeft="4dp"/>
+
+
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -416,12 +577,7 @@
                             android:layout_weight="0.8"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/label_twtds"
-                                style="@style/operatorTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/twtds" />
+
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -462,29 +618,52 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="0.1"
-                            android:paddingTop="20dp"
-                            android:src="@drawable/ic_camera" />
+                            android:src="@drawable/ic_camera"
+                            android:padding="5dp"/>
 
                         <RadioGroup
-                            android:id="@+id/twtds_radiogroup"
+                            android:id="@+id/twtds_notapplicable_radiogroup"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:paddingTop="23dp">
+                           >
 
                             <RadioButton
-                                android:id="@+id/twtds_notapplicable"
+                                android:id="@+id/twtds_notapplicable_radio"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:text="NA" />
                         </RadioGroup>
 
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/label_electricitymeter"
+                            style="@style/operatorTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/electricity_meter"
+                            android:textSize="13dp"/>
+                        <TextView
+                            android:id="@+id/label_electricitymeter_kannada"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/electricity_meter_kannada"
+                            android:textSize="9dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginLeft="0dp"/>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -493,12 +672,6 @@
                             android:layout_weight="0.8"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/label_electricitymeter"
-                                style="@style/operatorTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/electricity_meter" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -526,20 +699,20 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.15"
-                            android:paddingTop="20dp"
-                            android:src="@drawable/ic_camera" />
+                            android:src="@drawable/ic_camera"
+                            android:padding="5dp"/>
 
                         <RadioGroup
-                            android:id="@+id/electric_radiogroup"
+                            android:id="@+id/electric_meter_notapplicable_radiogroup"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:paddingTop="25dp">
+                           >
 
                             <RadioButton
-                                android:id="@+id/electric_notapplicable"
+                                android:id="@+id/electric_notapplicable_radio"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:text="NA" />
                         </RadioGroup>
 
@@ -555,7 +728,7 @@
                         android:layout_marginBottom="15dp"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:text="SUBMIT" />
+                        android:text="@string/submit" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

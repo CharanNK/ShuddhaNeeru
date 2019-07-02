@@ -1,5 +1,7 @@
 package com.sanradiance.mobilewpp.OperatorViews;
 
+import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,25 +16,69 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.sanradiance.mobilewpp.DataModels.UserDataModel;
+import com.sanradiance.mobilewpp.LoginClasses.LoginActivity;
+import com.sanradiance.mobilewpp.LoginClasses.VerifyOTPActivity;
 import com.sanradiance.mobilewpp.R;
+import com.sanradiance.mobilewpp.SplashScreen;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 public class OperatorDashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    SharedPreferences prf;
+    SharedPreferences pref;
+    Intent intent;
+    Boolean serverResponse = false;
+    String accessToken;
+    String updated_response="";
+    final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/loggedUserDetails";
+    NavigationView navigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operator_dashboard);
 
+        try {
+            pref = getSharedPreferences("user_save", Context.MODE_PRIVATE);
+            intent = new Intent(OperatorDashboardActivity.this, LoginActivity.class);
+            String session_check = pref.getString("user_session_save", null);
+            if (session_check != null) {
+                try {
+                    JSONObject loginResponse = new JSONObject(session_check);
+                    String success = loginResponse.getString("success");
+                    if (success.equals("true")) {
+                        accessToken = loginResponse.getString("access_token");
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+            }else{
+                Intent mainActivityIntent = new Intent(OperatorDashboardActivity.this,LoginActivity.class);
+                startActivity(mainActivityIntent);
+            }
+        }catch(Exception e){
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
 
-
-
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(OperatorDashboardActivity.this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -42,49 +88,112 @@ public class OperatorDashboardActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
 
-        String userDetails = getIntent().getStringExtra("userdetails");
+//        String userDetails = getIntent().getStringExtra("userdetails");
+//        FragmentManager fm = getFragmentManager();
+//        fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+//            @Override
+//            public void onBackStackChanged() {
+//                if(getFragmentManager().getBackStackEntryCount() == 0) finish();
+//            }
+//        });
 
         try {
-            JSONObject jsonObject = new JSONObject(userDetails);
-            String accessToken = jsonObject.getString("access_token");
-            JSONObject userData = jsonObject.getJSONObject("user");
-            String userName = userData.getString("name");
-            int userNumber = userData.getInt("id");
-            int mobileNumber = userData.getInt("mobile");
+            JSONObject paramJson = new JSONObject();
 
-            UserDataModel user = new UserDataModel(accessToken,userName,userNumber,mobileNumber);
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Details_URL, paramJson,new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("Response", response.toString());
 
-            View headerView = navigationView.getHeaderView(0);
-            TextView navHeaderUserName = headerView.findViewById(R.id.nav_header_userName);
-         //   TextView navHeaderUserId = headerView.findViewById(R.id.nav_header_userId);
+                    try {
+                        updated_response = response.toString();
+                        JSONObject obj = new JSONObject(String.valueOf(response));
+                        String accessToken = obj.getString("access_token");
+                        JSONObject userData = obj.getJSONObject("user");
+                        String userName = userData.getString("name");
+                        int userNumber = userData.getInt("id");
+                        int mobileNumber = userData.getInt("mobile");
 
-            navHeaderUserName.setText("Name : "+userName);
-           // navHeaderUserId.setText("User ID : "+userNumber);
+                        UserDataModel user = new UserDataModel(accessToken,userName,userNumber,mobileNumber);
+//                        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//                        navigationView.setNavigationItemSelectedListener(OperatorDashboardActivity.this);
+                        View headerView = navigationView.getHeaderView(0);
+                        TextView navHeaderUserName = headerView.findViewById(R.id.nav_header_userName);
+//                      TextView navHeaderUserId = headerView.findViewById(R.id.nav_header_userId);
 
-            Log.d("UserInfoName",userName);
-            Log.d("UserInfoNumber", String.valueOf(userNumber));
-        } catch (JSONException e) {
+                       navHeaderUserName.setText("Name : "+userName);
+//                        navHeaderUserId.setText("User ID : "+userNumber);
+
+                        Log.d("UserInfoName",userName);
+                        Log.d("UserInfoNumber", String.valueOf(userNumber));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                            Bundle bundle = new Bundle();
+                        bundle.putString("userDetails",response.toString());
+
+                        OperatorPlantsFragment plantsFragment = new OperatorPlantsFragment();
+                        plantsFragment.setArguments(bundle);
+
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container,plantsFragment).commit();
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                    Log.d("Error", error.toString());
+                }
+            }) {
+
+                @Override
+                protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                    int mStatusCode = response.statusCode;
+                    Log.d("Status code", String.valueOf(mStatusCode));
+                    if (mStatusCode == 200) {
+//                        if (getFragmentManager().getBackStackEntryCount() != 0) {
+//                            getFragmentManager().popBackStack();
+//                        }
+                        serverResponse = true;
+                    }
+                    return super.parseNetworkResponse(response);
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/json");
+                    params.put("X-Requested-With", "XMLHttpRequest");
+                    params.put("Authorization", "Bearer " + accessToken);
+                    return params;
+                }
+            };
+
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(jsonObjectRequest);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-
-        Bundle bundle = new Bundle();
-        bundle.putString("userDetails",getIntent().getStringExtra("userdetails"));
-
-        OperatorPlantsFragment plantsFragment = new OperatorPlantsFragment();
-        plantsFragment.setArguments(bundle);
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,plantsFragment).commit();
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        if (drawer.isDrawerOpen(GravityCompat.START)) {
 //            drawer.closeDrawer(GravityCompat.START);
@@ -109,11 +218,19 @@ public class OperatorDashboardActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            SharedPreferences.Editor editor = pref.edit();
+            editor.clear();
+            editor.commit();
+            startActivity(intent);
+//            return(true);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -123,18 +240,20 @@ public class OperatorDashboardActivity extends AppCompatActivity
 
         if (id == R.id.nav_plants) {
             Bundle bundle = new Bundle();
-            bundle.putString("userDetails",getIntent().getStringExtra("userdetails"));
+            bundle.putString("userDetails",updated_response);
 
             OperatorPlantsFragment plantsFragment = new OperatorPlantsFragment();
             plantsFragment.setArguments(bundle);
 
             getSupportFragmentManager().beginTransaction().replace(R.id.container,plantsFragment).commit();
-        } else if (id == R.id.nav_reports) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container,new OperatorReportsFragment()).commit();
         }
+//        else if (id == R.id.nav_reports) {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container,new OperatorReportsFragment()).commit();
+//        }
 
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
