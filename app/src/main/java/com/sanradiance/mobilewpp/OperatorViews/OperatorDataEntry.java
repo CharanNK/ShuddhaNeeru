@@ -126,8 +126,8 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
 
     String accessToken;
 
-    private static final String dataUploadURL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/user/survey-details/upload";
-    private static final String fileUploadURL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/upload/file";
+    private static final String dataUploadURL = "https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/user/survey-details/upload";
+    private static final String fileUploadURL = "https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/upload/file";
 
     int CAPTURE_IMAGE = 1000;
     private Uri fileUri;

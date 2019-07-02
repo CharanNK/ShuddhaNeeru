@@ -55,9 +55,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Intent sharedintent;
 
 
-    private static String Sendotp_URL ="https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/sendOTP";
-    private static String LOGIN_URL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/login";
-    final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/dashboard/count/details";
+    private static String Sendotp_URL ="https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/sendOTP";
+    private static String LOGIN_URL = "https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/login";
+    final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/dashboard/count/details";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

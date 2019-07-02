@@ -94,7 +94,7 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
     FileService fileService;
 
     String failureReason, rwTankLevel, twTankLevel, volumeDispensed, twTdsValue;
-    private String dataUploadURL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/user/plant/not-working/status/update";
+    private String dataUploadURL = "https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/user/plant/not-working/status/update";
     private String accessToken;
     private boolean flagmale = false;
     private boolean flagfemale = false;

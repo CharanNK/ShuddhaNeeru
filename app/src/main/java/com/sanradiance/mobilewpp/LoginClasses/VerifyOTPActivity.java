@@ -48,7 +48,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
 
 
-    private static String Verifyotp_URL ="https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/verifyOTP";
+    private static String Verifyotp_URL ="https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/verifyOTP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

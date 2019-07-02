@@ -46,7 +46,7 @@ public class OperatorDashboardActivity extends AppCompatActivity
     Boolean serverResponse = false;
     String accessToken;
     String updated_response="";
-    final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/loggedUserDetails";
+    final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/loggedUserDetails";
     NavigationView navigationView;
 
 

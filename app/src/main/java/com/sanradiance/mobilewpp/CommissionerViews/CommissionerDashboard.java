@@ -55,7 +55,7 @@ public class CommissionerDashboard extends AppCompatActivity implements View.OnC
     SharedPreferences pref;
 
 
-    final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/dashboard/count/details";
+    final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/dashboard/count/details";
     Button logout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

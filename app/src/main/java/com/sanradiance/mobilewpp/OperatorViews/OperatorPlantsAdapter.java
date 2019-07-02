@@ -49,8 +49,8 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
     private UserDataModel userDetail;
     private String reasonOfFailure;
 
-    private String failureStatusURL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/user/plant/not-working/status/update";
-    private String operatorSurveyStatusURL = "https://domytaxonline.com.au/shuddha-neeru-demo/public/api/auth/check/opertor-survey/status";
+    private String failureStatusURL = "https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/user/plant/not-working/status/update";
+    private String operatorSurveyStatusURL = "https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/check/opertor-survey/status";
 
     public OperatorPlantsAdapter(Context mContext, List<PlantDataModel> plantsList, UserDataModel userDetail) {
         this.mContext = mContext;
