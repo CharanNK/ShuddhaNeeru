@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sanradiance.mobilewpp.ConstantValues;
 import com.sanradiance.mobilewpp.DataModels.UserDataModel;
 import com.sanradiance.mobilewpp.LoginClasses.LoginActivity;
 import com.sanradiance.mobilewpp.LoginClasses.VerifyOTPActivity;
@@ -41,69 +42,40 @@ import java.util.Map;
 
 public class OperatorDashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    SharedPreferences pref;
+    SharedPreferences sharedPreference;
     Intent intent;
     Boolean serverResponse = false;
     String accessToken;
-    String updated_response="";
+    String updated_response = "";
     final String Details_URL = "https://domytaxonline.com.au/shuddha-neeru-test/public/api/auth/loggedUserDetails";
     NavigationView navigationView;
 
+    ConstantValues constantValues = new ConstantValues();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operator_dashboard);
 
-        try {
-            pref = getSharedPreferences("user_save", Context.MODE_PRIVATE);
-            intent = new Intent(OperatorDashboardActivity.this, LoginActivity.class);
-            String session_check = pref.getString("user_session_save", null);
-            if (session_check != null) {
-                try {
-                    JSONObject loginResponse = new JSONObject(session_check);
-                    String success = loginResponse.getString("success");
-                    if (success.equals("true")) {
-                        accessToken = loginResponse.getString("access_token");
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                }
-            }else{
-                Intent mainActivityIntent = new Intent(OperatorDashboardActivity.this,LoginActivity.class);
-                startActivity(mainActivityIntent);
-            }
-        }catch(Exception e){
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-        }
+        sharedPreference = getSharedPreferences(constantValues.PROJECT_SHARED_PREFERENCE, Context.MODE_PRIVATE);
+        accessToken = sharedPreference.getString(constantValues.USER_ACCESS_TOKEN,null);
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(OperatorDashboardActivity.this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-
-//        String userDetails = getIntent().getStringExtra("userdetails");
-//        FragmentManager fm = getFragmentManager();
-//        fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//            @Override
-//            public void onBackStackChanged() {
-//                if(getFragmentManager().getBackStackEntryCount() == 0) finish();
-//            }
-//        });
 
         try {
             JSONObject paramJson = new JSONObject();
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Details_URL, paramJson,new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Details_URL, paramJson, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.d("Response", response.toString());
@@ -117,28 +89,24 @@ public class OperatorDashboardActivity extends AppCompatActivity
                         int userNumber = userData.getInt("id");
                         int mobileNumber = userData.getInt("mobile");
 
-                        UserDataModel user = new UserDataModel(accessToken,userName,userNumber,mobileNumber);
-//                        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//                        navigationView.setNavigationItemSelectedListener(OperatorDashboardActivity.this);
+                        UserDataModel user = new UserDataModel(accessToken, userName, userNumber, mobileNumber);
                         View headerView = navigationView.getHeaderView(0);
                         TextView navHeaderUserName = headerView.findViewById(R.id.nav_header_userName);
-//                      TextView navHeaderUserId = headerView.findViewById(R.id.nav_header_userId);
 
-                       navHeaderUserName.setText("Name : "+userName);
-//                        navHeaderUserId.setText("User ID : "+userNumber);
+                        navHeaderUserName.setText("Name : " + userName);
 
-                        Log.d("UserInfoName",userName);
+                        Log.d("UserInfoName", userName);
                         Log.d("UserInfoNumber", String.valueOf(userNumber));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                            Bundle bundle = new Bundle();
-                        bundle.putString("userDetails",response.toString());
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userDetails", response.toString());
 
-                        OperatorPlantsFragment plantsFragment = new OperatorPlantsFragment();
-                        plantsFragment.setArguments(bundle);
+                    OperatorPlantsFragment plantsFragment = new OperatorPlantsFragment();
+                    plantsFragment.setArguments(bundle);
 
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,plantsFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, plantsFragment).commit();
                 }
 
             }, new Response.ErrorListener() {
@@ -217,19 +185,18 @@ public class OperatorDashboardActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            SharedPreferences.Editor editor = pref.edit();
+        if (id == R.id.action_logout) {
+            SharedPreferences.Editor editor = sharedPreference.edit();
             editor.clear();
             editor.commit();
+            String action;
+            intent = new Intent(OperatorDashboardActivity.this,LoginActivity.class);
             startActivity(intent);
-//            return(true);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -240,18 +207,15 @@ public class OperatorDashboardActivity extends AppCompatActivity
 
         if (id == R.id.nav_plants) {
             Bundle bundle = new Bundle();
-            bundle.putString("userDetails",updated_response);
+            bundle.putString("userDetails", updated_response);
 
             OperatorPlantsFragment plantsFragment = new OperatorPlantsFragment();
             plantsFragment.setArguments(bundle);
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.container,plantsFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, plantsFragment).commit();
         }
-//        else if (id == R.id.nav_reports) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.container,new OperatorReportsFragment()).commit();
-//        }
 
-        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

@@ -80,7 +80,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_insert_invitation_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/device/ic_developer_mode_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -90,7 +90,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_current_date" />
+                            <entry key="color" value="535288" />
+                            <entry key="outputName" value="ic_plantid" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\charank" />
                           </map>

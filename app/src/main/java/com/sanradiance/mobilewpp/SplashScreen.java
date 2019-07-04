@@ -30,9 +30,6 @@ import java.util.Locale;
 public class SplashScreen extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 3000;  //splash screen timeout milliseconds
-    SharedPreferences pref;
-    Intent sharedintent;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,53 +39,12 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                try{
-                    //session handling
-                    pref = getSharedPreferences("user_save", Context.MODE_PRIVATE);
-                    String session_check = pref.getString("user_session_save", null);
-
-                    if(session_check!=null) {
-                        try {
-                            JSONObject loginResponse = new JSONObject(session_check);
-                            String success = loginResponse.getString("success");
-                            if (success.equals("true")) {
-                                String userAccessToken = loginResponse.getString("access_token");
-                                JSONObject userDetails = loginResponse.getJSONObject("user");
-
-                                String accountType = userDetails.getString("account_type");
-                                if (accountType.equals("operator")) {
-                                    sharedintent = new Intent(SplashScreen.this, OperatorDashboardActivity.class);
-                                    sharedintent.putExtra("userdetails", session_check);
-                                    startActivity(sharedintent);
-                                } else if (accountType.equals("admin")) {
-                                    Intent intent = new Intent(SplashScreen.this, CommissionerDashboard.class);
-                                    intent.putExtra("userdetails", session_check);
-                                    startActivity(intent);
-                                    finish();
-                                } else if (accountType.equals("commissioner")) {
-                                    Intent intent = new Intent(SplashScreen.this, CommissionerDashboard.class);
-                                    intent.putExtra("userdetails", session_check);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Invalid", Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    }else{
-                        Intent mainActivityIntent = new Intent(SplashScreen.this,LoginActivity.class);
-                        startActivity(mainActivityIntent);
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        //close this Activity
-                        finish();
-                    }
+                try {
+                    Intent mainActivityIntent = new Intent(SplashScreen.this, LoginActivity.class);
+                    startActivity(mainActivityIntent);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    //close this Activity
+                    finish();
                 } catch (Exception exce) {
                     exce.printStackTrace();
                     Toast.makeText(getApplicationContext(), exce.toString(), Toast.LENGTH_LONG).show();
@@ -96,7 +52,7 @@ public class SplashScreen extends AppCompatActivity {
                 }
 
             }
-        },SPLASH_TIME_OUT);
+        }, SPLASH_TIME_OUT);
     }
 }
 
