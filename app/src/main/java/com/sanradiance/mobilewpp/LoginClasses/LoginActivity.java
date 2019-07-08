@@ -12,6 +12,8 @@ import android.net.ConnectivityManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,14 +47,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    EditText phoneNumberField, passwordField;
+    EditText phoneNumberField;
     TextView errorMessage;
     Button loginButton;
     String dateString;
-    SharedPreferences sharedPreference;
     private ProgressBar spinner;
     LinearLayout main_layout;
-    private ProgressDialog pd;
 
     ConstantValues constantValues = new ConstantValues();
 
@@ -75,9 +75,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         phoneNumberField = findViewById(R.id.phoneNumberField);
         main_layout = findViewById(R.id.loginLayout);
+        loginButton = findViewById(R.id.loginButton);
+        loginButton.setEnabled(false);
+
+        phoneNumberField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                loginButton.setEnabled(true);
+                errorMessage.setVisibility(View.GONE);
+                loginButton.setBackgroundColor(Color.parseColor("#535288"));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         errorMessage = findViewById(R.id.errorMessage);
-        loginButton = findViewById(R.id.loginButton);
+
         loginButton.setOnClickListener(this);
         spinner = findViewById(R.id.progressBar);
         spinner.setVisibility(View.GONE);
@@ -153,7 +174,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         String phoneNumber = phoneNumberField.getText().toString();
                         JSONObject loginResponse = new JSONObject(response.toString());
                         String success = loginResponse.getString("success");
-
+                        Log.d(getLocalClassName(),"status:"+success);
                         if (success.contains("true")) {
                             Intent routing = new Intent(LoginActivity.this, VerifyOTPActivity.class);
                             routing.putExtra("mobile_number", phoneNumber);
@@ -163,8 +184,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             errorMessage.setVisibility(View.VISIBLE);
                             spinner.setVisibility(View.GONE);
                             phoneNumberField.setEnabled(true);
-                            loginButton.setEnabled(true);
-                            loginButton.setBackgroundColor(Color.parseColor("#3F51B5"));
+                            loginButton.setEnabled(false);
+                            loginButton.setBackgroundColor(Color.parseColor("#535288"));
                             errorMessage.setText("Please enter valid mobile number");
                         }
                     } catch (JSONException e) {

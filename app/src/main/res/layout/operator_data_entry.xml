@@ -41,7 +41,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.75"
-                            android:drawableLeft="@drawable/ic_operatorid"
+                            android:drawableLeft="@drawable/ic_plantid"
                             android:text="Plant Id :"
                             />
 
@@ -62,7 +62,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.75"
-                            android:drawableLeft="@drawable/ic_person"
+                            android:drawableLeft="@drawable/ic_location"
                             android:text="Village :" />
 
                         <TextView

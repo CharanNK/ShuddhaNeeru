@@ -84,7 +84,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                         JSONObject paramJson = new JSONObject();
                         paramJson.put("mobile", mobile_number);
                         paramJson.put("otp", fullOTP);
-                        Log.i("verify", "calling success8528");
+                        Log.d("verify", "calling success8528");
                         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Verifyotp_URL, paramJson, new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {

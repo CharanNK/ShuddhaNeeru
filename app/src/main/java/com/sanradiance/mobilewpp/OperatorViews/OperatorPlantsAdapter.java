@@ -73,9 +73,6 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
         Typeface roundsTypeFace = Typeface.createFromAsset(mContext.getAssets(),"fonts/ttrounds.ttf");
         Typeface linottesemibold = Typeface.createFromAsset(mContext.getAssets(),"fonts/linottesemibold.otf");
 
-   // viewHolder.panelIdTextView.setTypeface(roundsTypeFace);
-       // viewHolder.panelIdTextView.setText("Panel ID : " + currentPlant.getPanelId());
-
         viewHolder.plantAddressTextView.setTypeface(linottesemibold);
         String completeAddress = currentPlant.getVillage() +  "," + currentPlant.getPanchayat()
                 + ", " + currentPlant.getTaluk() + ", \n" + currentPlant.getDistrict();
@@ -108,6 +105,7 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
                 public void onResponse(JSONObject response) {
                     try{
                         Boolean permission = response.getBoolean("permission");
+                        Log.d(getClass().getName(),"permission to upload:"+permission);
                         if(permission){
                             displayEntryPrompts(currentPlant);
                         } else {
@@ -131,13 +129,6 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
                     Log.d("Status code", String.valueOf(mStatusCode));
                     if (mStatusCode == 200) {
                         progressDialog.dismiss();
-//                        Activity currentActivity = (Activity) mContext;
-//                        currentActivity.runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Toast.makeText(mContext, "Updated to server!", Toast.LENGTH_LONG).show();
-//                            }
-//                        });
                     }
                     return super.parseNetworkResponse(response);
                 }

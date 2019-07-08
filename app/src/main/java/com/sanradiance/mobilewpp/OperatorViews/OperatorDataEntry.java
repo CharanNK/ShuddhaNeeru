@@ -318,6 +318,8 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             public void onClick(View v) {
                 boolean checked = ((RadioButton) v).isChecked();
                 // Check which radiobutton was pressed
+                Log.d(getClass().getName(),"checked:"+checked);
+                Log.d(getClass().getName(),"rwFlowRateImageID : "+rwFlowRateImageId);
                 if (checked){
                     if(rwFlowRateImageId!=0){
                         rwFlowRateNotApplicableRadioButton.setChecked(false);
@@ -682,12 +684,6 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             labelTWFlowRate.setTextColor(Color.BLACK);
 
         }
-//        if (twFlowRateCamera == null) {
-//            twFlowRateCamera.setImageResource(R.drawable.ic_camera_grey);
-//            valuesSetFlag = false;
-//        } else {
-//            twFlowRateCamera.setImageResource(R.drawable.ic_camera);
-//        }
 
         if (twTankLevel.length() <= 0) {
             labelTWTankLevel.setTextColor(Color.RED);
@@ -974,39 +970,6 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             }
         });
     }
-
-
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if(getView() == null){
-//            return;
-//        }
-//        getView().setFocusableInTouchMode(true);
-//        getView().requestFocus();
-//        getView().setOnKeyListener(new View.OnKeyListener(){
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                Toast.makeText(getContext(), keyCode, Toast.LENGTH_LONG).show();
-////                event.getAction() == KeyEvent.ACTION_UP &&
-//                if(keyCode == KeyEvent.KEYCODE_BACK){
-//                    Intent intent = new Intent(getActivity(),OperatorDashboardActivity.class);
-//                    intent.addCategory(Intent.CATEGORY_HOME);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    startActivity(intent);
-//                }
-//                return false;
-//            }
-//        });
-//    }
-
-    //    public void onBackPressed() {
-//        Intent intent = new Intent(getActivity(),OperatorDashboardActivity.class);
-//        intent.addCategory(Intent.CATEGORY_HOME);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
-//    }
 }
 
 
