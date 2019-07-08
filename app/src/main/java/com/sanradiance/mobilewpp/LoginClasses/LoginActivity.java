@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         phoneNumberField = findViewById(R.id.phoneNumberField);
         main_layout = findViewById(R.id.loginLayout);
         loginButton = findViewById(R.id.loginButton);
-        loginButton.setEnabled(false);
+        loginButton.setEnabled(true);
 
         phoneNumberField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -184,16 +184,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             errorMessage.setVisibility(View.VISIBLE);
                             spinner.setVisibility(View.GONE);
                             phoneNumberField.setEnabled(true);
-                            loginButton.setEnabled(false);
+                            loginButton.setEnabled(true);
                             loginButton.setBackgroundColor(Color.parseColor("#535288"));
-                            errorMessage.setText("Please enter valid mobile number");
+                            errorMessage.setText("Please enter valid mobile number & try again!");
                         }
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     } finally {
                         loginButton.setEnabled(true);
-                        loginButton.setBackgroundColor(Color.parseColor("#F4F4F4"));
+                        loginButton.setBackgroundColor(Color.parseColor("#535288"));
                     }
                 }
 
@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     spinner.setVisibility(View.GONE);
                     phoneNumberField.setEnabled(true);
                     loginButton.setEnabled(true);
-                    loginButton.setBackgroundColor(Color.parseColor("#3F51B5"));
+                    loginButton.setBackgroundColor(Color.parseColor("#535288"));
                     errorMessage.setText("Invalid login details. Please try again!");
                 }
             }) {

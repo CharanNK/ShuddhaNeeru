@@ -76,7 +76,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 } else if (fullOTP.length() < 6) {
                     Toast.makeText(getApplicationContext(), "Please enter valid verification code", Toast.LENGTH_LONG).show();
                 } else {
-                    Log.i("verify", "success8528");
+                    Log.i("verify", "success");
                     verifyOtpButton.setEnabled(false);
                     verifyOtpButton.setBackgroundColor(Color.parseColor("#F4F4F4"));
                     spinner.setVisibility(View.VISIBLE);
@@ -90,9 +90,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                             public void onResponse(JSONObject response) {
 
                                 Log.d("Response", response.toString());
-                                Log.i("verify", "before try");
                                 try {
-                                    Log.i("verify", "inside try");
                                     JSONObject loginResponse = new JSONObject(response.toString());
                                     String success = loginResponse.getString("success");
                                     Log.i("verify", success);
@@ -138,12 +136,9 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                     }
                                 } catch (JSONException e) {
                                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-
                                     e.printStackTrace();
-
                                 }
                             }
-
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {

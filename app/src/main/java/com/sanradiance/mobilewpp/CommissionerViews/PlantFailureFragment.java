@@ -106,16 +106,16 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        try {
-            pref = this.getActivity().getSharedPreferences("user_save", Context.MODE_PRIVATE);
-            String session_check = pref.getString("user_session_save", null);
-            if (session_check == null) {
-                Intent mainActivityIntent = new Intent(this.getActivity(), LoginActivity.class);
-                startActivity(mainActivityIntent);
-            }
-        }catch (Exception e){
-            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
-        }
+//        try {
+//            pref = this.getActivity().getSharedPreferences("user_save", Context.MODE_PRIVATE);
+//            String session_check = pref.getString("user_session_save", null);
+//            if (session_check == null) {
+//                Intent mainActivityIntent = new Intent(this.getActivity(), LoginActivity.class);
+//                startActivity(mainActivityIntent);
+//            }
+//        }catch (Exception e){
+//            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+//        }
 
         View view = inflater.inflate(R.layout.plant_failure_layout, container, false);
 
@@ -356,7 +356,7 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
         }
 
         if(volumeDispensedImageId==0){
-            volumeDispensedCamera.setImageResource(R.drawable.ic_camera_red);
+           volumeDispensedCamera.setImageResource(R.drawable.ic_camera_red);
             valuesSetFlag = false;
         }else{
             volumeDispensedCamera.setImageResource(R.drawable.ic_camera_grey);

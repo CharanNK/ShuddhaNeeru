@@ -147,16 +147,17 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        try {
-            pref = this.getActivity().getSharedPreferences("user_save", Context.MODE_PRIVATE);
-            String session_check = pref.getString("user_session_save", null);
-            if (session_check == null) {
-                Intent mainActivityIntent = new Intent(this.getActivity(), LoginActivity.class);
-                startActivity(mainActivityIntent);
-            }
-        }catch (Exception e){
-            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
-        }
+//        try {
+//            pref = this.getActivity().getSharedPreferences("user_save", Context.MODE_PRIVATE);
+//            String session_check = pref.getString("user_session_save", null);
+//            if (session_check == null) {
+//                Intent mainActivityIntent = new Intent(this.getActivity(), LoginActivity.class);
+//                startActivity(mainActivityIntent);
+//            }
+//        }catch (Exception e){
+//            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+//        }
+
 
         View view = inflater.inflate(R.layout.operator_data_entry, container, false);
 
@@ -341,7 +342,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
                 boolean checked = ((RadioButton) v).isChecked();
                 // Check which radiobutton was pressed
                 if (checked){
-                    if(twFlowRateImageId!=0){
+                    if(twTDSImageId!=0){
                         twTdsNotApplicableRadioButton.setChecked(false);
                         twTdsNotApplicableRadioButton.setEnabled(false);
                     }else {
