@@ -280,7 +280,6 @@ public class OperatorPlantsAdapter extends RecyclerView.Adapter<OperatorPlantsAd
 
             plantIdTextView = itemView.findViewById(R.id.plantIdTv);
             plantAddressTextView = itemView.findViewById(R.id.plantAddressTv);
-            //  panelIdTextView = itemView.findViewById(R.id.panelIdTv);
         }
     }
 }

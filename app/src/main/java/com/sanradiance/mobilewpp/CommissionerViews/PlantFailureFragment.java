@@ -106,17 +106,6 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        try {
-//            pref = this.getActivity().getSharedPreferences("user_save", Context.MODE_PRIVATE);
-//            String session_check = pref.getString("user_session_save", null);
-//            if (session_check == null) {
-//                Intent mainActivityIntent = new Intent(this.getActivity(), LoginActivity.class);
-//                startActivity(mainActivityIntent);
-//            }
-//        }catch (Exception e){
-//            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
-//        }
-
         View view = inflater.inflate(R.layout.plant_failure_layout, container, false);
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
@@ -200,42 +189,6 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
     }
 
     private void initViews() {
-
-        twTDSEdiText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-              //  submitButton.setEnabled(true);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        volumeDispensedEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //volumeDispensedCamera.setEnabled(true);
-              //  volumeDispensedCamera.setImageResource(R.drawable.ic_camera);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
         rwTankLevelLow.setOnClickListener(this);
         rwTankLevelHalf.setOnClickListener(this);
         rwTankLevelFull.setOnClickListener(this);
@@ -268,50 +221,26 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
             case R.id.rwtank_level1:
                 rwTankLevel = constantValues.CONSTANT_LOW;
                 modifyButtons(rwTankLevelLow, rwTankLevelHalf, rwTankLevelFull);
-                rwTankLevelHalf.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                rwTankLevelHalf.setTextColor(Color.BLACK);
-                rwTankLevelFull.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                rwTankLevelFull.setTextColor(Color.BLACK);
                 break;
             case R.id.rwtank_level2:
                 rwTankLevel = constantValues.CONSTANT_HALF;
                 modifyButtons(rwTankLevelHalf, rwTankLevelLow, rwTankLevelFull);
-                rwTankLevelLow.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                rwTankLevelLow.setTextColor(Color.BLACK);
-                rwTankLevelFull.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                rwTankLevelFull.setTextColor(Color.BLACK);
                 break;
             case R.id.rwtank_level3:
                 rwTankLevel = constantValues.CONSTANT_FULL;
                 modifyButtons(rwTankLevelFull, rwTankLevelLow, rwTankLevelHalf);
-                rwTankLevelLow.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                rwTankLevelLow.setTextColor(Color.BLACK);
-                rwTankLevelHalf.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                rwTankLevelHalf.setTextColor(Color.BLACK);
                 break;
             case R.id.twtanklevel1:
                 twTankLevel = constantValues.CONSTANT_LOW;
                 modifyButtons(twTankLevelLow, twTankLevelHalf, twTankLevelFull);
-                twTankLevelHalf.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                twTankLevelHalf.setTextColor(Color.BLACK);
-                twTankLevelFull.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                twTankLevelFull.setTextColor(Color.BLACK);
                 break;
             case R.id.twtanklevel2:
                 twTankLevel = constantValues.CONSTANT_HALF;
                 modifyButtons(twTankLevelHalf, twTankLevelLow, twTankLevelFull);
-                twTankLevelLow.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                twTankLevelLow.setTextColor(Color.BLACK);
-                twTankLevelFull.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                twTankLevelFull.setTextColor(Color.BLACK);
                 break;
             case R.id.twtanklevel3:
                 twTankLevel = constantValues.CONSTANT_FULL;
                 modifyButtons(twTankLevelFull, twTankLevelLow, twTankLevelHalf);
-                twTankLevelLow.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                twTankLevelLow.setTextColor(Color.BLACK);
-                twTankLevelHalf.setBackgroundResource(R.drawable.edittext_selected_white_color);
-                twTankLevelHalf.setTextColor(Color.BLACK);
                 break;
             case R.id.volumedispensedCamera:
                 openCamera();
@@ -447,9 +376,11 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
         button1.setBackgroundResource(R.drawable.edittext_selected_bg);
         button1.setTextColor(Color.WHITE);
 
-//        button2.setEnabled(false);
-//
-//        button3.setEnabled(false);
+        button2.setBackgroundResource(R.drawable.edittext_selected_white_color);
+        button2.setTextColor(Color.BLACK);
+
+        button3.setBackgroundResource(R.drawable.edittext_selected_white_color);
+        button3.setTextColor(Color.BLACK);
     }
 
     public void openCamera() {
