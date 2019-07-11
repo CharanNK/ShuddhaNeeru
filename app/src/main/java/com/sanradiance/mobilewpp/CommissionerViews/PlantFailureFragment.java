@@ -480,7 +480,7 @@ public class PlantFailureFragment extends Fragment implements View.OnClickListen
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Uploading..");
         progressDialog.show();
-        Call<ServerResponse> call = fileService.upload(body);
+        Call<ServerResponse> call = fileService.upload("Bearer " + accessToken,body);
         call.enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {

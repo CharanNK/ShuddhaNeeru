@@ -638,8 +638,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             Log.d("electricity_meter_units", electricityMeter);
             Log.d("electricity_image_id", String.valueOf(electricityMeterImageId));
 
-
-//            uploadData();
+            uploadData();
         } else {
             Toast.makeText(getContext(), "Please fill all fields before Submit!", Toast.LENGTH_LONG).show();
         }
@@ -796,15 +795,15 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
             Log.d("selectedImage", fileUri.toString());  //to be handled.
 
             if (selectedImage != null) {
-                String[] projection = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getActivity().managedQuery(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        projection, null, null, null);
-                int column_index_data = cursor
-                        .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                final String imageFilePath = cursor.getString(column_index_data);
-                Log.d("imageURL", "image url : " + imageFilePath);
+//                String[] projection = {MediaStore.Images.Media.DATA};
+//                Cursor cursor = getActivity().managedQuery(
+//                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//                        projection, null, null, null);
+//                int column_index_data = cursor
+//                        .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//                cursor.moveToFirst();
+//                final String imageFilePath = cursor.getString(column_index_data);
+//                Log.d("imageURL", "image url : " + imageFilePath);
 
                 String imagePath = selectedImage.toString();
                 imagePath = imagePath.replace("file://","");
@@ -836,7 +835,7 @@ public class OperatorDataEntry extends Fragment implements View.OnClickListener 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Uploading..");
         progressDialog.show();
-        Call<ServerResponse> call = fileService.upload(body);
+        Call<ServerResponse> call = fileService.upload("Bearer " + accessToken,body);
         call.enqueue(new Callback<ServerResponse>() {
             @Override
             public void onResponse(Call<ServerResponse> call, retrofit2.Response<ServerResponse> response) {
